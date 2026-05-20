@@ -74,9 +74,8 @@ const ContactScreen = () => {
           <View style={styles.infoItem}>
             <Text style={styles.infoLabel}>Address:</Text>
             <Text style={styles.infoText}>
-              123 Business Street{'\n'}
-              Suite 100{'\n'}
-              New York, NY 10001
+              89a Creek Road{'\n'}
+              Allenton-Ashburton, 7700 NZ
             </Text>
           </View>
         </View>

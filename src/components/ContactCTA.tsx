@@ -115,8 +115,8 @@ const ContactCTA: React.FC = () => {
                 <div>
                   <h3 className="font-bold text-[#086375]">Address</h3>
                   <p className="text-gray-600">
-                    250b Mangorei Road, Merrilands,<br />
-                    New Plymouth, 4312, New Zealand
+                    89a Creek Road, Allenton-Ashburton<br />
+                    7700 NZ
                   </p>
                 </div>
               </div>
@@ -264,7 +264,7 @@ const ContactCTA: React.FC = () => {
               className="rounded-xl overflow-hidden shadow-lg"
             >
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2997.1234567890123!2d174.12345678901234!3d-39.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d1b123456789012%3A0x1234567890123456!2s250b%20Mangorei%20Road%2C%20Merrilands%2C%20New%20Plymouth%204312%2C%20New%20Zealand!5e0!3m2!1sen!2snz!4v1234567890123!5m2!1sen!2snz"
+                src="https://maps.google.com/maps?q=89a+Creek+Road,+Allenton-Ashburton,+7700,+NZ&hl=en&z=14&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

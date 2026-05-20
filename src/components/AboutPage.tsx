@@ -292,7 +292,7 @@ const AboutPage: React.FC = () => {
                 <FaMapMarkerAlt className="text-2xl text-[#1dd3b0] mt-1" />
                 <div>
                   <h3 className="font-semibold text-lg">Location</h3>
-                  <p className="text-gray-600 font-normal">New Plymouth, Taranaki, New Zealand</p>
+                  <p className="text-gray-600 font-normal">89a Creek Road, Allenton-Ashburton, 7700 NZ</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">

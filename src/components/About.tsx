@@ -134,7 +134,7 @@ const About: React.FC = () => {
                 <FaMapMarkerAlt className="text-blue-600 mr-4 text-xl" />
                 <div>
                   <h3 className="font-semibold">Location</h3>
-                  <p>New Plymouth, Taranaki, New Zealand</p>
+                  <p>89a Creek Road, Allenton-Ashburton, 7700 NZ</p>
                 </div>
               </div>
               <div className="flex items-center">
@@ -162,7 +162,7 @@ const About: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <h3 className="font-semibold mb-4">Get In Touch</h3>
-              <p>New Plymouth, Taranaki, New Zealand</p>
+              <p>89a Creek Road, Allenton-Ashburton, 7700 NZ</p>
               <p>+64 22 5060 870</p>
               <p>contact@appdoers.co.nz</p>
             </div>

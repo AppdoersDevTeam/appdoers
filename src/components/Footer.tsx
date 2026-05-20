@@ -107,8 +107,8 @@ const Footer: React.FC = () => {
             'Contact Us',
             <ul className="space-y-2">
               <li className="text-gray-300">
-                250b Mangorei Road, Merrilands,<br />
-                New Plymouth, 4312, New Zealand
+                89a Creek Road, Allenton-Ashburton<br />
+                7700 NZ
               </li>
               <li className="text-gray-300">
                 Phone: <a href="tel:+64225060870" className="hover:text-white transition-colors">+64 22 5060 870</a>
