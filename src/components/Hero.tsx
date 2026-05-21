@@ -1,70 +1,53 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaExternalLinkAlt } from 'react-icons/fa';
 import DigitalServicesIllustration from './DigitalServicesIllustration';
+import { hero } from '../content/siteContent';
 
 const Hero: React.FC = () => {
   return (
     <section className="relative overflow-hidden min-h-screen flex items-center">
-      {/* Animated Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#3c1642] via-[#086375] to-[#1dd3b0] animate-gradient">
-        <div className="absolute inset-0 bg-[url('/src/assets/hero-pattern.svg')] opacity-10"></div>
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_20%_50%,rgba(255,255,255,0.15),transparent_50%)]" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 pt-28 pb-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Text Content */}
-          <div className="text-white space-y-8 pl-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-fade-in text-white">
-              Transform Your Business & Increase Revenue
+          <div className="text-white space-y-6 lg:space-y-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white drop-shadow-sm">
+              {hero.headline}
             </h1>
-            <p className="text-xl md:text-2xl text-gray-200 animate-fade-in animation-delay-200">
-              Access 5 Cutting-Edge Digital Solutions for a Competitive Edge
+            <p className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-xl">
+              {hero.subheadline}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row gap-4 sm:items-center pt-2">
               <Link
                 to="/contact"
-                className="bg-[#affc41] text-black px-6 py-3 rounded-full hover:bg-[#9ceb3a] transition-colors duration-300 font-medium"
+                className="bg-[#affc41] text-[#3c1642] px-8 py-3.5 rounded-full hover:bg-white transition-colors duration-300 font-semibold text-center shadow-lg"
               >
-                Get Started
+                {hero.primaryCta}
               </Link>
-              <button
-                onClick={() => {
-                  const featuredServices = document.getElementById('featured-services');
-                  if (featuredServices) {
-                    featuredServices.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-                className="flex items-center justify-center text-white hover:text-[#affc41] transition-colors duration-300 group"
+              <Link
+                to="/work"
+                className="inline-flex items-center justify-center text-white hover:text-[#affc41] transition-colors duration-300 group font-medium"
               >
-                See Our Services
+                {hero.secondaryCta}
                 <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
+              </Link>
             </div>
+            <a
+              href={hero.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-[#affc41] transition-colors border-t border-white/20 pt-6 mt-2"
+            >
+              <FaExternalLinkAlt className="text-xs" />
+              Featured build: jornadadeinsights.com
+            </a>
           </div>
 
-          {/* Right Column - Digital Services Illustration */}
-          <div className="hidden lg:block animate-fade-in animation-delay-600 h-[500px]">
+          <div className="hidden lg:block h-[420px] xl:h-[500px]">
             <DigitalServicesIllustration />
-          </div>
-        </div>
-      </div>
-
-      {/* Trust Banner */}
-      <div className="absolute bottom-0 left-0 right-0 bg-[#086375] py-4">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <span className="text-white text-lg font-medium">20+ Years Experience</span>
-              <div className="relative">
-                <div className="absolute inset-0 bg-[#1dd3b0] opacity-20 rounded-full animate-pulse"></div>
-                <div className="relative flex items-center justify-center w-8 h-8">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

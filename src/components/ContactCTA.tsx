@@ -1,15 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { handleFormSubmit } from '../utils/formHandler';
+import { pricingTiers, communityTier } from '../content/siteContent';
+
+const tierLabels: Record<string, string> = {
+  launch: 'The Launch Tier',
+  growth: 'The Growth Tier',
+  scale: 'The Scale Tier',
+  community: communityTier.name,
+};
 
 const ContactCTA: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const tierParam = searchParams.get('tier') || '';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    message: ''
+    message: '',
+    tier: tierParam,
   });
+
+  useEffect(() => {
+    if (tierParam) {
+      setFormData((prev) => ({ ...prev, tier: tierParam }));
+    }
+  }, [tierParam]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -19,14 +38,20 @@ const ContactCTA: React.FC = () => {
     setIsSubmitting(true);
     
     try {
+      const tierLabel = tierLabels[formData.tier] || formData.tier;
       const result = await handleFormSubmit({
-        ...formData,
-        source: 'Contact Page'
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.tier
+          ? `[${tierLabel}] ${formData.message}`
+          : formData.message,
+        source: 'Contact Page',
       });
       
       if (result.success) {
         setSubmitStatus('success');
-        setFormData({ name: '', email: '', phone: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', message: '', tier: tierParam });
       } else {
         setSubmitStatus('error');
       }
@@ -37,15 +62,17 @@ const ContactCTA: React.FC = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-32 px-4 md:px-8 overflow-hidden">
+      <section className="relative pt-32 pb-20 px-4 md:px-8 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#086375] to-[#1dd3b0] opacity-90 backdrop-blur-sm">
           <div className="absolute inset-0 bg-dots-pattern opacity-10"></div>
         </div>
@@ -63,7 +90,7 @@ const ContactCTA: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Get in Touch With AppDoers
+              Book A Call
             </motion.h1>
             <motion.p 
               className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-12"
@@ -71,7 +98,7 @@ const ContactCTA: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              We'd love to hear about your project, answer your questions, and help your business thrive.
+              Open to opportunities — tell us about your project, tier, and timeline. We respond within our SLA for your partnership level.
             </motion.p>
           </motion.div>
         </div>
@@ -152,8 +179,33 @@ const ContactCTA: React.FC = () => {
               className="bg-white rounded-xl p-8 shadow-lg bg-gradient-to-br from-white to-[#b2ff9e]/10"
             >
               <h2 className="text-2xl font-bold text-[#3c1642] mb-6">Let's Talk About Your Project</h2>
+              {formData.tier && tierLabels[formData.tier] && (
+                <p className="text-sm text-[#086375] font-medium mb-4">
+                  Selected plan: {tierLabels[formData.tier]}
+                </p>
+              )}
               
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="tier" className="block text-sm font-medium text-gray-700 mb-1">
+                    Partnership tier
+                  </label>
+                  <select
+                    id="tier"
+                    name="tier"
+                    value={formData.tier}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1dd3b0] focus:border-transparent"
+                  >
+                    <option value="">Select a tier (optional)</option>
+                    {pricingTiers.map((t) => (
+                      <option key={t.id} value={t.id}>
+                        {t.name} — ${t.monthly}/mo
+                      </option>
+                    ))}
+                    <option value="community">{communityTier.name}</option>
+                  </select>
+                </div>
                 <div className="relative">
                   <input
                     type="text"

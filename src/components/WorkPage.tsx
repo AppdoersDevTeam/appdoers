@@ -1,0 +1,113 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaCheck, FaExternalLinkAlt } from 'react-icons/fa';
+import PageHero from './PageHero';
+import Statistics from './Statistics';
+import HomeCTA from './HomeCTA';
+import { pageIntros, portfolio } from '../content/siteContent';
+
+const WorkPage: React.FC = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <PageHero
+        eyebrow={pageIntros.work.eyebrow}
+        title={pageIntros.work.title}
+        subtitle={pageIntros.work.subtitle}
+        primaryCta={{ label: 'Start Your Project', to: '/contact' }}
+        secondaryCta={{ label: 'View Pricing', to: '/pricing' }}
+      />
+
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-5xl space-y-20">
+          {portfolio.map((project) => (
+            <article
+              key={project.slug}
+              id={project.slug}
+              className="scroll-mt-28 border border-gray-100 rounded-2xl shadow-lg overflow-hidden"
+            >
+              <div className="bg-gradient-to-r from-[#3c1642] to-[#086375] px-8 py-6 text-white">
+                <p className="text-[#affc41] text-sm font-semibold uppercase tracking-wide mb-1">
+                  {project.category}
+                </p>
+                <div className="flex flex-wrap items-end justify-between gap-4">
+                  <h2 className="text-3xl font-bold">{project.title}</h2>
+                  <div className="text-right">
+                    <span className="text-3xl font-bold">{project.metric}</span>
+                    <span className="text-white/80 ml-2">{project.metricLabel}</span>
+                  </div>
+                </div>
+                <p className="text-white/80 mt-2">{project.client}</p>
+              </div>
+
+              <div className="p-8 md:p-10 space-y-8">
+                <p className="text-lg text-gray-700">{project.description}</p>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h3 className="text-lg font-bold text-[#086375] mb-3">The Challenge</h3>
+                    <p className="text-gray-600">{project.challenge}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-[#086375] mb-3">Our Solution</h3>
+                    <p className="text-gray-600">{project.solution}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-bold text-[#086375] mb-3">Results</h3>
+                  <ul className="grid sm:grid-cols-3 gap-3">
+                    {project.results.map((r) => (
+                      <li
+                        key={r}
+                        className="flex items-start gap-2 bg-[#f0fdf4] rounded-lg p-4 text-gray-700 text-sm"
+                      >
+                        <FaCheck className="text-[#1dd3b0] mt-0.5 shrink-0" />
+                        {r}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {project.stack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 text-[#3c1642]"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-4 pt-2">
+                  {'externalUrl' in project && project.externalUrl && (
+                    <a
+                      href={project.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-[#086375] font-semibold hover:text-[#1dd3b0]"
+                    >
+                      View live project
+                      <FaExternalLinkAlt className="text-xs" />
+                    </a>
+                  )}
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center bg-[#086375] text-white font-semibold px-6 py-2.5 rounded-lg hover:bg-[#3c1642] transition-colors"
+                  >
+                    Build something similar
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <Statistics />
+      <HomeCTA />
+    </div>
+  );
+};
+
+export default WorkPage;

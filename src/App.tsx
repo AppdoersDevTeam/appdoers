@@ -1,21 +1,29 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
+import WorkPage from './components/WorkPage';
+import PricingPage from './components/PricingPage';
+import ServicesPage from './components/ServicesPage';
 import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
-import AppsPage from './components/AppsPage';
-import WebsitesPage from './components/WebsitesPage';
-import SEOPage from './components/SEOPage';
-import ContentPage from './components/ContentPage';
-import SocialMarketingPage from './components/SocialMarketingPage';
-import ListingBuilderPage from './components/ListingBuilderPage';
-import BusinessCenterProPage from './components/BusinessCenterProPage';
-import ReviewBuilderPage from './components/ReviewBuilderPage';
-import AdIntelligencePage from './components/AdIntelligencePage';
+import WebsitesProductPage from './pages/WebsitesProductPage';
+import DigitalSystemsProductPage from './pages/DigitalSystemsProductPage';
+import MinistryProductPage from './pages/MinistryProductPage';
 import { useScrollAnimation } from './hooks/useScrollAnimation';
 import ScrollToTop from './components/ScrollToTop';
+
+const legacyProductRedirects = [
+  '/apps',
+  '/seo',
+  '/content',
+  '/social-marketing',
+  '/listing-builder',
+  '/business-center-pro',
+  '/review-builder',
+  '/ad-intelligence',
+];
 
 const App: React.FC = () => {
   useScrollAnimation();
@@ -28,17 +36,17 @@ const App: React.FC = () => {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/work" element={<WorkPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/services" element={<ServicesPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/apps" element={<AppsPage />} />
-            <Route path="/websites" element={<WebsitesPage />} />
-            <Route path="/seo" element={<SEOPage />} />
-            <Route path="/content" element={<ContentPage />} />
-            <Route path="/social-marketing" element={<SocialMarketingPage />} />
-            <Route path="/listing-builder" element={<ListingBuilderPage />} />
-            <Route path="/business-center-pro" element={<BusinessCenterProPage />} />
-            <Route path="/review-builder" element={<ReviewBuilderPage />} />
-            <Route path="/ad-intelligence" element={<AdIntelligencePage />} />
+            <Route path="/websites" element={<WebsitesProductPage />} />
+            <Route path="/digital-systems" element={<DigitalSystemsProductPage />} />
+            <Route path="/ministry" element={<MinistryProductPage />} />
+            {legacyProductRedirects.map((path) => (
+              <Route key={path} path={path} element={<Navigate to="/services" replace />} />
+            ))}
           </Routes>
         </main>
         <Footer />

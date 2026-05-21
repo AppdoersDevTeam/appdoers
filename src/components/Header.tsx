@@ -1,42 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import { v1Products } from '../content/siteContent';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowWidth(window.innerWidth);
       if (window.innerWidth >= 1024) {
         setIsMenuOpen(false);
       }
     };
 
     window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const navigation = [
     { name: 'Home', href: '/' },
+    { name: 'Work', href: '/work' },
+    { name: 'Services', href: '/services' },
+    { name: 'Pricing', href: '/pricing' },
     { name: 'About', href: '/about' },
-    { name: 'Business Center Pro', href: '/business-center-pro' },
     { name: 'Contact', href: '/contact' },
-  ];
-
-  const products = [
-    { name: 'Apps', href: '/apps' },
-    { name: 'Websites', href: '/websites' },
-    { name: 'SEO', href: '/seo' },
-    { name: 'Content', href: '/content' },
-    { name: 'Social Marketing', href: '/social-marketing' },
-    { name: 'Ad Intelligence', href: '/ad-intelligence' },
-    { name: 'Review Builder', href: '/review-builder' },
-    { name: 'Listing Builder', href: '/listing-builder' },
   ];
 
   return (
@@ -44,15 +31,10 @@ const Header: React.FC = () => {
       <nav className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center pl-4">
-            <img
-              src="/images/logo.png"
-              alt="App Doers Logo"
-              className="h-12 w-auto"
-            />
+            <img src="/images/logo.png" alt="Appdoers Logo" className="h-12 w-auto" />
           </Link>
 
-          {/* Desktop Navigation - Hidden on tablets and phones */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -62,38 +44,11 @@ const Header: React.FC = () => {
                 {item.name}
               </Link>
             ))}
-            
-            <div className="relative group">
-              <button
-                className="flex items-center text-body hover:text-primary transition-colors duration-300"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              >
-                Products
-                <FaChevronDown className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
-              </button>
-              
-              <div className={`absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg transform transition-all duration-300 ${isDropdownOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}>
-                {products.map((product) => (
-                  <Link
-                    key={product.name}
-                    to={product.href}
-                    className="block px-4 py-2 text-body hover:bg-soft hover:text-primary transition-colors duration-300"
-                  >
-                    {product.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <Link
-              to="/contact"
-              className="btn-primary"
-            >
-              Get a Quote
+            <Link to="/contact" className="btn-primary">
+              Start Your Project
             </Link>
           </div>
 
-          {/* Hamburger Menu Button - Visible on tablets and phones */}
           <button
             className="lg:hidden text-body hover:text-primary transition-colors duration-300"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -103,11 +58,11 @@ const Header: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation Menu */}
         <div
-          className={`lg:hidden fixed inset-0 bg-white z-40 transform transition-transform duration-300 ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          className={`lg:hidden fixed top-[72px] left-0 right-0 bottom-0 bg-white z-40 transform transition-transform duration-300 overflow-y-auto ${
+            isMenuOpen ? 'translate-x-0 visible' : 'translate-x-full invisible pointer-events-none'
           }`}
+          aria-hidden={!isMenuOpen}
         >
           <div className="container mx-auto px-4 py-8">
             <div className="flex flex-col space-y-6">
@@ -115,42 +70,33 @@ const Header: React.FC = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="text-xl md:text-2xl font-medium text-body hover:text-primary transition-colors duration-300"
+                  className="text-xl font-medium text-body hover:text-primary transition-colors duration-300"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
-              
-              <div className="space-y-4">
-                <button
-                  className="flex items-center text-xl md:text-2xl font-medium text-body hover:text-primary transition-colors duration-300"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+
+              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide pt-4 border-t border-gray-100">
+                Our services
+              </p>
+              {v1Products.map((product) => (
+                <Link
+                  key={product.slug}
+                  to={product.href}
+                  className="block text-lg text-body hover:text-primary transition-colors pl-2"
+                  onClick={() => setIsMenuOpen(false)}
                 >
-                  Products
-                  <FaChevronDown className={`ml-2 h-5 w-5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
-                </button>
-                
-                <div className={`pl-4 space-y-2 transform transition-all duration-300 ${isDropdownOpen ? 'opacity-100 max-h-96' : 'opacity-0 max-h-0 overflow-hidden'}`}>
-                  {products.map((product) => (
-                    <Link
-                      key={product.name}
-                      to={product.href}
-                      className="block text-lg md:text-xl text-body hover:text-primary transition-colors duration-300"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {product.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+                  {product.title}
+                </Link>
+              ))}
 
               <Link
                 to="/contact"
-                className="btn-primary text-center text-lg md:text-xl py-3"
+                className="btn-primary text-center text-lg py-3"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Get a Quote
+                Start Your Project
               </Link>
             </div>
           </div>

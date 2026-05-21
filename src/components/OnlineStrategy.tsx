@@ -1,54 +1,54 @@
 import React from 'react';
-import { FaUsers, FaEnvelope, FaCalendar, FaComments, FaChartBar, FaDesktop } from 'react-icons/fa';
+import { FaServer, FaShoppingCart, FaUsers, FaChartBar, FaLock, FaRocket } from 'react-icons/fa';
 
 const OnlineStrategy: React.FC = () => {
   const features = [
     {
+      icon: <FaRocket className="text-4xl text-[#1dd3b0]" />,
+      title: 'Sub-Second Performance',
+      description: 'Static and edge-optimized architectures tuned for Core Web Vitals and conversion.',
+    },
+    {
+      icon: <FaShoppingCart className="text-4xl text-[#1dd3b0]" />,
+      title: 'Store Integration',
+      description: 'Stripe and Shopify flows with inventory, checkout, and fulfillment built in.',
+    },
+    {
       icon: <FaUsers className="text-4xl text-[#1dd3b0]" />,
-      title: "CRM Integration",
-      description: "Manage customer relationships and track interactions seamlessly"
-    },
-    {
-      icon: <FaEnvelope className="text-4xl text-[#1dd3b0]" />,
-      title: "Email Marketing",
-      description: "Create and automate targeted email campaigns"
-    },
-    {
-      icon: <FaCalendar className="text-4xl text-[#1dd3b0]" />,
-      title: "Appointment Booking",
-      description: "Streamline scheduling with automated booking system"
-    },
-    {
-      icon: <FaComments className="text-4xl text-[#1dd3b0]" />,
-      title: "Communication Hub",
-      description: "Centralize all customer communications in one place"
+      title: 'User Management',
+      description: 'Secure login, signup, and role-based dashboards on Scale-tier partnerships.',
     },
     {
       icon: <FaChartBar className="text-4xl text-[#1dd3b0]" />,
-      title: "Automated Reporting",
-      description: "Get real-time insights with automated analytics"
+      title: 'Analytics & Reporting',
+      description: 'Monthly performance reviews and growth insights on Growth and Scale tiers.',
     },
     {
-      icon: <FaDesktop className="text-4xl text-[#1dd3b0]" />,
-      title: "Dashboard Visualization",
-      description: "Monitor performance with intuitive dashboards"
-    }
+      icon: <FaLock className="text-4xl text-[#1dd3b0]" />,
+      title: 'Safety Lock CMS',
+      description: 'Content control without breaking layouts—code-locked templates for peace of mind.',
+    },
+    {
+      icon: <FaServer className="text-4xl text-[#1dd3b0]" />,
+      title: 'Managed Infrastructure',
+      description: 'We manage code, hosting, and deployments—100% passive tech on Launch and above.',
+    },
   ];
 
   return (
     <section className="py-20 bg-[#b2ff9e]/10">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="section-title">Manage Your Online Strategy</h2>
+          <h2 className="section-title">Platform Capabilities</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Comprehensive tools to streamline your digital presence and boost engagement
+            Everything included across our Launch, Growth, and Scale partnerships.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 max-w-6xl mx-auto">
           {features.map((feature, index) => (
             <div
-              key={index}
+              key={feature.title}
               className="bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition-all duration-300 reveal"
               style={{ animationDelay: `${index * 100}ms` }}
             >

@@ -1,102 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { FaChartLine, FaUsers, FaThumbsUp } from 'react-icons/fa';
+import { stats } from '../content/siteContent';
 
 const Statistics: React.FC = () => {
-  const [counters, setCounters] = useState({
-    revenue: 0,
-    customers: 0,
-    satisfaction: 0
-  });
-
-  const targetValues = {
-    revenue: 95,
-    customers: 100,
-    satisfaction: 98
-  };
+  const [animated, setAnimated] = useState(false);
+  const [values, setValues] = useState(stats.map(() => 0));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const interval = setInterval(() => {
-              setCounters((prev) => {
-                const newCounters = { ...prev };
-                let allReached = true;
+          if (entry.isIntersecting && !animated) {
+            setAnimated(true);
+            const duration = 1500;
+            const start = performance.now();
 
-                Object.keys(targetValues).forEach((key) => {
-                  if (prev[key as keyof typeof targetValues] < targetValues[key as keyof typeof targetValues]) {
-                    newCounters[key as keyof typeof targetValues] += 1;
-                    allReached = false;
-                  }
-                });
+            const tick = (now: number) => {
+              const progress = Math.min((now - start) / duration, 1);
+              setValues(
+                stats.map((stat) => {
+                  const target = stat.value;
+                  const current = target * progress;
+                  return stat.decimals ? Math.round(current * 10) / 10 : Math.floor(current);
+                })
+              );
+              if (progress < 1) requestAnimationFrame(tick);
+            };
 
-                if (allReached) {
-                  clearInterval(interval);
-                }
-
-                return newCounters;
-              });
-            }, 30);
-
-            return () => clearInterval(interval);
+            requestAnimationFrame(tick);
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.4 }
     );
 
     const element = document.querySelector('.stats-section');
-    if (element) {
-      observer.observe(element);
-    }
+    if (element) observer.observe(element);
 
     return () => observer.disconnect();
-  }, []);
+  }, [animated]);
 
-  const stats = [
-    {
-      icon: <FaChartLine className="text-4xl" />,
-      value: counters.revenue,
-      label: "Revenue Growth",
-      color: "from-[#3c1642] to-[#086375]"
-    },
-    {
-      icon: <FaUsers className="text-4xl" />,
-      value: counters.customers,
-      label: "Happy Customers",
-      color: "from-[#086375] to-[#1dd3b0]"
-    },
-    {
-      icon: <FaThumbsUp className="text-4xl" />,
-      value: counters.satisfaction,
-      label: "Customer Satisfaction",
-      color: "from-[#1dd3b0] to-[#affc41]"
-    }
+  const colors = [
+    'from-[#3c1642] to-[#086375]',
+    'from-[#086375] to-[#1dd3b0]',
+    'from-[#1dd3b0] to-[#affc41]',
+    'from-[#3c1642] to-[#1dd3b0]',
   ];
 
   return (
-    <section className="py-20 bg-white stats-section">
+    <section className="py-20 bg-gray-50 stats-section" aria-labelledby="stats-heading">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="section-title">Digital Transformation by the Numbers</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            See how we've helped businesses achieve remarkable results
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+        <h2 id="stats-heading" className="sr-only">
+          Results by the numbers
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 max-w-6xl mx-auto">
           {stats.map((stat, index) => (
             <div
-              key={index}
-              className={`bg-gradient-to-r ${stat.color} rounded-xl p-8 text-white reveal`}
-              style={{ animationDelay: `${index * 200}ms` }}
+              key={stat.label}
+              className={`bg-gradient-to-br ${colors[index % colors.length]} rounded-xl p-8 text-white shadow-lg text-center min-h-[140px] flex flex-col justify-center`}
             >
-              <div className="flex flex-col items-center text-center">
-                <div className="mb-4">{stat.icon}</div>
-                <div className="text-5xl font-bold mb-2">{stat.value}%</div>
-                <div className="text-xl">{stat.label}</div>
+              <div className="text-4xl md:text-5xl font-bold mb-2 tabular-nums">
+                {stat.prefix}
+                {stat.decimals ? values[index].toFixed(1) : values[index]}
+                {stat.suffix}
               </div>
+              <div className="text-base md:text-lg text-white/95">{stat.label}</div>
             </div>
           ))}
         </div>
