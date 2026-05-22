@@ -32,8 +32,8 @@ export const techStack = [
   'Supabase',
 ];
 
-/** v1 website — only these three offerings */
-export const v1Products = [
+/** Core service offerings */
+export const products = [
   {
     slug: 'websites',
     href: '/websites',
@@ -120,66 +120,79 @@ export const v1Products = [
   },
 ];
 
-/** @deprecated use v1Products — kept for components that import `services` */
-export const services = v1Products.map((p) => ({
+export const services = products.map((p) => ({
   title: p.title,
   description: p.summary,
   badge: p.badge,
   link: p.href,
 }));
 
-export const products = v1Products;
+export type PortfolioProject = {
+  category: string;
+  title: string;
+  description: string;
+  metric: string;
+  metricLabel: string;
+  link: string;
+  slug: string;
+  client: string;
+  challenge: string;
+  solution: string;
+  results: string[];
+  stack: string[];
+  externalUrl: string;
+  /** Shopify and some hosts block iframes — use false and show open-site panel */
+  embeddable?: boolean;
+};
 
-export const portfolio = [
+export const portfolio: PortfolioProject[] = [
   {
-    category: 'AI SaaS Platform',
-    title: 'MindLink',
+    category: 'Content & Ministry Platform',
+    title: 'Journey of Insights',
     description:
-      'AI-driven metadata extraction tool for enterprise document management.',
-    metric: '+40%',
-    metricLabel: 'Efficiency Increase',
-    link: '/work#mindlink',
-    slug: 'mindlink',
-    client: 'Enterprise Document Management',
+      'A bilingual digital home for Patricia da Silva—podcast, e-book shop, donations, and community—unifying years of Bible teaching into one fast, managed platform.',
+    metric: '50+',
+    metricLabel: 'Podcast Episodes',
+    link: '/work#jornada-de-insights',
+    slug: 'jornada-de-insights',
+    client: 'Patricia da Silva · jornadadeinsights.com',
     challenge:
-      'Manual tagging of thousands of legal and compliance documents slowed teams and introduced costly errors.',
+      'Patricia’s ministry had grown across YouTube, Spotify, Instagram, and printed study materials—but audiences had no single place to listen, buy e-books, subscribe, or support the work. She needed English and Portuguese (Brazil) without juggling separate tools or slow, fragile DIY sites.',
     solution:
-      'Built a Next.js SaaS front-end with OpenAI-powered metadata extraction, batch processing, and role-based admin dashboards.',
-    results: ['40% faster document processing', 'Reduced manual tagging by 85%', 'SOC2-ready audit trails'],
-    stack: ['Next.js', 'TypeScript', 'OpenAI API', 'Supabase', 'Vercel'],
+      'We designed and built a custom React platform on Vercel: homepage with featured episodes and e-books, full podcast catalog, shop with cart and sign-in, donation flow, about timeline, and language switching. Content stays editable while layouts remain code-locked for brand consistency and performance.',
+    results: [
+      'Unified podcast, shop, and giving on one domain',
+      'Bilingual EN / PT-BR experience for global listeners',
+      '50+ episodes and 10+ e-books surfaced with clear CTAs',
+      'Edge-hosted delivery with managed updates for zero maintenance',
+    ],
+    stack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Vercel'],
     externalUrl: 'https://jornadadeinsights.com',
+    embeddable: true,
   },
   {
-    category: 'High-Performance Web',
-    title: 'Gym Website',
-    description: 'Ultra-fast Next.js website optimized for conversion and SEO.',
-    metric: '<1s',
-    metricLabel: 'Load Speed',
-    link: '/work#gym-website',
-    slug: 'gym-website',
-    client: 'Fitness & Wellness Brand',
+    category: 'Education & E-Commerce',
+    title: 'NZ Modern School of Music',
+    description:
+      'Everybody Playing — the online face of a nationwide music school (est. 1952), connecting students and tutors across Aotearoa with lessons, products, and regional enquiry flows.',
+    metric: '54+',
+    metricLabel: 'Years Teaching',
+    link: '/work#everybody-playing',
+    slug: 'everybody-playing',
+    client: 'Gail Boswell · everybodyplaying.com',
     challenge:
-      'Legacy WordPress site scored poorly on mobile Core Web Vitals and leaked leads from slow booking flows.',
+      'The New Zealand Modern School of Music needed a modern storefront and lead engine: showcase decades of trust, list instruments and regions for one-to-one tuition, sell resources, and capture serious enquiries from parents and aspiring teachers—without losing the warmth of a community-led school.',
     solution:
-      'Rebuilt on static Next.js with edge caching, streamlined class schedules, and Google Business integration.',
-    results: ['Sub-1s LCP on mobile', '2.4× increase in trial sign-ups', 'Top-3 local map pack within 90 days'],
-    stack: ['Next.js', 'Tailwind CSS', 'Vercel', 'Stripe'],
-  },
-  {
-    category: 'E-Commerce',
-    title: 'Sneakers Store',
-    description: 'Custom Shopify layout with 3D product visualization.',
-    metric: '$20k',
-    metricLabel: 'Monthly Revenue',
-    link: '/work#sneakers-store',
-    slug: 'sneakers-store',
-    client: 'Direct-to-Consumer Retail',
-    challenge:
-      'Generic Shopify theme failed to showcase premium products and support high-AOV checkout experiences.',
-    solution:
-      'Custom theme with 3D product viewers, size-guide UX, and abandoned-cart automation tied to email flows.',
-    results: ['$20k monthly revenue in month three', '18% higher average order value', '35% cart recovery rate'],
-    stack: ['Shopify', 'React', 'Three.js', 'Klaviyo'],
+      'We delivered a custom Shopify experience with hero storytelling, curriculum and teacher sections, student testimonials by region, product catalog, cart, and a structured enquiry form (instrument + location). The site positions Gail’s national network while making it easy to register for lessons or teacher opportunities.',
+    results: [
+      'Nationwide lesson enquiries by instrument and region',
+      'Shopify cart and catalog for school products',
+      'Social proof from students across Taranaki to Gisborne',
+      'Clear paths for students and prospective music tutors',
+    ],
+    stack: ['Shopify', 'Liquid', 'Custom Theme', 'NZ Localization'],
+    externalUrl: 'https://everybodyplaying.com',
+    embeddable: false,
   },
 ];
 
@@ -314,7 +327,7 @@ export const pageIntros = {
     eyebrow: 'Portfolio',
     title: 'Selected Work',
     subtitle:
-      'Case studies from AI platforms, high-performance marketing sites, and e-commerce experiences—built for measurable outcomes.',
+      'Real client builds—ministry and content platforms to nationwide education brands—engineered for speed, clarity, and conversion.',
   },
   pricing: {
     eyebrow: 'Partnerships',
@@ -390,8 +403,8 @@ export const homeCta = {
   cta: 'Book A Call',
 };
 
-export type V1Product = (typeof v1Products)[number];
+export type Product = (typeof products)[number];
 
-export function getProductBySlug(slug: string): V1Product | undefined {
-  return v1Products.find((p) => p.slug === slug);
+export function getProductBySlug(slug: string): Product | undefined {
+  return products.find((p) => p.slug === slug);
 }

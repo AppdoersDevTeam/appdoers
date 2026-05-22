@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaCheck, FaExternalLinkAlt } from 'react-icons/fa';
 import PageHero from './PageHero';
+import PortfolioPreview from './PortfolioPreview';
 import Statistics from './Statistics';
 import HomeCTA from './HomeCTA';
 import { pageIntros, portfolio } from '../content/siteContent';
@@ -42,6 +43,12 @@ const WorkPage: React.FC = () => {
               <div className="p-8 md:p-10 space-y-8">
                 <p className="text-lg text-gray-700">{project.description}</p>
 
+                <PortfolioPreview
+                  title={project.title}
+                  externalUrl={project.externalUrl}
+                  embeddable={project.embeddable !== false}
+                />
+
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <h3 className="text-lg font-bold text-[#086375] mb-3">The Challenge</h3>
@@ -80,17 +87,15 @@ const WorkPage: React.FC = () => {
                 </div>
 
                 <div className="flex flex-wrap gap-4 pt-2">
-                  {'externalUrl' in project && project.externalUrl && (
-                    <a
-                      href={project.externalUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-[#086375] font-semibold hover:text-[#1dd3b0]"
-                    >
-                      View live project
-                      <FaExternalLinkAlt className="text-xs" />
-                    </a>
-                  )}
+                  <a
+                    href={project.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-[#086375] font-semibold hover:text-[#1dd3b0]"
+                  >
+                    Visit {project.externalUrl.replace(/^https?:\/\//, '')}
+                    <FaExternalLinkAlt className="text-xs" />
+                  </a>
                   <Link
                     to="/contact"
                     className="inline-flex items-center bg-[#086375] text-white font-semibold px-6 py-2.5 rounded-lg hover:bg-[#3c1642] transition-colors"

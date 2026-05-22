@@ -20,13 +20,13 @@ const HomePage: React.FC = () => {
         <div className="container mx-auto px-4">
           <SectionPreview
             title=""
-            description="Three offerings from our v1 playbook—web, digital systems, and ministry platforms."
+            description="Three core services—high-performance web, digital systems, and ministry platforms."
             to="/services"
             linkLabel="View all services"
           />
         </div>
       </section>
-      <Portfolio compact />
+      <Portfolio />
       <section className="py-6 bg-white">
         <div className="container mx-auto px-4">
           <SectionPreview

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaBolt, FaChurch, FaStore, FaArrowRight } from 'react-icons/fa';
 import PageHero from './PageHero';
 import Protocol from './Protocol';
-import { communityTier, pageIntros, v1Products } from '../content/siteContent';
+import { communityTier, pageIntros, products } from '../content/siteContent';
 
 const productIcons = {
   web: <FaBolt className="text-4xl text-[#1dd3b0]" />,
@@ -25,7 +25,7 @@ const ServicesPage: React.FC = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-3 gap-8">
-            {v1Products.map((product) => (
+            {products.map((product) => (
               <article
                 key={product.slug}
                 className="feature-card flex flex-col h-full"

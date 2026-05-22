@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { v1Products } from '../content/siteContent';
+import { products } from '../content/siteContent';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -80,7 +80,7 @@ const Header: React.FC = () => {
               <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide pt-4 border-t border-gray-100">
                 Our services
               </p>
-              {v1Products.map((product) => (
+              {products.map((product) => (
                 <Link
                   key={product.slug}
                   to={product.href}

@@ -8,7 +8,7 @@ test.describe('Appdoers UI smoke', () => {
     await expect(page.getByRole('heading', { name: 'Our Services' })).toBeVisible();
   });
 
-  test('services page shows only v1 products', async ({ page }) => {
+  test('services page shows core offerings', async ({ page }) => {
     await page.goto('/services');
     await expect(page.getByRole('heading', { name: 'Our Services' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'High-Performance Web' })).toBeVisible();
@@ -47,5 +47,20 @@ test.describe('Appdoers UI smoke', () => {
   test('contact tier prefill', async ({ page }) => {
     await page.goto('/contact?tier=community');
     await expect(page.getByText('Selected plan: The Community Tier')).toBeVisible();
+  });
+
+  test('work page shows client case studies', async ({ page }) => {
+    await page.goto('/work');
+    await expect(page.getByRole('heading', { name: 'Journey of Insights' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'NZ Modern School of Music' })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Visit jornadadeinsights\.com/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Visit everybodyplaying\.com/i })).toBeVisible();
+  });
+
+  test('homepage embeds Journey of Insights and links Everybody Playing', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('iframe[title="Journey of Insights live site"]')).toBeVisible();
+    await expect(page.locator('iframe[title="NZ Modern School of Music live site"]')).toHaveCount(0);
+    await expect(page.getByRole('link', { name: /Visit everybodyplaying\.com/i }).first()).toBeVisible();
   });
 });

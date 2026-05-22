@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaBolt, FaCheck, FaChurch, FaStore } from 'react-icons/fa';
 import PageHero from './PageHero';
 import Protocol from './Protocol';
-import type { V1Product } from '../content/siteContent';
+import type { Product } from '../content/siteContent';
 import { pricingTiers, communityTier } from '../content/siteContent';
 
 const icons = {
@@ -13,7 +13,7 @@ const icons = {
 };
 
 type ProductDetailPageProps = {
-  product: V1Product;
+  product: Product;
 };
 
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {

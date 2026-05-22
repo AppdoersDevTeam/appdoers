@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaArrowRight, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
 import DigitalServicesIllustration from './DigitalServicesIllustration';
 import { hero } from '../content/siteContent';
 
@@ -35,15 +35,13 @@ const Hero: React.FC = () => {
                 <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
             </div>
-            <a
-              href={hero.demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/work"
               className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-[#affc41] transition-colors border-t border-white/20 pt-6 mt-2"
             >
-              <FaExternalLinkAlt className="text-xs" />
-              Featured build: jornadadeinsights.com
-            </a>
+              Featured builds: jornadadeinsights.com · everybodyplaying.com
+              <FaArrowRight className="text-xs" />
+            </Link>
           </div>
 
           <div className="hidden lg:block h-[420px] xl:h-[500px]">
