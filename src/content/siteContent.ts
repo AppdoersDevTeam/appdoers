@@ -4,7 +4,7 @@ export const brand = {
   location: 'New Zealand / Remote',
   email: 'contact@appdoers.co.nz',
   phone: '+64 22 5060 870',
-  address: '89a Creek Road, Allenton-Ashburton, 7700 NZ',
+  address: '49 Braebrook Drive, Netherby, Ashburton 7700',
   year: 2026,
 };
 

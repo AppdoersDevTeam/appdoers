@@ -74,8 +74,8 @@ const ContactScreen = () => {
           <View style={styles.infoItem}>
             <Text style={styles.infoLabel}>Address:</Text>
             <Text style={styles.infoText}>
-              89a Creek Road{'\n'}
-              Allenton-Ashburton, 7700 NZ
+              49 Braebrook Drive{'\n'}
+              Netherby, Ashburton 7700
             </Text>
           </View>
         </View>
