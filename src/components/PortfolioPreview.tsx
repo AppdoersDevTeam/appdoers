@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
 export type PortfolioPreviewProps = {
@@ -10,43 +10,54 @@ export type PortfolioPreviewProps = {
 
 const IFRAME_WIDTH = 1280;
 const IFRAME_HEIGHT = 900;
-const COMPACT_SCALE = 0.32;
-const FULL_SCALE = 0.72;
 
-const PortfolioPreview: React.FC<PortfolioPreviewProps> = ({
-  title,
-  externalUrl,
-  compact = false,
-  embeddable = true,
-}) => {
-  const host = externalUrl.replace(/^https?:\/\//, '');
-  const scale = compact ? COMPACT_SCALE : FULL_SCALE;
-  const frameHeight = Math.round(IFRAME_HEIGHT * scale);
+function screenshotPreviewUrl(url: string) {
+  return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=1280`;
+}
 
-  if (!embeddable) {
+const PreviewChrome: React.FC<{
+  host: string;
+  externalUrl: string;
+  linkLabel?: string;
+  children: React.ReactNode;
+}> = ({ host, externalUrl, linkLabel = 'Open in new tab', children }) => (
+  <div className="rounded-xl border border-gray-200 overflow-hidden bg-gray-50">
+    <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-white border-b border-gray-100">
+      <p className="text-sm font-semibold text-[#3c1642]">{host}</p>
+      <a
+        href={externalUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#086375] hover:text-[#1dd3b0]"
+      >
+        {linkLabel}
+        <FaExternalLinkAlt />
+      </a>
+    </div>
+    {children}
+  </div>
+);
+
+const ScreenshotPreview: React.FC<{
+  title: string;
+  externalUrl: string;
+  host: string;
+  compact?: boolean;
+}> = ({ title, externalUrl, host, compact = false }) => {
+  const [screenshotFailed, setScreenshotFailed] = useState(false);
+  const minHeight = compact ? 200 : 280;
+
+  if (screenshotFailed) {
     return (
-      <div className="rounded-xl border border-gray-200 overflow-hidden bg-gradient-to-br from-[#3c1642] via-[#086375] to-[#1dd3b0]">
-        <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-white/95 border-b border-gray-100">
-          <p className="text-sm font-semibold text-[#3c1642]">{host}</p>
-          <a
-            href={externalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#086375] hover:text-[#1dd3b0]"
-          >
-            Open live site
-            <FaExternalLinkAlt />
-          </a>
-        </div>
+      <PreviewChrome host={host} externalUrl={externalUrl} linkLabel="Open live site">
         <div
-          className={`flex flex-col items-center justify-center text-center text-white px-6 ${
-            compact ? 'min-h-[200px] py-10' : 'min-h-[280px] py-14'
-          }`}
+          className="flex flex-col items-center justify-center text-center bg-gradient-to-br from-[#3c1642] via-[#086375] to-[#1dd3b0] text-white px-6"
+          style={{ minHeight }}
         >
           <p className="text-lg font-bold mb-2">{title}</p>
           <p className="text-white/85 text-sm max-w-md mb-5">
-            This site cannot be embedded here (host security). Open it in a new tab to explore the
-            live build.
+            This site cannot be embedded live (host security). Open it in a new tab to explore the
+            build.
           </p>
           <a
             href={externalUrl}
@@ -58,42 +69,106 @@ const PortfolioPreview: React.FC<PortfolioPreviewProps> = ({
             <FaExternalLinkAlt />
           </a>
         </div>
-      </div>
+      </PreviewChrome>
     );
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 overflow-hidden bg-gray-50">
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-white border-b border-gray-100">
-        <p className="text-sm font-semibold text-[#3c1642]">{host}</p>
-        <a
-          href={externalUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#086375] hover:text-[#1dd3b0]"
-        >
-          Open in new tab
-          <FaExternalLinkAlt />
-        </a>
-      </div>
-      <div className="w-full overflow-hidden bg-white" style={{ height: frameHeight }}>
+    <PreviewChrome host={host} externalUrl={externalUrl} linkLabel="Open live site">
+      <a
+        href={externalUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group relative block w-full overflow-hidden bg-gray-100"
+        style={{ minHeight }}
+      >
+        <img
+          src={screenshotPreviewUrl(externalUrl)}
+          alt={`${title} website preview`}
+          className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+          loading="lazy"
+          onError={() => setScreenshotFailed(true)}
+        />
+        <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#3c1642]/80 to-transparent px-4 py-3 text-xs font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity">
+          Tap to open live site
+        </span>
+      </a>
+    </PreviewChrome>
+  );
+};
+
+const LiveIframePreview: React.FC<{
+  title: string;
+  externalUrl: string;
+  host: string;
+}> = ({ title, externalUrl, host }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+
+    const updateScale = () => {
+      const width = node.clientWidth;
+      if (width > 0) {
+        setScale(width / IFRAME_WIDTH);
+      }
+    };
+
+    updateScale();
+    const observer = new ResizeObserver(updateScale);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  const frameHeight = Math.round(IFRAME_HEIGHT * scale);
+
+  return (
+    <PreviewChrome host={host} externalUrl={externalUrl}>
+      <div
+        ref={containerRef}
+        className="relative w-full overflow-hidden bg-white"
+        style={{ height: frameHeight }}
+      >
         <iframe
           title={`${title} live site`}
           src={externalUrl}
-          width={IFRAME_WIDTH}
-          height={IFRAME_HEIGHT}
-          className="border-0 origin-top-left"
+          className="absolute top-0 left-0 border-0"
           style={{
-            transform: `scale(${scale})`,
             width: IFRAME_WIDTH,
             height: IFRAME_HEIGHT,
+            transform: `scale(${scale})`,
+            transformOrigin: 'top left',
           }}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
         />
       </div>
-    </div>
+    </PreviewChrome>
   );
+};
+
+const PortfolioPreview: React.FC<PortfolioPreviewProps> = ({
+  title,
+  externalUrl,
+  compact = false,
+  embeddable = true,
+}) => {
+  const host = externalUrl.replace(/^https?:\/\//, '');
+
+  if (!embeddable) {
+    return (
+      <ScreenshotPreview
+        title={title}
+        externalUrl={externalUrl}
+        host={host}
+        compact={compact}
+      />
+    );
+  }
+
+  return <LiveIframePreview title={title} externalUrl={externalUrl} host={host} />;
 };
 
 export default PortfolioPreview;

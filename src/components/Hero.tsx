@@ -1,29 +1,55 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
-import DigitalServicesIllustration from './DigitalServicesIllustration';
+import HeroWebsiteVisual from './HeroWebsiteVisual';
 import { hero } from '../content/siteContent';
+import { heroItem, heroStagger } from '../utils/motionPresets';
 
 const Hero: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
-    <section className="relative overflow-hidden min-h-screen flex items-center">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#3c1642] via-[#086375] to-[#1dd3b0] animate-gradient">
+    <section className="relative min-h-screen flex items-center overflow-visible">
+      <div className="absolute inset-0 overflow-x-hidden bg-gradient-to-r from-[#3c1642] via-[#086375] to-[#1dd3b0] animate-gradient bg-[length:200%_200%]">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_20%_50%,rgba(255,255,255,0.15),transparent_50%)]" />
+        <div
+          className="hero-blob hero-blob-a w-64 h-64 bg-[#affc41] top-[12%] right-[8%]"
+          aria-hidden
+        />
+        <div
+          className="hero-blob hero-blob-b w-80 h-80 bg-[#1dd3b0] bottom-[8%] left-[4%]"
+          aria-hidden
+        />
       </div>
 
       <div className="container mx-auto px-4 relative z-10 pt-28 pb-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="text-white space-y-6 lg:space-y-8">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white drop-shadow-sm">
+          <motion.div
+            className="text-white space-y-6 lg:space-y-8"
+            initial={prefersReducedMotion ? false : 'hidden'}
+            animate="visible"
+            variants={heroStagger}
+          >
+            <motion.h1
+              variants={heroItem}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white drop-shadow-sm"
+            >
               {hero.headline}
-            </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-xl">
+            </motion.h1>
+            <motion.p
+              variants={heroItem}
+              className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-xl"
+            >
               {hero.subheadline}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 sm:items-center pt-2">
+            </motion.p>
+            <motion.div
+              variants={heroItem}
+              className="flex flex-col sm:flex-row gap-4 sm:items-center pt-2"
+            >
               <Link
                 to="/contact"
-                className="bg-[#affc41] text-[#3c1642] px-8 py-3.5 rounded-full hover:bg-white transition-colors duration-300 font-semibold text-center shadow-lg"
+                className="bg-[#affc41] text-[#3c1642] px-8 py-3.5 rounded-full hover:bg-white hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 font-semibold text-center shadow-lg hover:shadow-xl"
               >
                 {hero.primaryCta}
               </Link>
@@ -34,18 +60,20 @@ const Hero: React.FC = () => {
                 {hero.secondaryCta}
                 <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
-            </div>
-            <Link
-              to="/work"
-              className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-[#affc41] transition-colors border-t border-white/20 pt-6 mt-2"
-            >
-              Featured builds: jornadadeinsights.com · everybodyplaying.com
-              <FaArrowRight className="text-xs" />
-            </Link>
-          </div>
+            </motion.div>
+            <motion.div variants={heroItem}>
+              <Link
+                to="/work"
+                className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-[#affc41] transition-colors border-t border-white/20 pt-6 mt-2"
+              >
+                Featured builds: jornadadeinsights.com · everybodyplaying.com
+                <FaArrowRight className="text-xs group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </motion.div>
+          </motion.div>
 
-          <div className="hidden lg:block h-[420px] xl:h-[500px]">
-            <DigitalServicesIllustration />
+          <div className="hidden md:flex min-h-[420px] lg:min-h-[500px] xl:min-h-[580px] flex-1 items-center justify-center overflow-visible">
+            <HeroWebsiteVisual />
           </div>
         </div>
       </div>

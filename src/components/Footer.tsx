@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaChevronDown, FaChevronUp, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { brand } from '../content/siteContent';
 
@@ -39,26 +39,19 @@ const Footer: React.FC = () => {
             <p className="mt-4 text-white/90 max-w-md">
               High-end digital agency. {brand.location}
             </p>
-            <div className="flex space-x-4 mt-6">
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-white transition-colors"
-                aria-label="Twitter"
-              >
-                <FaTwitter size={20} />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-white transition-colors"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin size={20} />
-              </a>
-            </div>
+            {brand.social?.linkedin && (
+              <div className="flex space-x-4 mt-6">
+                <a
+                  href={brand.social.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <FaLinkedin size={20} />
+                </a>
+              </div>
+            )}
           </div>
 
           {renderSection(
@@ -99,17 +92,12 @@ const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li>
                 <Link to="/websites" className="text-gray-300 hover:text-white transition-colors">
-                  High-Performance Web
+                  Business Websites
                 </Link>
               </li>
               <li>
                 <Link to="/digital-systems" className="text-gray-300 hover:text-white transition-colors">
-                  Digital Systems & E-Commerce
-                </Link>
-              </li>
-              <li>
-                <Link to="/ministry" className="text-gray-300 hover:text-white transition-colors">
-                  Ministry & Community
+                  Online Shops & Member Areas
                 </Link>
               </li>
               <li>

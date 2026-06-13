@@ -10,9 +10,9 @@ import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
 import WebsitesProductPage from './pages/WebsitesProductPage';
 import DigitalSystemsProductPage from './pages/DigitalSystemsProductPage';
-import MinistryProductPage from './pages/MinistryProductPage';
-import { useScrollAnimation } from './hooks/useScrollAnimation';
+import NotFoundPage from './components/NotFoundPage';
 import ScrollToTop from './components/ScrollToTop';
+import ScrollAnimationProvider from './components/ScrollAnimationProvider';
 
 const legacyProductRedirects = [
   '/apps',
@@ -23,13 +23,13 @@ const legacyProductRedirects = [
   '/business-center-pro',
   '/review-builder',
   '/ad-intelligence',
+  '/ministry',
 ];
 
 const App: React.FC = () => {
-  useScrollAnimation();
-
   return (
     <Router>
+      <ScrollAnimationProvider />
       <ScrollToTop />
       <div className="min-h-screen flex flex-col">
         <Header />
@@ -43,10 +43,10 @@ const App: React.FC = () => {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/websites" element={<WebsitesProductPage />} />
             <Route path="/digital-systems" element={<DigitalSystemsProductPage />} />
-            <Route path="/ministry" element={<MinistryProductPage />} />
             {legacyProductRedirects.map((path) => (
               <Route key={path} path={path} element={<Navigate to="/services" replace />} />
             ))}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
         <Footer />

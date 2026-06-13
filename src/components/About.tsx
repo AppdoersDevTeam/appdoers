@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaStar, FaChartLine, FaUsers, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaStar, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 
 const About: React.FC = () => {
   return (

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { products } from '../content/siteContent';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const handleResize = () => {
@@ -27,7 +29,12 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className="fixed w-full z-50 bg-white shadow-md py-4">
+    <motion.header
+      className="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-md py-4"
+      initial={prefersReducedMotion ? false : { y: -72, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    >
       <nav className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center pl-4">
@@ -102,7 +109,7 @@ const Header: React.FC = () => {
           </div>
         </div>
       </nav>
-    </header>
+    </motion.header>
   );
 };
 

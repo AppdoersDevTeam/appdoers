@@ -1,27 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const useScrollAnimation = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const elements = document.querySelectorAll('.reveal');
-      elements.forEach((element) => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementBottom = element.getBoundingClientRect().bottom;
-        const isVisible = elementTop < window.innerHeight && elementBottom >= 0;
-        
-        if (isVisible) {
-          element.classList.add('active');
-        }
-      });
-    };
+    const elements = document.querySelectorAll('.reveal');
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check on mount
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -48px 0px',
+      }
+    );
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    elements.forEach((element) => {
+      element.classList.remove('active');
+      observer.observe(element);
+    });
 
-  return isVisible;
-}; 
+    return () => observer.disconnect();
+  }, [location.pathname]);
+};

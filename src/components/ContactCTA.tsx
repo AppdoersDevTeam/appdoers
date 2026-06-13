@@ -3,18 +3,26 @@ import { useSearchParams } from 'react-router-dom';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { handleFormSubmit } from '../utils/formHandler';
-import { pricingTiers, communityTier } from '../content/siteContent';
+import { pricingTiers } from '../content/siteContent';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 const tierLabels: Record<string, string> = {
-  launch: 'The Launch Tier',
-  growth: 'The Growth Tier',
-  scale: 'The Scale Tier',
-  community: communityTier.name,
+  'full-website': 'Full Website',
+  'starter-website': 'Starter Website',
 };
 
 const ContactCTA: React.FC = () => {
+  usePageMeta({
+    title: 'Book A Call | Appdoers',
+    description: 'Tell us about your project and which plan interests you. We will get back to you soon.',
+  });
+
   const [searchParams] = useSearchParams();
   const tierParam = searchParams.get('tier') || '';
+  const termParam = searchParams.get('term') || '';
+  const devUpfrontParam = searchParams.get('devUpfront') || '';
+  const emailUsersParam = searchParams.get('emailUsers') || '';
+  const emailTierParam = searchParams.get('emailTier') || '';
 
   const [formData, setFormData] = useState({
     name: '',
@@ -22,13 +30,24 @@ const ContactCTA: React.FC = () => {
     phone: '',
     message: '',
     tier: tierParam,
+    term: termParam,
+    devUpfront: devUpfrontParam,
+    emailUsers: emailUsersParam,
+    emailTier: emailTierParam,
   });
 
   useEffect(() => {
-    if (tierParam) {
-      setFormData((prev) => ({ ...prev, tier: tierParam }));
+    if (tierParam || termParam || devUpfrontParam || emailUsersParam || emailTierParam) {
+      setFormData((prev) => ({
+        ...prev,
+        ...(tierParam ? { tier: tierParam } : {}),
+        ...(termParam ? { term: termParam } : {}),
+        ...(devUpfrontParam ? { devUpfront: devUpfrontParam } : {}),
+        ...(emailUsersParam ? { emailUsers: emailUsersParam } : {}),
+        ...(emailTierParam ? { emailTier: emailTierParam } : {}),
+      }));
     }
-  }, [tierParam]);
+  }, [tierParam, termParam, devUpfrontParam, emailUsersParam, emailTierParam]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -39,23 +58,42 @@ const ContactCTA: React.FC = () => {
     
     try {
       const tierLabel = tierLabels[formData.tier] || formData.tier;
+      const termLabel = formData.term ? `${formData.term}-month plan` : '';
+      const devLabel = formData.devUpfront
+        ? `$${Number(formData.devUpfront).toLocaleString('en-NZ')} NZD setup fee upfront`
+        : '';
+      const emailLabel =
+        formData.emailUsers && formData.emailTier
+          ? `${formData.emailUsers} email users (${formData.emailTier})`
+          : '';
+      const planLabel = [tierLabel, termLabel, devLabel, emailLabel].filter(Boolean).join(' · ');
       const result = await handleFormSubmit({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        message: formData.tier
-          ? `[${tierLabel}] ${formData.message}`
+        message: planLabel
+          ? `[${planLabel}] ${formData.message}`
           : formData.message,
         source: 'Contact Page',
       });
       
       if (result.success) {
         setSubmitStatus('success');
-        setFormData({ name: '', email: '', phone: '', message: '', tier: tierParam });
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+          tier: tierParam,
+          term: termParam,
+          devUpfront: devUpfrontParam,
+          emailUsers: emailUsersParam,
+          emailTier: emailTierParam,
+        });
       } else {
         setSubmitStatus('error');
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -98,7 +136,7 @@ const ContactCTA: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Open to opportunities — tell us about your project, tier, and timeline. We respond within our SLA for your partnership level.
+              Tell us about your project, which plan interests you, and your timeline. We will get back to you soon.
             </motion.p>
           </motion.div>
         </div>
@@ -182,13 +220,20 @@ const ContactCTA: React.FC = () => {
               {formData.tier && tierLabels[formData.tier] && (
                 <p className="text-sm text-[#086375] font-medium mb-4">
                   Selected plan: {tierLabels[formData.tier]}
+                  {formData.term ? ` · ${formData.term}-month plan` : ''}
+                  {formData.devUpfront
+                    ? ` · $${Number(formData.devUpfront).toLocaleString('en-NZ')} NZD setup fee upfront`
+                    : ''}
+                  {formData.emailUsers && formData.emailTier
+                    ? ` · ${formData.emailUsers} email users (${formData.emailTier})`
+                    : ''}
                 </p>
               )}
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="tier" className="block text-sm font-medium text-gray-700 mb-1">
-                    Partnership tier
+                    Which plan interests you?
                   </label>
                   <select
                     id="tier"
@@ -197,13 +242,12 @@ const ContactCTA: React.FC = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1dd3b0] focus:border-transparent"
                   >
-                    <option value="">Select a tier (optional)</option>
+                    <option value="">Select a plan (optional)</option>
                     {pricingTiers.map((t) => (
                       <option key={t.id} value={t.id}>
-                        {t.name} — ${t.monthly}/mo
+                        {t.name}: ${t.monthly} NZD/mo
                       </option>
                     ))}
-                    <option value="community">{communityTier.name}</option>
                   </select>
                 </div>
                 <div className="relative">

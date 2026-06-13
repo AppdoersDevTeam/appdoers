@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { stats } from '../content/siteContent';
+import { Stagger, StaggerItem } from './AnimateIn';
 
 const Statistics: React.FC = () => {
   const [animated, setAnimated] = useState(false);
@@ -18,6 +19,7 @@ const Statistics: React.FC = () => {
               const progress = Math.min((now - start) / duration, 1);
               setValues(
                 stats.map((stat) => {
+                  if ('staticDisplay' in stat) return 0;
                   const target = stat.value;
                   const current = target * progress;
                   return stat.decimals ? Math.round(current * 10) / 10 : Math.floor(current);
@@ -52,21 +54,28 @@ const Statistics: React.FC = () => {
         <h2 id="stats-heading" className="sr-only">
           Results by the numbers
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 max-w-6xl mx-auto">
+        <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 max-w-6xl mx-auto">
           {stats.map((stat, index) => (
-            <div
-              key={stat.label}
-              className={`bg-gradient-to-br ${colors[index % colors.length]} rounded-xl p-8 text-white shadow-lg text-center min-h-[140px] flex flex-col justify-center`}
-            >
-              <div className="text-4xl md:text-5xl font-bold mb-2 tabular-nums">
-                {stat.prefix}
-                {stat.decimals ? values[index].toFixed(1) : values[index]}
-                {stat.suffix}
+            <StaggerItem key={stat.label} variant="scaleIn">
+              <div
+                className={`bg-gradient-to-br ${colors[index % colors.length]} rounded-xl p-8 text-white shadow-lg text-center min-h-[140px] flex flex-col justify-center hover:scale-[1.03] hover:shadow-xl transition-all duration-500`}
+              >
+                <div className="text-4xl md:text-5xl font-bold mb-2 tabular-nums">
+                  {'staticDisplay' in stat ? (
+                    stat.staticDisplay
+                  ) : (
+                    <>
+                      {stat.prefix}
+                      {stat.decimals ? values[index].toFixed(1) : values[index]}
+                      {stat.suffix}
+                    </>
+                  )}
+                </div>
+                <div className="text-base md:text-lg text-white/95">{stat.label}</div>
               </div>
-              <div className="text-base md:text-lg text-white/95">{stat.label}</div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

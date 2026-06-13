@@ -6,18 +6,47 @@ interface FormData {
   source?: string;
 }
 
-export const handleFormSubmit = async (formData: FormData): Promise<{ success: boolean; message: string }> => {
+const formspreeFormId = import.meta.env.VITE_FORMSPREE_FORM_ID?.trim();
+
+const getFormEndpoint = (): string => {
+  if (formspreeFormId) {
+    return `https://formspree.io/f/${formspreeFormId}`;
+  }
+  return 'https://formsubmit.co/ajax/contact@appdoers.co.nz';
+};
+
+export const handleFormSubmit = async (
+  formData: FormData
+): Promise<{ success: boolean; message: string }> => {
   try {
-    const response = await fetch('https://formspree.io/f/your-form-id', {
+    const payload: Record<string, string> = {
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+      _subject: `New Contact Form Submission from ${formData.name}`,
+      _replyto: formData.email,
+    };
+
+    if (formData.phone) {
+      payload.phone = formData.phone;
+    }
+
+    if (formData.source) {
+      payload.source = formData.source;
+    }
+
+    if (!formspreeFormId) {
+      payload._template = 'table';
+      payload._captcha = 'false';
+    }
+
+    const response = await fetch(getFormEndpoint(), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-      body: JSON.stringify({
-        ...formData,
-        _replyto: formData.email,
-        _subject: `New Contact Form Submission from ${formData.name}`,
-      }),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
@@ -28,11 +57,10 @@ export const handleFormSubmit = async (formData: FormData): Promise<{ success: b
       success: true,
       message: 'Thank you! Your message has been sent successfully.',
     };
-  } catch (error) {
-    console.error('Form submission error:', error);
+  } catch {
     return {
       success: false,
       message: 'Oops! Something went wrong. Please try again.',
     };
   }
-}; 
+};
