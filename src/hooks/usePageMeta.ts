@@ -66,7 +66,10 @@ export const usePageMeta = ({
       canonical.href = pageUrl;
     }
 
+    document.documentElement.setAttribute('data-page-meta-ready', 'true');
+
     return () => {
+      document.documentElement.removeAttribute('data-page-meta-ready');
       document.title = brand.metaTitle;
       upsertMeta('name', 'description', brand.metaDescription);
       upsertMeta('property', 'og:title', brand.metaTitle);
