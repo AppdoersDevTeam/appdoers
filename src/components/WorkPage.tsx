@@ -25,8 +25,8 @@ const WorkPage: React.FC = () => {
         secondaryCta={{ label: 'View Pricing', to: '/pricing' }}
       />
 
-      <section className="py-20 px-4">
-        <Stagger className="container mx-auto max-w-5xl space-y-20">
+      <section className="section-py px-4">
+        <Stagger className="container mx-auto max-w-5xl space-y-12">
           {portfolio.map((project) => (
             <StaggerItem key={project.slug}>
               <article
@@ -56,7 +56,7 @@ const WorkPage: React.FC = () => {
                     embeddable={project.embeddable !== false}
                   />
 
-                  <div className="grid md:grid-cols-2 gap-8">
+                  <div className="grid md:grid-cols-2 gap-5 md:gap-6">
                     <div>
                       <h3 className="text-lg font-bold text-[#086375] mb-3">The Challenge</h3>
                       <p className="text-gray-600">{project.challenge}</p>

@@ -19,7 +19,7 @@ const NotFoundPage: React.FC = () => {
         secondaryCta={{ label: 'Contact Us', to: '/contact' }}
       />
 
-      <section className="py-16 px-4">
+      <section className="section-py-sm px-4">
         <div className="container mx-auto max-w-2xl text-center text-gray-600">
           <p className="mb-6">
             Try our main pages:{' '}

@@ -47,7 +47,7 @@ const PlanFeaturesSection: React.FC = () => {
       : activeTier?.audience ?? '';
 
   return (
-    <section id="plan-features" className="max-w-4xl mx-auto mb-12">
+    <section id="plan-features" className="max-w-4xl mx-auto mb-8">
       <div className="text-center mb-6">
         <h3 className="text-2xl font-bold text-[#086375] mb-2">What&apos;s included?</h3>
         <p className="text-gray-600 text-sm max-w-xl mx-auto">

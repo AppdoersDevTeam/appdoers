@@ -24,7 +24,7 @@ const DigitalSolutions: React.FC = () => {
   const { audienceId } = useAudienceSegment();
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="section-py bg-gray-50">
       <div className="container mx-auto px-4">
         <MotionReveal className="text-center mb-8">
           <h2 className="section-title" id="featured-services">
@@ -38,7 +38,7 @@ const DigitalSolutions: React.FC = () => {
           </div>
         </MotionReveal>
 
-        <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 max-w-4xl mx-auto">
+        <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 px-4 max-w-4xl mx-auto">
           {services.map((service) => {
             const planSlug = slugByTitle[service.title];
             const copy = getAudienceProductCopy(audienceId, planSlug);

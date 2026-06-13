@@ -6,16 +6,16 @@ import { MotionReveal, Stagger, StaggerItem } from './AnimateIn';
 
 const Portfolio: React.FC = () => {
   return (
-    <section id="work" className="py-20 bg-white">
+    <section id="work" className="section-py bg-white">
       <div className="container mx-auto px-4">
-        <MotionReveal className="text-center mb-16">
+        <MotionReveal className="text-center section-head">
           <h2 className="section-title">Selected Work</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Real websites for New Zealand clients, built to be fast, clear, and easy to use.
           </p>
         </MotionReveal>
 
-        <Stagger className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+        <Stagger className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {portfolio.map((project) => (
             <StaggerItem key={project.slug}>
               <article className="feature-card flex flex-col h-full overflow-hidden p-0 hover:shadow-2xl transition-shadow duration-500">

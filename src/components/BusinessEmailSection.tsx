@@ -98,8 +98,8 @@ const BusinessEmailSection: React.FC<BusinessEmailSectionProps> = ({
   onAddEmailToQuote,
 }) => {
   return (
-    <section id="business-email" className="max-w-5xl mx-auto mb-12">
-      <div className="text-center mb-8">
+    <section id="business-email" className="max-w-5xl mx-auto mb-8">
+      <div className="text-center mb-6">
         <div className="inline-flex items-center gap-2 text-[#086375] mb-2">
           <FaEnvelope aria-hidden />
           <h3 className="text-2xl font-bold">Business Email</h3>
@@ -110,7 +110,7 @@ const BusinessEmailSection: React.FC<BusinessEmailSectionProps> = ({
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-4 mb-8 max-w-3xl mx-auto">
+      <div className="grid sm:grid-cols-2 gap-4 mb-6 max-w-3xl mx-auto">
         {pricingTiers.map((tier) => (
           <div
             key={tier.id}
@@ -130,7 +130,7 @@ const BusinessEmailSection: React.FC<BusinessEmailSectionProps> = ({
       <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 text-center">
         Email contract length
       </p>
-      <div className="max-w-md mx-auto mb-8">
+      <div className="max-w-md mx-auto mb-6">
         <div className="inline-flex rounded-xl border border-gray-200 bg-white p-1 w-full shadow-sm">
           {TERM_OPTIONS.map((months) => (
             <button
@@ -153,7 +153,7 @@ const BusinessEmailSection: React.FC<BusinessEmailSectionProps> = ({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
         {emailAddOns.map((addon, index) => (
           <EmailPackageCard
             key={addon.label}

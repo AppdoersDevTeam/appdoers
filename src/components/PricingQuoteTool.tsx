@@ -69,7 +69,7 @@ const PricingQuoteTool: React.FC<PricingQuoteToolProps> = ({ quote, onQuoteChang
   }`;
 
   return (
-    <section id="quote-tool" className="max-w-4xl mx-auto mb-14">
+    <section id="quote-tool" className="max-w-4xl mx-auto mb-8">
       <div className="rounded-2xl border-2 border-[#086375]/20 bg-white shadow-lg overflow-hidden">
         <div className="bg-gradient-to-r from-[#3c1642] to-[#086375] px-6 py-4 text-white">
           <h3 className="text-lg font-bold">Quick quote</h3>

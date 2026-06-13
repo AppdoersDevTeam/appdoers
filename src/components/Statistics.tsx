@@ -49,7 +49,7 @@ const Statistics: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-gray-50 stats-section" aria-labelledby="stats-heading">
+    <section className="section-py-tight bg-gray-50 stats-section" aria-labelledby="stats-heading">
       <div className="container mx-auto px-4">
         <h2 id="stats-heading" className="sr-only">
           Results by the numbers

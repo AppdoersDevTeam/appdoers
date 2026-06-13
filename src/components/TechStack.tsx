@@ -6,8 +6,8 @@ const TechStack: React.FC = () => {
   const track = [...clientBenefits, ...clientBenefits];
 
   return (
-    <section className="py-14 bg-[#3c1642] overflow-hidden border-y border-white/10" aria-label="Why clients choose us">
-      <div className="container mx-auto px-4 mb-8">
+    <section className="section-py-tight bg-[#3c1642] overflow-hidden border-y border-white/10" aria-label="Why clients choose us">
+      <div className="container mx-auto px-4 mb-5">
         <MotionReveal className="text-center">
           <h2 className="text-white text-xl md:text-2xl font-semibold tracking-wide">
             Why clients choose us

@@ -15,7 +15,7 @@ const sectionIcons = [FaHandHoldingUsd, FaCalendarCheck, FaFileContract, FaTimes
 
 const PricingPolicySection: React.FC = () => {
   return (
-    <section id="billing-terms" className="max-w-4xl mx-auto mb-14 scroll-mt-24">
+    <section id="billing-terms" className="max-w-4xl mx-auto mb-8 scroll-mt-24">
       <div className="rounded-2xl border-2 border-[#086375]/25 bg-white shadow-lg overflow-hidden">
         <div className="bg-gradient-to-r from-[#3c1642] to-[#086375] px-6 py-5 text-white">
           <h2 className="text-xl md:text-2xl font-bold">Billing, contracts &amp; terms</h2>
@@ -25,7 +25,7 @@ const PricingPolicySection: React.FC = () => {
           </p>
         </div>
 
-        <div className="p-6 md:p-8 space-y-8">
+        <div className="p-5 md:p-6 space-y-6">
           <div className="rounded-xl border-2 border-[#1dd3b0] bg-gradient-to-br from-[#1dd3b0]/10 to-[#affc41]/15 p-5 md:p-6">
             <div className="flex flex-col lg:flex-row lg:items-start gap-5">
               <div className="shrink-0">

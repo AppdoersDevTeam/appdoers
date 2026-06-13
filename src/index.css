@@ -44,7 +44,24 @@
 
   .feature-card {
     @apply bg-white rounded-xl shadow-md hover:shadow-xl transform hover:-translate-y-1 
-           transition-all duration-300 p-6 border border-[#b2ff9e] hover:border-[#1dd3b0];
+           transition-all duration-300 p-5 border border-[#b2ff9e] hover:border-[#1dd3b0];
+  }
+
+  /* Consistent vertical rhythm — tighter than default py-20 stacks */
+  .section-py {
+    @apply py-12 md:py-14;
+  }
+
+  .section-py-sm {
+    @apply py-10 md:py-12;
+  }
+
+  .section-py-tight {
+    @apply py-8 md:py-10;
+  }
+
+  .section-head {
+    @apply mb-8;
   }
 
   .hero-section {
@@ -56,7 +73,7 @@
   }
 
   .section-title {
-    @apply text-3xl md:text-4xl font-bold text-[#086375] mb-6;
+    @apply text-3xl md:text-4xl font-bold text-[#086375] mb-4;
   }
 
   .footer {

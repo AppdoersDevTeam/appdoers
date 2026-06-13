@@ -39,13 +39,13 @@ const ServicesPage: React.FC = () => {
         secondaryCta={{ label: 'Start Your Project', to: '/contact' }}
       />
 
-      <section className="py-8 px-4 border-b border-gray-100 bg-white">
+      <section className="py-5 px-4 border-b border-gray-100 bg-white">
         <div className="container mx-auto max-w-3xl">
           <AudienceSwitcher />
         </div>
       </section>
 
-      <section className="py-10 px-4 bg-gradient-to-r from-[#3c1642]/5 to-[#086375]/5 border-y border-gray-100">
+      <section className="py-6 px-4 bg-gradient-to-r from-[#3c1642]/5 to-[#086375]/5 border-y border-gray-100">
         <MotionReveal className="container mx-auto max-w-3xl text-center" key={audienceId}>
           <h2 className="text-xl font-bold text-[#086375] mb-2">{spotlight.title}</h2>
           <p className="text-gray-600 text-sm leading-relaxed mb-3">{spotlight.description}</p>
@@ -59,9 +59,9 @@ const ServicesPage: React.FC = () => {
         </MotionReveal>
       </section>
 
-      <section className="py-20 px-4">
+      <section className="section-py px-4">
         <div className="container mx-auto max-w-5xl">
-          <Stagger className="grid md:grid-cols-2 gap-8">
+          <Stagger className="grid md:grid-cols-2 gap-5 md:gap-6">
             {products.map((product) => {
               const copy = getAudienceProductCopy(
                 audienceId,
@@ -121,7 +121,7 @@ const ServicesPage: React.FC = () => {
 
       <Protocol />
 
-      <section className="relative py-16 px-4 bg-gradient-to-r from-[#3c1642] to-[#086375] text-center text-white overflow-hidden">
+      <section className="relative section-py-sm px-4 bg-gradient-to-r from-[#3c1642] to-[#086375] text-center text-white overflow-hidden">
         <div className="hero-blob hero-blob-a w-56 h-56 bg-[#affc41] bottom-0 left-[5%] opacity-20" aria-hidden />
         <MotionReveal className="container mx-auto max-w-2xl relative z-10" variant="scaleIn">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Not sure which plan fits?</h2>

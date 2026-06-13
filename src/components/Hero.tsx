@@ -23,8 +23,8 @@ const Hero: React.FC = () => {
         />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 pt-28 pb-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto px-4 relative z-10 pt-28 pb-12">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           <motion.div
             className="text-white space-y-6 lg:space-y-8"
             initial={prefersReducedMotion ? false : 'hidden'}

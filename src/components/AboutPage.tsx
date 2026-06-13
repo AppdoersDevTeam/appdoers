@@ -25,7 +25,7 @@ const AboutPage: React.FC = () => {
         secondaryCta={{ label: 'View Pricing', to: '/pricing' }}
       />
 
-      <section className="py-20 px-4">
+      <section className="section-py px-4">
         <MotionReveal className="container mx-auto max-w-4xl text-center">
           <h2 className="section-title">Our Mission</h2>
           <p className="text-xl text-gray-700 leading-relaxed mb-8">{aboutContent.mission}</p>
@@ -33,12 +33,12 @@ const AboutPage: React.FC = () => {
         </MotionReveal>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="section-py-sm px-4 bg-gray-50">
         <div className="container mx-auto max-w-5xl">
-          <MotionReveal className="text-center mb-12">
+          <MotionReveal className="text-center mb-8">
             <h2 className="section-title">What We Stand For</h2>
           </MotionReveal>
-          <Stagger className="grid md:grid-cols-3 gap-8">
+          <Stagger className="grid md:grid-cols-3 gap-5 md:gap-6">
             {aboutContent.values.map((v) => (
               <StaggerItem key={v.title} variant="scaleIn">
                 <div className="bg-white rounded-xl p-8 shadow-md text-center h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-500">
@@ -55,7 +55,7 @@ const AboutPage: React.FC = () => {
       <Protocol />
       <TechStack />
 
-      <section className="relative py-16 px-4 bg-[#086375] text-white text-center overflow-hidden">
+      <section className="relative section-py-sm px-4 bg-[#086375] text-white text-center overflow-hidden">
         <div className="hero-blob hero-blob-b w-40 h-40 bg-[#1dd3b0] top-[10%] right-[15%] opacity-25" aria-hidden />
         <MotionReveal className="container mx-auto max-w-2xl relative z-10" variant="scaleIn">
           <h2 className="text-2xl font-bold mb-4">Ready to partner?</h2>

@@ -5,9 +5,9 @@ import { MotionReveal, Stagger, StaggerItem } from './AnimateIn';
 
 const FoundersSection: React.FC = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="section-py bg-white">
       <div className="container mx-auto px-4">
-        <MotionReveal className="text-center mb-10 max-w-3xl mx-auto">
+        <MotionReveal className="text-center mb-8 max-w-3xl mx-auto">
           <p className="text-[#1dd3b0] font-semibold uppercase tracking-wider mb-2">
             {foundersIntro.eyebrow}
           </p>
@@ -16,7 +16,7 @@ const FoundersSection: React.FC = () => {
           <p className="text-gray-600 text-sm leading-relaxed">{foundersIntro.partnership}</p>
         </MotionReveal>
 
-        <Stagger className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <Stagger className="grid md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
           {founders.map((founder) => (
             <StaggerItem key={founder.id}>
               <article className="bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-lg p-8 border border-[#b2ff9e]/50 flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-500">

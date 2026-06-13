@@ -21,7 +21,7 @@ const PageHero: React.FC<PageHeroProps> = ({
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="relative pt-28 pb-16 md:pb-20 overflow-hidden">
+    <section className="relative pt-28 pb-10 md:pb-12 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[#3c1642] via-[#086375] to-[#1dd3b0] animate-gradient bg-[length:200%_200%]" />
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2),transparent_55%)]" />
       <div

@@ -26,7 +26,7 @@ const PricingPage: React.FC = () => {
 
       <Pricing showHeader={false} />
 
-      <section className="py-16 px-4 bg-white">
+      <section className="section-py-sm px-4 bg-white">
         <MotionReveal className="container mx-auto max-w-4xl">
           <details className="group rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
             <summary className="cursor-pointer list-none px-6 py-5 bg-gray-50 font-bold text-[#086375] text-lg [&::-webkit-details-marker]:hidden flex justify-between items-center">
@@ -69,7 +69,7 @@ const PricingPage: React.FC = () => {
         </MotionReveal>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="section-py-sm px-4 bg-gray-50">
         <div className="container mx-auto max-w-3xl">
           <MotionReveal className="text-center mb-8">
             <h2 className="section-title">Common questions</h2>

@@ -182,10 +182,10 @@ const Pricing: React.FC<PricingProps> = ({ showHeader = true }) => {
   }, []);
 
   return (
-    <section id="pricing" className="py-20 bg-gray-50">
+    <section id="pricing" className="section-py bg-gray-50">
       <div className="container mx-auto px-4">
         {showHeader && (
-          <MotionReveal className="text-center mb-10">
+          <MotionReveal className="text-center mb-6">
             <h2 className="section-title">Website Pricing</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Two plans. One simple process.
@@ -193,7 +193,7 @@ const Pricing: React.FC<PricingProps> = ({ showHeader = true }) => {
           </MotionReveal>
         )}
 
-        <Stagger className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-10">
+        <Stagger className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-6">
           {howItWorks.map((item) => (
             <StaggerItem key={item.step} variant="scaleIn">
               <div className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 h-full">
@@ -207,7 +207,7 @@ const Pricing: React.FC<PricingProps> = ({ showHeader = true }) => {
           ))}
         </Stagger>
 
-        <MotionReveal className="max-w-md mx-auto mb-8" delay={0.1}>
+        <MotionReveal className="max-w-md mx-auto mb-6" delay={0.1}>
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 text-center">
             Plan length: website &amp; email
           </p>
@@ -243,11 +243,11 @@ const Pricing: React.FC<PricingProps> = ({ showHeader = true }) => {
           </p>
         </MotionReveal>
 
-        <MotionReveal className="max-w-3xl mx-auto mb-8" delay={0.08}>
+        <MotionReveal className="max-w-3xl mx-auto mb-6" delay={0.08}>
           <AudienceSwitcher size="compact" />
         </MotionReveal>
 
-        <Stagger className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
+        <Stagger className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6 max-w-4xl mx-auto mb-8">
           {pricingTiers.map((tier) => (
             <StaggerItem key={tier.id}>
               <PlanCard

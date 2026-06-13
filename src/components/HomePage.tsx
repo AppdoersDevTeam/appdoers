@@ -24,7 +24,7 @@ const HomePage: React.FC = () => {
       <Hero />
       <TechStack />
       <DigitalSolutions />
-      <section className="py-6 bg-gray-50 border-b border-gray-100">
+      <section className="py-3 bg-gray-50 border-b border-gray-100">
         <div className="container mx-auto px-4">
           <SectionPreview
             title=""
@@ -35,7 +35,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
       <Portfolio />
-      <section className="py-6 bg-white">
+      <section className="py-3 bg-white">
         <div className="container mx-auto px-4">
           <SectionPreview
             title=""
@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
       </section>
       <Statistics />
       <Pricing />
-      <section className="py-6 bg-gray-50">
+      <section className="py-3 bg-gray-50">
         <div className="container mx-auto px-4">
           <SectionPreview
             title=""
@@ -57,16 +57,16 @@ const HomePage: React.FC = () => {
           />
         </div>
       </section>
-      <section className="py-20 bg-white">
+      <section className="section-py bg-white">
         <div className="container mx-auto px-4 max-w-5xl">
-          <MotionReveal className="text-center mb-12">
+          <MotionReveal className="text-center mb-8">
             <p className="text-[#1dd3b0] font-semibold uppercase tracking-wider text-sm mb-2">
               The Team Behind
             </p>
             <h2 className="section-title">Meet Fabiano &amp; Sara</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">{foundersIntro.lead}</p>
           </MotionReveal>
-          <Stagger className="grid md:grid-cols-2 gap-8 mb-10">
+          <Stagger className="grid md:grid-cols-2 gap-5 md:gap-6 mb-6">
             {founders.map((f) => (
               <StaggerItem key={f.id}>
                 <div className="rounded-xl border border-[#b2ff9e]/60 p-6 bg-gray-50 h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-500">

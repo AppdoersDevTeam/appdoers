@@ -50,13 +50,13 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
         secondaryCta={{ label: 'View Pricing', to: '/pricing' }}
       />
 
-      <section className="py-8 px-4 border-b border-gray-100">
+      <section className="py-5 px-4 border-b border-gray-100">
         <div className="container mx-auto max-w-3xl">
           <AudienceSwitcher />
         </div>
       </section>
 
-      <section className="py-20 px-4">
+      <section className="section-py px-4">
         <div className="container mx-auto max-w-5xl">
           {recommended && (
             <MotionReveal className="mb-8 text-center" key={`rec-${audienceId}`}>
@@ -66,8 +66,8 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
             </MotionReveal>
           )}
 
-          <div className="grid lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2 space-y-8">
+          <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="lg:col-span-2 space-y-6">
               <MotionReveal key={`overview-${audienceId}`}>
                 <h2 className="text-2xl font-bold text-[#086375] mb-4">Overview</h2>
                 <p className="text-lg text-gray-700 leading-relaxed">{copy.description}</p>
@@ -153,7 +153,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
         </div>
       </section>
 
-      <section className="py-12 px-4 bg-gray-50 border-y border-gray-100">
+      <section className="py-6 px-4 bg-gray-50 border-y border-gray-100">
         <MotionReveal className="container mx-auto max-w-5xl text-center">
           <h2 className="text-xl font-bold text-[#086375] mb-6">Explore our other services</h2>
           <div className="flex flex-wrap justify-center gap-4">
