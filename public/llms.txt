@@ -1,0 +1,27 @@
+# Appdoers Limited
+
+> New Zealand website design, development, hosting, and support for businesses, churches, and organisations.
+
+Appdoers Limited (NZBN 9429052210952) builds fast, professional websites with clear monthly pricing. Teams in Ashburton (Canterbury) and New Plymouth (Taranaki) serve clients across Aotearoa.
+
+## Services
+
+- Basic Website: public sites for trades, cafés, churches, and small organisations
+- Full Website: member areas, events, rosters, and admin tools for active churches and businesses
+- Hosting, security, and ongoing support included in plans
+
+## Key pages
+
+- Home: https://appdoers.co.nz/
+- Work: https://appdoers.co.nz/work
+- Services: https://appdoers.co.nz/services
+- Pricing: https://appdoers.co.nz/pricing
+- About: https://appdoers.co.nz/about
+- Contact: https://appdoers.co.nz/contact
+
+## Contact
+
+- Email: contact@appdoers.co.nz
+- Phone: +64 22 5060 870
+- Address: 49 Braebrook Drive, Netherby, Ashburton 7700, New Zealand
+- LinkedIn: https://www.linkedin.com/company/appdoers-limited/

@@ -6,6 +6,7 @@ import Protocol from './Protocol';
 import TechStack from './TechStack';
 import { aboutContent, brand, pageIntros } from '../content/siteContent';
 import { MotionReveal, Stagger, StaggerItem } from './AnimateIn';
+import StructuredData from './StructuredData';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 const AboutPage: React.FC = () => {
@@ -18,10 +19,12 @@ const AboutPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <StructuredData type="about" path="/about" />
       <PageHero
         eyebrow={pageIntros.about.eyebrow}
         title={pageIntros.about.title}
         subtitle={pageIntros.about.subtitle}
+        breadcrumbPath="/about"
         primaryCta={{ label: 'Work With Us', to: '/contact' }}
         secondaryCta={{ label: 'View Pricing', to: '/pricing' }}
       />

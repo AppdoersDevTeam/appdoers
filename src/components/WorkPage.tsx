@@ -14,17 +14,19 @@ import { usePageMeta } from '../hooks/usePageMeta';
 const WorkPage: React.FC = () => {
   usePageMeta({
     title: 'Our Work | Appdoers',
-    description: 'Selected client websites built by Appdoers for New Zealand organisations.',
+    description:
+      'Selected New Zealand client websites: ministry platform, nationwide music school, and Taranaki community church — built by Appdoers Limited.',
     path: '/work',
   });
 
   return (
     <div className="min-h-screen bg-white">
-      <StructuredData type="work" />
+      <StructuredData type="work" path="/work" />
       <PageHero
         eyebrow={pageIntros.work.eyebrow}
         title={pageIntros.work.title}
         subtitle={pageIntros.work.subtitle}
+        breadcrumbPath="/work"
         primaryCta={{ label: 'Contact Us', to: '/contact' }}
         secondaryCta={{ label: 'View Pricing', to: '/pricing' }}
       />

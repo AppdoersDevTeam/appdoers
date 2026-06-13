@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import VercelAnalytics from './components/VercelAnalytics';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
@@ -67,7 +67,7 @@ const App: React.FC = () => {
         </main>
         <Footer />
       </div>
-      <Analytics />
+      <VercelAnalytics />
       <SpeedInsights />
       </AudienceSegmentProvider>
     </Router>

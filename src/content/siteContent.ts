@@ -4,7 +4,7 @@ export const brand = {
   tagline: 'Websites & online tools for New Zealand clients',
   metaTitle: 'Appdoers | Websites & Online Tools for New Zealand',
   metaDescription:
-    'Fast, easy-to-use websites for New Zealand businesses, churches, and organisations. Clear pricing, hosting included, and you speak directly with the Appdoers team.',
+    'Professional websites for New Zealand businesses, churches, and organisations. Appdoers Limited — clear pricing, hosting included, and direct team support from Ashburton and Taranaki.',
   siteUrl: 'https://appdoers.co.nz',
   location: 'New Zealand',
   email: 'contact@appdoers.co.nz',

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
+import Breadcrumbs from './Breadcrumbs';
 import { heroItem, heroStagger } from '../utils/motionPresets';
 
 type PageHeroProps = {
   eyebrow?: string;
   title: string;
   subtitle: string;
+  breadcrumbPath?: string;
   primaryCta?: { label: string; to: string };
   secondaryCta?: { label: string; to: string };
 };
@@ -15,6 +17,7 @@ const PageHero: React.FC<PageHeroProps> = ({
   eyebrow,
   title,
   subtitle,
+  breadcrumbPath,
   primaryCta,
   secondaryCta,
 }) => {
@@ -38,6 +41,11 @@ const PageHero: React.FC<PageHeroProps> = ({
           animate="visible"
           variants={heroStagger}
         >
+          {breadcrumbPath && (
+            <motion.div variants={heroItem} className="mb-4">
+              <Breadcrumbs path={breadcrumbPath} />
+            </motion.div>
+          )}
           {eyebrow && (
             <motion.p
               variants={heroItem}

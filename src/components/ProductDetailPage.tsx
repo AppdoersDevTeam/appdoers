@@ -13,6 +13,7 @@ import {
 } from '../content/audienceContent';
 import { useAudienceSegment } from '../context/AudienceSegmentContext';
 import { MotionReveal, Stagger, StaggerItem } from './AnimateIn';
+import StructuredData from './StructuredData';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 const icons = {
@@ -40,10 +41,12 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
 
   return (
     <div className="min-h-screen bg-white">
+      <StructuredData type="product" path={product.href} productSlug={product.slug} />
       <PageHero
         eyebrow={product.badge}
         title={product.title}
         subtitle={copy.summary}
+        breadcrumbPath={product.href}
         primaryCta={{
           label: tier?.cta ?? 'Start Your Project',
           to: `/contact?tier=${product.recommendedTier}`,

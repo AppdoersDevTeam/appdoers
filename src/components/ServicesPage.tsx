@@ -33,11 +33,12 @@ const ServicesPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <StructuredData type="services" />
+      <StructuredData type="services" path="/services" />
       <PageHero
         eyebrow={pageIntros.services.eyebrow}
         title={pageIntros.services.title}
         subtitle={pageIntros.services.subtitle}
+        breadcrumbPath="/services"
         primaryCta={{ label: 'View Pricing', to: '/pricing' }}
         secondaryCta={{ label: 'Contact Us', to: '/contact' }}
       />

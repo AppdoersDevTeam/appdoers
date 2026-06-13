@@ -11,6 +11,7 @@ import {
   type QuoteInput,
 } from '../utils/pricingCalculations';
 import ContactQuoteSection from './ContactQuoteSection';
+import StructuredData from './StructuredData';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 const tierLabels: Record<string, string> = {
@@ -183,6 +184,7 @@ const ContactCTA: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <StructuredData type="contact" path="/contact" />
       {/* Hero Section */}
       <section className="relative pt-28 pb-12 px-4 md:px-8 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#086375] to-[#1dd3b0] opacity-90 backdrop-blur-sm">

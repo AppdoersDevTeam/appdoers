@@ -18,11 +18,12 @@ const PricingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <StructuredData type="faq" />
+      <StructuredData type="faq" path="/pricing" />
       <PageHero
         eyebrow={pageIntros.pricing.eyebrow}
         title={pageIntros.pricing.title}
         subtitle="Two plans. Pick your length, set your setup fee, and see exactly what you pay."
+        breadcrumbPath="/pricing"
         primaryCta={{ label: 'Contact Us', to: '/contact' }}
         secondaryCta={{ label: 'View Our Work', to: '/work' }}
       />
