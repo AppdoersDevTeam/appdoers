@@ -9,7 +9,8 @@ export const defaultTransition: Transition = {
 
 export const viewport = {
   once: true,
-  amount: 0.18,
+  /** "some" avoids tall stacked sections (e.g. Work portfolio) staying invisible on load */
+  amount: 'some' as const,
 } as const;
 
 export const fadeInUp: Variants = {

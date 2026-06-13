@@ -8,7 +8,7 @@ import Statistics from './Statistics';
 import HomeCTA from './HomeCTA';
 import StructuredData from './StructuredData';
 import { pageIntros, portfolio } from '../content/siteContent';
-import { Stagger, StaggerItem } from './AnimateIn';
+import { MotionReveal } from './AnimateIn';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 const WorkPage: React.FC = () => {
@@ -32,9 +32,9 @@ const WorkPage: React.FC = () => {
       />
 
       <section className="section-py px-4">
-        <Stagger className="container mx-auto max-w-5xl space-y-12">
+        <div className="container mx-auto max-w-5xl space-y-12">
           {portfolio.map((project) => (
-            <StaggerItem key={project.slug}>
+            <MotionReveal key={project.slug}>
               <article
                 id={project.slug}
                 className="scroll-mt-28 border border-gray-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-500"
@@ -123,9 +123,9 @@ const WorkPage: React.FC = () => {
                   </div>
                 </div>
               </article>
-            </StaggerItem>
+            </MotionReveal>
           ))}
-        </Stagger>
+        </div>
       </section>
 
       <Testimonials />
