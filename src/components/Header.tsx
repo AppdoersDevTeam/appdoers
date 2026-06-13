@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { products } from '../content/siteContent';
+import { hero, products } from '../content/siteContent';
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   `transition-colors duration-300 ${
@@ -69,7 +69,7 @@ const Header: React.FC = () => {
                 </NavLink>
               ))}
               <Link to="/contact" className="btn-primary">
-                Contact Us
+                {hero.primaryCta}
               </Link>
             </div>
 
@@ -138,7 +138,7 @@ const Header: React.FC = () => {
                   className="btn-primary text-center text-lg py-3"
                   onClick={closeMenu}
                 >
-                  Contact Us
+                  {hero.primaryCta}
                 </Link>
               </div>
             </nav>
