@@ -8,11 +8,12 @@ import PricingPage from './components/PricingPage';
 import ServicesPage from './components/ServicesPage';
 import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
-import WebsitesProductPage from './pages/WebsitesProductPage';
-import DigitalSystemsProductPage from './pages/DigitalSystemsProductPage';
+import BasicWebsiteProductPage from './pages/BasicWebsiteProductPage';
+import FullWebsiteProductPage from './pages/FullWebsiteProductPage';
 import NotFoundPage from './components/NotFoundPage';
 import ScrollToTop from './components/ScrollToTop';
 import ScrollAnimationProvider from './components/ScrollAnimationProvider';
+import { AudienceSegmentProvider } from './context/AudienceSegmentContext';
 
 const legacyProductRedirects = [
   '/apps',
@@ -29,6 +30,7 @@ const legacyProductRedirects = [
 const App: React.FC = () => {
   return (
     <Router>
+      <AudienceSegmentProvider>
       <ScrollAnimationProvider />
       <ScrollToTop />
       <div className="min-h-screen flex flex-col">
@@ -41,8 +43,10 @@ const App: React.FC = () => {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/websites" element={<WebsitesProductPage />} />
-            <Route path="/digital-systems" element={<DigitalSystemsProductPage />} />
+            <Route path="/basic-website" element={<BasicWebsiteProductPage />} />
+            <Route path="/full-website" element={<FullWebsiteProductPage />} />
+            <Route path="/websites" element={<Navigate to="/basic-website" replace />} />
+            <Route path="/digital-systems" element={<Navigate to="/full-website" replace />} />
             {legacyProductRedirects.map((path) => (
               <Route key={path} path={path} element={<Navigate to="/services" replace />} />
             ))}
@@ -51,6 +55,7 @@ const App: React.FC = () => {
         </main>
         <Footer />
       </div>
+      </AudienceSegmentProvider>
     </Router>
   );
 };

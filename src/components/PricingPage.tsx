@@ -39,7 +39,7 @@ const PricingPage: React.FC = () => {
                   <tr className="bg-[#086375] text-white">
                     <th className="p-4 font-semibold">What you get</th>
                     <th className="p-4 font-semibold text-center">Full Website</th>
-                    <th className="p-4 font-semibold text-center">Starter Website</th>
+                    <th className="p-4 font-semibold text-center">Basic Website</th>
                   </tr>
                 </thead>
                 <tbody>

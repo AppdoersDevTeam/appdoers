@@ -1,17 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaBolt, FaCheck, FaStore } from 'react-icons/fa';
+import { FaCheck, FaGlobe, FaUsers } from 'react-icons/fa';
 import PageHero from './PageHero';
 import PriceAmount from './PriceAmount';
 import Protocol from './Protocol';
+import AudienceSwitcher from './AudienceSwitcher';
 import type { Product } from '../content/siteContent';
-import { pricingTiers } from '../content/siteContent';
+import { pricingTiers, products } from '../content/siteContent';
+import {
+  getAudienceProductCopy,
+  isRecommendedPlanForAudience,
+} from '../content/audienceContent';
+import { useAudienceSegment } from '../context/AudienceSegmentContext';
 import { MotionReveal, Stagger, StaggerItem } from './AnimateIn';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 const icons = {
-  web: <FaBolt className="text-4xl text-[#1dd3b0]" />,
-  systems: <FaStore className="text-4xl text-[#1dd3b0]" />,
+  basic: <FaGlobe className="text-4xl text-[#1dd3b0]" />,
+  full: <FaUsers className="text-4xl text-[#1dd3b0]" />,
 };
 
 type ProductDetailPageProps = {
@@ -19,11 +25,16 @@ type ProductDetailPageProps = {
 };
 
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
+  const { audienceId } = useAudienceSegment();
   const tier = pricingTiers.find((t) => t.id === product.recommendedTier);
+  const otherProduct = products.find((p) => p.slug !== product.slug);
+  const planSlug = product.slug as 'basic-website' | 'full-website';
+  const copy = getAudienceProductCopy(audienceId, planSlug);
+  const recommended = isRecommendedPlanForAudience(audienceId, planSlug);
 
   usePageMeta({
     title: `${product.title} | Appdoers`,
-    description: product.summary,
+    description: copy.summary,
   });
 
   return (
@@ -31,7 +42,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
       <PageHero
         eyebrow={product.badge}
         title={product.title}
-        subtitle={product.summary}
+        subtitle={copy.summary}
         primaryCta={{
           label: tier?.cta ?? 'Start Your Project',
           to: `/contact?tier=${product.recommendedTier}`,
@@ -39,18 +50,33 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
         secondaryCta={{ label: 'View Pricing', to: '/pricing' }}
       />
 
+      <section className="py-8 px-4 border-b border-gray-100">
+        <div className="container mx-auto max-w-3xl">
+          <AudienceSwitcher />
+        </div>
+      </section>
+
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-5xl">
+          {recommended && (
+            <MotionReveal className="mb-8 text-center" key={`rec-${audienceId}`}>
+              <span className="inline-block text-sm font-bold bg-[#affc41] text-[#3c1642] px-4 py-1.5 rounded-full">
+                Best fit for your organisation type
+              </span>
+            </MotionReveal>
+          )}
+
           <div className="grid lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2 space-y-8">
-              <MotionReveal>
+              <MotionReveal key={`overview-${audienceId}`}>
                 <h2 className="text-2xl font-bold text-[#086375] mb-4">Overview</h2>
-                <p className="text-lg text-gray-700 leading-relaxed">{product.description}</p>
+                <p className="text-lg text-gray-700 leading-relaxed">{copy.description}</p>
               </MotionReveal>
-              <MotionReveal delay={0.08}>
+
+              <MotionReveal delay={0.08} key={`highlights-${audienceId}`}>
                 <h2 className="text-2xl font-bold text-[#086375] mb-4">What you get</h2>
                 <ul className="space-y-3">
-                  {product.highlights.map((item) => (
+                  {copy.highlights.map((item) => (
                     <li key={item} className="flex items-start gap-3 text-gray-700">
                       <FaCheck className="text-[#1dd3b0] mt-1 shrink-0" />
                       {item}
@@ -74,11 +100,11 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
               </div>
             </div>
 
-            <MotionReveal variant="slideInRight" className="h-fit lg:sticky lg:top-28">
+            <MotionReveal variant="slideInRight" className="h-fit lg:sticky lg:top-28" key={`aside-${audienceId}`}>
             <aside className="bg-gradient-to-br from-[#3c1642] to-[#086375] rounded-2xl p-8 text-white shadow-xl">
               <div className="mb-6">{icons[product.icon]}</div>
               <p className="text-[#affc41] text-sm font-semibold uppercase mb-2">Ideal for</p>
-              <p className="text-white/90 mb-6">{product.idealFor}</p>
+              <p className="text-white/90 mb-6 text-sm leading-relaxed">{copy.idealFor}</p>
               <p className="text-[#affc41] text-sm font-semibold uppercase mb-2">Pricing</p>
               <p className="text-white font-medium mb-6">{product.tierLabel}</p>
               {tier && (
@@ -134,13 +160,14 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
             <Link to="/services" className="text-[#086375] font-semibold hover:text-[#1dd3b0]">
               All services
             </Link>
-            <span className="text-gray-300">|</span>
-            <Link to="/websites" className="text-gray-600 hover:text-[#086375]">
-              Business Websites
-            </Link>
-            <Link to="/digital-systems" className="text-gray-600 hover:text-[#086375]">
-              Online Shops & Member Areas
-            </Link>
+            {otherProduct && (
+              <>
+                <span className="text-gray-300">|</span>
+                <Link to={otherProduct.href} className="text-gray-600 hover:text-[#086375]">
+                  {otherProduct.title}
+                </Link>
+              </>
+            )}
           </div>
         </MotionReveal>
       </section>

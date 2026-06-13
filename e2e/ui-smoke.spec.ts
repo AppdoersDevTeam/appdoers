@@ -11,8 +11,8 @@ test.describe('Appdoers UI smoke', () => {
   test('services page shows core offerings', async ({ page }) => {
     await page.goto('/services');
     await expect(page.getByRole('heading', { name: 'Our Services' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Business Websites' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Online Shops & Member Areas' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Basic Website' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Full Website' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'SEO' })).toHaveCount(0);
   });
 
@@ -21,10 +21,10 @@ test.describe('Appdoers UI smoke', () => {
     await expect(page).toHaveURL(/\/services$/);
   });
 
-  test('digital systems product page', async ({ page }) => {
-    await page.goto('/digital-systems');
-    await expect(page.getByRole('heading', { name: 'Online Shops & Member Areas' })).toBeVisible();
-    await expect(page.getByText('Built to keep running', { exact: true })).toBeVisible();
+  test('full website product page', async ({ page }) => {
+    await page.goto('/full-website');
+    await expect(page.getByRole('heading', { name: 'Full Website' })).toBeVisible();
+    await expect(page.getByText('Churches', { exact: true })).toBeVisible();
   });
 
   test('legacy ministry URL redirects to services', async ({ page }) => {
@@ -32,9 +32,9 @@ test.describe('Appdoers UI smoke', () => {
     await expect(page).toHaveURL(/\/services$/);
   });
 
-  test('websites product page', async ({ page }) => {
-    await page.goto('/websites');
-    await expect(page.getByRole('heading', { name: 'Business Websites' })).toBeVisible();
+  test('basic website product page', async ({ page }) => {
+    await page.goto('/basic-website');
+    await expect(page.getByRole('heading', { name: 'Basic Website' })).toBeVisible();
   });
 
   test('pricing page has FAQ', async ({ page }) => {

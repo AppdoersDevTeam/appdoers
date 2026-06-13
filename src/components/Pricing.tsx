@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCheck } from 'react-icons/fa';
+import AudienceSwitcher from './AudienceSwitcher';
 import BusinessEmailSection from './BusinessEmailSection';
 import PriceAmount from './PriceAmount';
 import PlanFeaturesSection from './PlanFeaturesSection';
@@ -18,6 +19,11 @@ import {
   type QuoteState,
   type TermMonths,
 } from '../utils/pricingCalculations';
+import {
+  getAudienceProductCopy,
+  isRecommendedPlanForAudience,
+} from '../content/audienceContent';
+import { useAudienceSegment } from '../context/AudienceSegmentContext';
 import { MotionReveal, Stagger, StaggerItem } from './AnimateIn';
 
 type PricingProps = {
@@ -32,6 +38,10 @@ const PlanCard: React.FC<{
   isInQuote: boolean;
   onAddToQuote: (planId: PlanId, upfrontDev: number) => void;
 }> = ({ tier, selectedMonths, isInQuote, onAddToQuote }) => {
+  const { audienceId } = useAudienceSegment();
+  const planSlug = tier.id === 'starter-website' ? 'basic-website' : 'full-website';
+  const audienceCopy = getAudienceProductCopy(audienceId, planSlug);
+  const recommended = isRecommendedPlanForAudience(audienceId, planSlug);
   const [upfrontDev, setUpfrontDev] = useState(tier.minDevelopmentPayment);
 
   const selectedTerm =
@@ -44,22 +54,24 @@ const PlanCard: React.FC<{
     selectedTerm.monthly
   );
 
-  const topHighlights = tier.features.slice(0, 3).map((f) => f.label);
+  const topHighlights = audienceCopy.highlights.slice(0, 3);
 
   return (
     <div
       className={`relative bg-white rounded-2xl shadow-lg p-5 md:p-6 flex flex-col border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
-        tier.popular ? 'border-[#1dd3b0] ring-2 ring-[#1dd3b0]/20' : 'border-gray-100'
+        tier.popular || recommended
+          ? 'border-[#1dd3b0] ring-2 ring-[#1dd3b0]/20'
+          : 'border-gray-100'
       }`}
     >
-      {tier.badge && (
+      {(tier.badge || recommended) && (
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#affc41] text-[#3c1642] text-xs font-bold px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">
-          {tier.badge}
+          {recommended && !tier.badge ? 'Best fit for you' : tier.badge}
         </span>
       )}
 
       <h3 className="text-xl font-bold text-[#086375]">{tier.name}</h3>
-      <p className="text-sm text-gray-600 mt-1 mb-4 line-clamp-2">{tier.audience}</p>
+      <p className="text-sm text-gray-600 mt-1 mb-4 line-clamp-3">{audienceCopy.idealFor}</p>
 
       <div className="flex items-baseline gap-2 flex-wrap mb-1">
         {referenceMonthly !== null && (
@@ -143,7 +155,7 @@ const PlanCard: React.FC<{
 };
 
 const howItWorks = [
-  { step: '1', title: 'Pick your plan', detail: 'Full Website with team & member areas, or Starter for a simpler public site.' },
+  { step: '1', title: 'Pick your plan', detail: 'Basic for a simple public site, or Full for churches and businesses that need member tools.' },
   { step: '2', title: 'Choose your length', detail: '12, 24, or 48 months; longer plans cost less per month.' },
   {
     step: '3',
@@ -229,6 +241,10 @@ const Pricing: React.FC<PricingProps> = ({ showHeader = true }) => {
               Billing, contracts &amp; $49/hr rate. Read before you sign up
             </a>
           </p>
+        </MotionReveal>
+
+        <MotionReveal className="max-w-3xl mx-auto mb-8" delay={0.08}>
+          <AudienceSwitcher size="compact" />
         </MotionReveal>
 
         <Stagger className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">

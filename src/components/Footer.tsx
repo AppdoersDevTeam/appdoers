@@ -91,13 +91,13 @@ const Footer: React.FC = () => {
             'Services',
             <ul className="space-y-2">
               <li>
-                <Link to="/websites" className="text-gray-300 hover:text-white transition-colors">
-                  Business Websites
+                <Link to="/basic-website" className="text-gray-300 hover:text-white transition-colors">
+                  Basic Website
                 </Link>
               </li>
               <li>
-                <Link to="/digital-systems" className="text-gray-300 hover:text-white transition-colors">
-                  Online Shops & Member Areas
+                <Link to="/full-website" className="text-gray-300 hover:text-white transition-colors">
+                  Full Website
                 </Link>
               </li>
               <li>

@@ -30,7 +30,7 @@ type FeaturesTab = 'full-website' | 'starter-website' | 'all';
 
 const tabs: { id: FeaturesTab; label: string }[] = [
   { id: 'full-website', label: 'Full Website' },
-  { id: 'starter-website', label: 'Starter Website' },
+  { id: 'starter-website', label: 'Basic Website' },
   { id: 'all', label: 'Every plan' },
 ];
 

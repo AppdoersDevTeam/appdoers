@@ -28,7 +28,7 @@ const HomePage: React.FC = () => {
         <div className="container mx-auto px-4">
           <SectionPreview
             title=""
-            description="Websites and online shops for clients of every kind, with clear pricing."
+            description="Basic and Full website plans for businesses, churches, and organisations — with clear pricing."
             to="/services"
             linkLabel="View all services"
           />

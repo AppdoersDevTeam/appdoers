@@ -8,7 +8,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 
 const tierLabels: Record<string, string> = {
   'full-website': 'Full Website',
-  'starter-website': 'Starter Website',
+  'starter-website': 'Basic Website',
 };
 
 const ContactCTA: React.FC = () => {

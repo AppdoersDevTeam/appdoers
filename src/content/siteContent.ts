@@ -32,71 +32,89 @@ export const clientBenefits = [
   'You own your domain',
 ];
 
-/** Core service offerings */
+/** Core service offerings — aligned with pricing plans */
 export const products = [
   {
-    slug: 'websites',
-    href: '/websites',
-    title: 'Business Websites',
-    badge: 'Fast on mobile',
+    slug: 'basic-website',
+    href: '/basic-website',
+    title: 'Basic Website',
+    badge: 'Simple & professional',
     summary:
-      'A polished website that looks great on phones and is easy for visitors to use.',
+      'A polished public website that looks great on phones — no admin tools or logins to manage.',
     description:
-      'We build websites for New Zealand clients who want to look professional online, show up on Google, and turn visitors into enquiries without you needing to learn any technical tools.',
-    idealFor: 'Trades, cafés, churches, individuals, and organisations who want a simple, trustworthy online presence.',
+      'We build straightforward websites for New Zealand trades, cafés, churches, clubs, and small organisations who want to look professional online and turn visitors into enquiries, without learning any technical tools.',
+    idealFor:
+      'Trades, cafés, small churches, clubs, and anyone who wants a simple, trustworthy brochure site.',
+    audienceTags: ['Trades & cafés', 'Churches', 'Clubs & groups'],
     recommendedTier: 'starter-website',
-    tierLabel: 'Starter Website · Full Website',
-    icon: 'web' as const,
+    tierLabel: 'Basic Website plan',
+    icon: 'basic' as const,
     highlights: [
       'Fast loading on phones and computers',
       'Hosting, security, and updates included',
-      'Basic Google setup so people can find you',
+      'YouTube and contact form built in',
       'We look after the technical side; you focus on your work',
-      'Layouts designed to encourage enquiries',
+      'Request content changes when you need them',
     ],
     deliverables: [
       'Planning call and page list',
       'Design that works on all screen sizes',
       'Your finished website, live on the web',
       'Secure hosting and launch support',
-      'Google Business profile connection',
+      'Basic Google setup so people can find you',
     ],
   },
   {
-    slug: 'digital-systems',
-    href: '/digital-systems',
-    title: 'Online Shops & Member Areas',
-    badge: 'Built to keep running',
+    slug: 'full-website',
+    href: '/full-website',
+    title: 'Full Website',
+    badge: 'Most popular',
     summary:
-      'Online shops, booking tools, and member-only areas for when you need more than a simple brochure site.',
+      'Team tools, member areas, events, and donations — built for churches and growing businesses.',
     description:
-      'When you need an online shop, a way for members to log in, donations, or tools your team can update themselves, we build it and keep it running reliably in the background.',
-    idealFor: 'Growing brands, schools, churches, and retailers who need shops, bookings, or private member areas.',
+      'When you need more than a brochure site — member logins, events, rosters, prayer requests, online giving, or a shop — we build it and keep it running. Churches and businesses across New Zealand use our Full Website plan.',
+    idealFor:
+      'Churches with rosters, prayer requests, and giving — and businesses that need member portals, shops, or a team admin area.',
+    audienceTags: ['Churches', 'Businesses', 'Schools & nonprofits'],
+    audienceExamples: {
+      churches: ['Sermon libraries & YouTube', 'Prayer requests & events', 'Rosters, groups & giving'],
+      businesses: ['Member portals & logins', 'Online shops & bookings', 'Team admin area'],
+    },
     recommendedTier: 'full-website',
     tierLabel: 'Full Website plan',
-    icon: 'systems' as const,
+    icon: 'full' as const,
     highlights: [
-      'Online payments and shop checkout',
-      'Booking and enquiry forms',
-      'Member logins and private areas',
-      'Tools your team can use without calling us every time',
-      'Priority help when something urgent comes up',
+      'Private area for your team to manage the site',
+      'Member-only section with logins',
+      'Events, newsletters, prayer requests, and directories',
+      'Online donations and YouTube catalogue',
+      'Rosters, groups, and who-can-log-in controls',
     ],
     deliverables: [
-      'Clear plan of what we are building and why',
-      'Your shop, bookings, or member area, set up and tested',
-      'Secure logins for your team or members',
-      'Payment and order flows that are easy to follow',
-      'We keep an eye on speed and uptime after launch',
+      'Discovery call and feature plan',
+      'Public site plus team and member areas',
+      'Secure logins for leaders and members',
+      'Events, content tools, and giving setup',
+      'Hosting, security, and ongoing support',
     ],
   },
-];
+] as const;
+
+export const churchClientHighlight = {
+  title: 'Trusted by churches across New Zealand',
+  description:
+    'From sermon libraries and prayer requests to rosters and online giving — we build websites churches actually use every week.',
+  example: 'Journey of Insights — bilingual ministry platform with podcast, shop, and donations.',
+  link: '/work#jornada-de-insights',
+  linkLabel: 'See church work',
+};
 
 export const services = products.map((p) => ({
   title: p.title,
   description: p.summary,
   badge: p.badge,
   link: p.href,
+  audienceTags: p.audienceTags,
 }));
 
 export type PortfolioProject = {
@@ -217,7 +235,8 @@ export const pricingTiers = [
   {
     id: 'full-website',
     name: 'Full Website',
-    audience: 'Best for: churches, communities, and organisations that need admin tools and member areas.',
+    audience: 'Churches and businesses that need team tools, member areas, and admin features.',
+    audienceTags: ['Churches', 'Businesses', 'Schools & nonprofits'],
     monthly: 199,
     developmentFee: 2999,
     minDevelopmentPayment: 1199,
@@ -298,8 +317,9 @@ export const pricingTiers = [
   },
   {
     id: 'starter-website',
-    name: 'Starter Website',
-    audience: 'Best for: clients who want a simple, polished site without admin tools or logins.',
+    name: 'Basic Website',
+    audience: 'Trades, cafés, churches, and anyone who wants a simple public site without admin tools.',
+    audienceTags: ['Trades & cafés', 'Churches', 'Clubs & groups'],
     monthly: 106.8,
     developmentFee: 1499,
     minDevelopmentPayment: 799,
@@ -344,7 +364,7 @@ export const pricingTiers = [
           'Visitors can send you a message straight from your site without you needing to publish your email address publicly.',
       },
     ],
-    cta: 'Get Starter Website',
+    cta: 'Get Basic Website',
     popular: false,
   },
 ];
@@ -373,8 +393,8 @@ export const emailAddOns = [
 
 export const pricingFaq = [
   {
-    q: 'What is the difference between Full Website and Starter Website?',
-    a: 'Full Website includes private areas for your team and members: events, newsletters, prayer requests, directories, rosters, groups, logins, YouTube, contact forms, and online donations. Starter Website is a simpler public site with fixed content, YouTube, and a contact form; any changes are requested through us.',
+    q: 'What is the difference between Full Website and Basic Website?',
+    a: 'Full Website includes private areas for your team and members: events, newsletters, prayer requests, directories, rosters, groups, logins, YouTube, contact forms, and online donations — popular with churches and growing businesses. Basic Website is a simpler public site with fixed content, YouTube, and a contact form; any changes are requested through us.',
   },
   {
     q: 'How do the 1-year, 2-year, and 4-year plans work?',
@@ -394,7 +414,7 @@ export const pricingFaq = [
   },
   {
     q: 'How does the setup fee work?',
-    a: 'Every plan has a one-time setup fee: $2,999 for Full Website and $1,499 for Starter Website. You choose how much to pay upfront (minimum $1,199 or $799). Your setup fee is due within 7 days of signing up. Anything you do not pay upfront is spread evenly across your monthly payments for the length of your plan.',
+    a: 'Every plan has a one-time setup fee: $2,999 for Full Website and $1,499 for Basic Website. You choose how much to pay upfront (minimum $1,199 or $799). Your setup fee is due within 7 days of signing up. Anything you do not pay upfront is spread evenly across your monthly payments for the length of your plan.',
   },
   {
     q: 'When does my monthly fee start?',
@@ -414,7 +434,7 @@ export const pricingFaq = [
   },
   {
     q: 'Can I add more business email accounts?',
-    a: 'Both plans include free business email on 4-year (48-month) contracts: Full Website gets 20GB for up to 5 people, Starter Website gets 5GB for up to 5 people. Additional mailboxes use the same contract length as your website (12, 24, or 48 months). Choose any number of mailboxes up to 30. Basic is $3/$2.50/$2 per mailbox per month, Standard is $6.50/$6/$5.50, and Premium is $12.50/$11.50/$10.50 for 12-, 24-, and 48-month terms respectively.',
+    a: 'Both plans include free business email on 4-year (48-month) contracts: Full Website gets 20GB for up to 5 people, Basic Website gets 5GB for up to 5 people. Additional mailboxes use the same contract length as your website (12, 24, or 48 months). Choose any number of mailboxes up to 30. Basic is $3/$2.50/$2 per mailbox per month, Standard is $6.50/$6/$5.50, and Premium is $12.50/$11.50/$10.50 for 12-, 24-, and 48-month terms respectively.',
   },
 ];
 
@@ -492,7 +512,7 @@ export const tierComparison = [
   { feature: 'Manage who can log in', fullWebsite: true, starterWebsite: false },
   { feature: 'Online donations', fullWebsite: true, starterWebsite: false },
   { feature: 'Fixed content; changes on request', fullWebsite: false, starterWebsite: true },
-  { feature: 'Free business email (4-year plan (Full: 20GB/5 people, Starter: 5GB/5 people)', fullWebsite: true, starterWebsite: true },
+  { feature: 'Free business email (4-year plan (Full: 20GB/5 people, Basic: 5GB/5 people)', fullWebsite: true, starterWebsite: true },
 ];
 
 export const aboutContent = {
@@ -533,7 +553,7 @@ export const pageIntros = {
     eyebrow: 'What We Build',
     title: 'Our Services',
     subtitle:
-      'Websites and online shops for clients of every kind, with clear pricing.',
+      'Basic and Full website plans for businesses, churches, and organisations — with clear pricing.',
   },
   about: {
     eyebrow: 'The Team Behind',
