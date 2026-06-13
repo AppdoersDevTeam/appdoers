@@ -32,7 +32,7 @@ export const routeMeta = {
   '/contact': {
     title: 'Contact Us | Appdoers',
     description:
-      'Call, email, or send your project details and pricing quote through our contact form. We reply within one business day.',
+      'Call, email, or send your project details and pricing quote through our contact form. We reply within 2 business days.',
   },
   '/privacy': {
     title: 'Privacy Policy | Appdoers',

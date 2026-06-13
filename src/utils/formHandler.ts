@@ -83,7 +83,7 @@ export const handleFormSubmit = async (
 
     return {
       success: true,
-      message: `Thank you! Your message has been sent to ${recipientEmail}. We will reply within one business day.`,
+      message: `Thank you! Your message has been sent to ${recipientEmail}. We will reply within 2 business days.`,
     };
   } catch {
     return {

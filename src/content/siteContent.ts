@@ -697,7 +697,7 @@ export const homeCta = {
 export const contactPage = {
   metaTitle: 'Contact Us | Appdoers',
   metaDescription:
-    'Call, email, or send your project details and pricing quote through our contact form. We reply within one business day.',
+    'Call, email, or send your project details and pricing quote through our contact form. We reply within 2 business days.',
   heading: 'Contact Us',
   subheadline:
     'Call us, email us, or use the form below. Built a quote on our pricing page? Your plan details will appear here automatically.',
