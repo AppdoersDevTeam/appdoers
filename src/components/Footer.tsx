@@ -36,9 +36,7 @@ const Footer: React.FC = () => {
             <Link to="/" className="inline-block">
               <img src="/images/logo.png" alt="Appdoers Logo" className="h-12 w-auto" />
             </Link>
-            <p className="mt-4 text-white/90 max-w-md">
-              High-end digital agency. {brand.location}
-            </p>
+            <p className="mt-4 text-white/90 max-w-md">{brand.tagline}</p>
             {brand.social?.linkedin && (
               <div className="flex space-x-4 mt-6">
                 <a
@@ -127,10 +125,18 @@ const Footer: React.FC = () => {
           )}
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-300 text-sm">
-          <p className="mb-4 md:mb-0">
+        <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-300 text-sm">
+          <p>
             &copy; {brand.year} {brand.name}. All rights reserved.
           </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link to="/privacy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="hover:text-white transition-colors">
+              Terms of Service
+            </Link>
+          </div>
           <p>{brand.location}</p>
         </div>
       </div>

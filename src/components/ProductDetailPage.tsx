@@ -35,6 +35,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product }) => {
   usePageMeta({
     title: `${product.title} | Appdoers`,
     description: copy.summary,
+    path: product.href,
   });
 
   return (

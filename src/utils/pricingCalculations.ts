@@ -210,3 +210,113 @@ export function formatMoney(value: number) {
 export function calculateWeeklyFromMonthly(monthlyTotal: number) {
   return (monthlyTotal * 12) / 52;
 }
+
+export function buildQuoteContactUrl(quote: QuoteInput): string {
+  const params = new URLSearchParams({
+    tier: quote.planId,
+    term: String(quote.termMonths),
+    devUpfront: String(quote.upfrontDev),
+    includeEmail: quote.includeEmail ? '1' : '0',
+  });
+
+  if (quote.includeEmail) {
+    params.set('emailUsers', String(quote.emailUserCount));
+    params.set('emailTier', quote.emailTierLabel);
+  }
+
+  return `/contact?${params.toString()}`;
+}
+
+export function parseQuoteFromSearchParams(searchParams: URLSearchParams): QuoteInput | null {
+  const tierParam = searchParams.get('tier');
+  if (!tierParam || !pricingTiers.some((tier) => tier.id === tierParam)) {
+    return null;
+  }
+
+  const planId = tierParam as PlanId;
+  const tier = getTier(planId);
+  const termParam = Number(searchParams.get('term'));
+  const termMonths = TERM_OPTIONS.includes(termParam as TermMonths)
+    ? (termParam as TermMonths)
+    : 12;
+
+  const devParam = Number(searchParams.get('devUpfront'));
+  const upfrontDev = Number.isFinite(devParam)
+    ? Math.min(Math.max(devParam, tier.minDevelopmentPayment), tier.developmentFee)
+    : tier.minDevelopmentPayment;
+
+  const includeEmail = searchParams.get('includeEmail') === '1';
+  const emailTierParam = searchParams.get('emailTier');
+  const emailTierLabel =
+    emailAddOns.some((addon) => addon.label === emailTierParam) && emailTierParam
+      ? (emailTierParam as EmailTierId)
+      : 'Basic email';
+
+  const usersParam = Number(searchParams.get('emailUsers'));
+  const emailUserCount = Number.isFinite(usersParam)
+    ? Math.min(Math.max(usersParam, 1), maxEmailMailboxes)
+    : 1;
+
+  return {
+    planId,
+    termMonths,
+    upfrontDev,
+    includeEmail,
+    emailTierLabel,
+    emailUserCount: includeEmail ? emailUserCount : 1,
+  };
+}
+
+export function formatQuoteSummary(quote: QuoteInput): string {
+  const tier = getTier(quote.planId);
+  const breakdown = calculateQuote(quote);
+  const weeklyTotal = calculateWeeklyFromMonthly(breakdown.monthlyTotal);
+  const annualTotal = breakdown.monthlyTotal * 12;
+  const emailTier = getEmailTier(quote.emailTierLabel);
+  const pricePerMailbox = emailTier.prices[quote.termMonths];
+
+  const lines = [
+    '--- Website quote ---',
+    `Plan: ${tier.name}`,
+    `Contract length: ${termLabels[quote.termMonths]}`,
+    '',
+    'Setup fee',
+    `Total setup fee: $${formatMoney(tier.developmentFee)} NZD`,
+    `Due today: $${formatMoney(breakdown.upfront)} NZD`,
+    `Spread monthly: $${formatMoney(breakdown.monthlyBuildSpread)} NZD/mo`,
+    '',
+    'Monthly breakdown',
+    `Website plan: $${formatMoney(breakdown.monthlyPlan)} NZD/mo`,
+    `Setup fee spread: $${formatMoney(breakdown.monthlyBuildSpread)} NZD/mo`,
+  ];
+
+  if (quote.includeEmail) {
+    if (breakdown.monthlyEmail === 0 && breakdown.freeEmailUsers > 0) {
+      lines.push(
+        `Business email: $0 NZD/mo (${breakdown.freeEmailUsers} included on 4-year plan — ${tier.includedEmail.storage})`
+      );
+    } else if (breakdown.emailIsIncluded && breakdown.paidEmailUsers > 0) {
+      lines.push(
+        `Business email: $${formatMoney(breakdown.monthlyEmail)} NZD/mo (${breakdown.freeEmailUsers} free + ${breakdown.paidEmailUsers} paid · ${quote.emailTierLabel} · ${emailTier.storageNote})`
+      );
+    } else {
+      lines.push(
+        `Business email: $${formatMoney(breakdown.monthlyEmail)} NZD/mo (${quote.emailUserCount} mailbox${quote.emailUserCount !== 1 ? 'es' : ''} × $${formatMoney(pricePerMailbox)} NZD · ${quote.emailTierLabel} · ${emailTier.storageNote})`
+      );
+    }
+  } else {
+    lines.push('Business email: not included');
+  }
+
+  lines.push(
+    '',
+    'Totals',
+    `Due today: $${formatMoney(breakdown.upfront)} NZD`,
+    `Monthly total: $${formatMoney(breakdown.monthlyTotal)} NZD/mo`,
+    `Weekly equivalent: $${formatMoney(weeklyTotal)} NZD`,
+    `Annual total (if paying monthly): $${formatMoney(annualTotal)} NZD/year`,
+    '--- End quote ---'
+  );
+
+  return lines.join('\n');
+}

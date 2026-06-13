@@ -13,6 +13,7 @@ import {
   calculatePlanPriceDisplay,
   createDefaultQuoteState,
   scrollToQuoteTool,
+  buildQuoteContactUrl,
   termLabels,
   type EmailTierId,
   type PlanId,
@@ -28,6 +29,7 @@ import { MotionReveal, Stagger, StaggerItem } from './AnimateIn';
 
 type PricingProps = {
   showHeader?: boolean;
+  variant?: 'full' | 'preview';
 };
 
 type PricingTier = (typeof pricingTiers)[number];
@@ -37,7 +39,8 @@ const PlanCard: React.FC<{
   selectedMonths: TermMonths;
   isInQuote: boolean;
   onAddToQuote: (planId: PlanId, upfrontDev: number) => void;
-}> = ({ tier, selectedMonths, isInQuote, onAddToQuote }) => {
+  preview?: boolean;
+}> = ({ tier, selectedMonths, isInQuote, onAddToQuote, preview = false }) => {
   const { audienceId } = useAudienceSegment();
   const planSlug = tier.id === 'starter-website' ? 'basic-website' : 'full-website';
   const audienceCopy = getAudienceProductCopy(audienceId, planSlug);
@@ -97,23 +100,27 @@ const PlanCard: React.FC<{
       </p>
 
       <div className="mb-4">
-        <label
-          htmlFor={`dev-slider-${tier.id}`}
-          className="text-xs font-semibold text-gray-500 uppercase tracking-wide"
-        >
-          Setup upfront
-        </label>
-        <input
-          id={`dev-slider-${tier.id}`}
-          type="range"
-          min={tier.minDevelopmentPayment}
-          max={tier.developmentFee}
-          step={50}
-          value={upfrontDev}
-          onChange={(e) => setUpfrontDev(Number(e.target.value))}
-          className="w-full h-1.5 rounded-lg appearance-none cursor-pointer accent-[#086375] bg-gray-200 mt-2"
-          aria-label={`Setup fee upfront for ${tier.name}`}
-        />
+        {!preview && (
+          <>
+            <label
+              htmlFor={`dev-slider-${tier.id}`}
+              className="text-xs font-semibold text-gray-500 uppercase tracking-wide"
+            >
+              Setup upfront
+            </label>
+            <input
+              id={`dev-slider-${tier.id}`}
+              type="range"
+              min={tier.minDevelopmentPayment}
+              max={tier.developmentFee}
+              step={50}
+              value={upfrontDev}
+              onChange={(e) => setUpfrontDev(Number(e.target.value))}
+              className="w-full h-1.5 rounded-lg appearance-none cursor-pointer accent-[#086375] bg-gray-200 mt-2"
+              aria-label={`Setup fee upfront for ${tier.name}`}
+            />
+          </>
+        )}
       </div>
 
       <ul className="space-y-1.5 mb-4 flex-grow">
@@ -125,31 +132,53 @@ const PlanCard: React.FC<{
         ))}
       </ul>
 
-      <button
-        type="button"
-        onClick={() => onAddToQuote(tier.id, upfrontDev)}
-        className={`mt-auto text-center font-semibold px-6 py-3 rounded-lg transition-colors ${
-          isInQuote
-            ? 'bg-[#affc41] text-[#3c1642] hover:bg-[#1dd3b0] hover:text-white'
-            : tier.popular
+      {preview ? (
+        <Link
+          to="/pricing"
+          className={`mt-auto text-center font-semibold px-6 py-3 rounded-lg transition-colors ${
+            tier.popular
               ? 'bg-[#1dd3b0] text-white hover:bg-[#086375]'
               : 'bg-[#086375] text-white hover:bg-[#3c1642]'
-        }`}
-      >
-        {isInQuote ? 'Added to quote. View below' : 'Add to your quote'}
-      </button>
-      <Link
-        to={`/contact?tier=${tier.id}&term=${selectedMonths}&devUpfront=${upfrontDev}`}
-        className="text-center text-sm font-semibold text-[#086375] hover:text-[#1dd3b0] mt-3"
-      >
-        {tier.cta}
-      </Link>
-      <a
-        href="#plan-features"
-        className="text-center text-xs text-[#086375] hover:text-[#1dd3b0] mt-2 font-medium"
-      >
-        Full feature list ↓
-      </a>
+          }`}
+        >
+          View pricing details
+        </Link>
+      ) : (
+        <>
+          <button
+            type="button"
+            onClick={() => onAddToQuote(tier.id, upfrontDev)}
+            className={`mt-auto text-center font-semibold px-6 py-3 rounded-lg transition-colors ${
+              isInQuote
+                ? 'bg-[#affc41] text-[#3c1642] hover:bg-[#1dd3b0] hover:text-white'
+                : tier.popular
+                  ? 'bg-[#1dd3b0] text-white hover:bg-[#086375]'
+                  : 'bg-[#086375] text-white hover:bg-[#3c1642]'
+            }`}
+          >
+            {isInQuote ? 'Added to quote. View below' : 'Add to your quote'}
+          </button>
+          <Link
+            to={buildQuoteContactUrl({
+              planId: tier.id,
+              termMonths: selectedMonths,
+              upfrontDev,
+              includeEmail: false,
+              emailTierLabel: 'Basic email',
+              emailUserCount: 1,
+            })}
+            className="text-center text-sm font-semibold text-[#086375] hover:text-[#1dd3b0] mt-3"
+          >
+            {tier.cta}
+          </Link>
+          <a
+            href="#plan-features"
+            className="text-center text-xs text-[#086375] hover:text-[#1dd3b0] mt-2 font-medium"
+          >
+            Full feature list ↓
+          </a>
+        </>
+      )}
     </div>
   );
 };
@@ -164,7 +193,8 @@ const howItWorks = [
   },
 ];
 
-const Pricing: React.FC<PricingProps> = ({ showHeader = true }) => {
+const Pricing: React.FC<PricingProps> = ({ showHeader = true, variant = 'full' }) => {
+  const preview = variant === 'preview';
   const [quote, setQuote] = useState<QuoteState>(createDefaultQuoteState);
 
   const updateQuote = useCallback((update: Partial<QuoteState>) => {
@@ -233,14 +263,16 @@ const Pricing: React.FC<PricingProps> = ({ showHeader = true }) => {
               4-year plans include free business email
             </p>
           )}
-          <p className="text-center mt-4">
-            <a
-              href="#billing-terms"
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#086375]/30 bg-white px-4 py-2 text-sm font-semibold text-[#086375] hover:border-[#1dd3b0] hover:text-[#1dd3b0] transition-colors shadow-sm"
-            >
-              Billing, contracts &amp; $49/hr rate. Read before you sign up
-            </a>
-          </p>
+          {!preview && (
+            <p className="text-center mt-4">
+              <a
+                href="#billing-terms"
+                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#086375]/30 bg-white px-4 py-2 text-sm font-semibold text-[#086375] hover:border-[#1dd3b0] hover:text-[#1dd3b0] transition-colors shadow-sm"
+              >
+                Billing, contracts &amp; $49/hr rate. Read before you sign up
+              </a>
+            </p>
+          )}
         </MotionReveal>
 
         <MotionReveal className="max-w-3xl mx-auto mb-6" delay={0.08}>
@@ -255,20 +287,34 @@ const Pricing: React.FC<PricingProps> = ({ showHeader = true }) => {
                 selectedMonths={quote.termMonths}
                 isInQuote={quote.planId === tier.id}
                 onAddToQuote={addWebsiteToQuote}
+                preview={preview}
               />
             </StaggerItem>
           ))}
         </Stagger>
 
-        <PlanFeaturesSection />
-        <BusinessEmailSection
-          selectedMonths={quote.termMonths}
-          onTermChange={(months) => updateQuote({ termMonths: months })}
-          quote={quote}
-          onAddEmailToQuote={addEmailToQuote}
-        />
-        <PricingQuoteTool quote={quote} onQuoteChange={updateQuote} />
-        <PricingPolicySection />
+        {preview ? (
+          <MotionReveal className="text-center mt-6">
+            <Link
+              to="/pricing"
+              className="inline-flex items-center justify-center bg-[#086375] text-white font-semibold px-8 py-3 rounded-lg hover:bg-[#3c1642] transition-colors"
+            >
+              See full pricing, quote tool &amp; FAQ
+            </Link>
+          </MotionReveal>
+        ) : (
+          <>
+            <PlanFeaturesSection />
+            <BusinessEmailSection
+              selectedMonths={quote.termMonths}
+              onTermChange={(months) => updateQuote({ termMonths: months })}
+              quote={quote}
+              onAddEmailToQuote={addEmailToQuote}
+            />
+            <PricingQuoteTool quote={quote} onQuoteChange={updateQuote} />
+            <PricingPolicySection />
+          </>
+        )}
       </div>
     </section>
   );

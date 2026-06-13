@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaCheck, FaExternalLinkAlt } from 'react-icons/fa';
 import PageHero from './PageHero';
 import PortfolioPreview from './PortfolioPreview';
+import Testimonials from './Testimonials';
 import Statistics from './Statistics';
 import HomeCTA from './HomeCTA';
 import { pageIntros, portfolio } from '../content/siteContent';
@@ -13,6 +14,7 @@ const WorkPage: React.FC = () => {
   usePageMeta({
     title: 'Our Work | Appdoers',
     description: 'Selected client websites built by Appdoers for New Zealand organisations.',
+    path: '/work',
   });
 
   return (
@@ -21,7 +23,7 @@ const WorkPage: React.FC = () => {
         eyebrow={pageIntros.work.eyebrow}
         title={pageIntros.work.title}
         subtitle={pageIntros.work.subtitle}
-        primaryCta={{ label: 'Start Your Project', to: '/contact' }}
+        primaryCta={{ label: 'Contact Us', to: '/contact' }}
         secondaryCta={{ label: 'View Pricing', to: '/pricing' }}
       />
 
@@ -122,6 +124,7 @@ const WorkPage: React.FC = () => {
         </Stagger>
       </section>
 
+      <Testimonials />
       <Statistics />
       <HomeCTA />
     </div>

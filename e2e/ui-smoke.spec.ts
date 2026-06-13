@@ -49,8 +49,10 @@ test.describe('Appdoers UI smoke', () => {
   });
 
   test('contact tier prefill', async ({ page }) => {
-    await page.goto('/contact?tier=full-website');
-    await expect(page.getByText('Selected plan: Full Website')).toBeVisible();
+    await page.goto('/contact?tier=full-website&term=12&devUpfront=1199&includeEmail=0');
+    await expect(page.getByRole('heading', { name: 'Your quote', level: 3 })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Send quote & message' })).toBeVisible();
+    await expect(page.getByText('Setup fee due today')).toBeVisible();
   });
 
   test('work page shows client case studies', async ({ page }) => {
@@ -69,5 +71,22 @@ test.describe('Appdoers UI smoke', () => {
       page.locator('img[alt="NZ Modern School of Music website preview"]')
     ).toBeVisible();
     await expect(page.getByRole('link', { name: /Open live site/i }).first()).toBeVisible();
+  });
+
+  test('privacy and terms pages render', async ({ page }) => {
+    await page.goto('/privacy');
+    await expect(page.getByRole('heading', { name: 'Privacy Policy' })).toBeVisible();
+
+    await page.goto('/terms');
+    await expect(page.getByRole('heading', { name: 'Terms of Service' })).toBeVisible();
+  });
+
+  test('homepage shows client testimonials and founder photos', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByRole('heading', { name: 'What our clients say' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Patricia da Silva' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Gail Boswell' })).toBeVisible();
+    await expect(page.locator('img[alt="Fabiano Da Silva"]')).toBeVisible();
+    await expect(page.locator('img[alt="Sara Da Silva"]')).toBeVisible();
   });
 });

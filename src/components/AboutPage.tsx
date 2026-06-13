@@ -13,6 +13,7 @@ const AboutPage: React.FC = () => {
     title: 'About Us | Appdoers',
     description:
       'Founded by Fabiano Da Silva in Ashburton, with technical delivery led by Sara Da Silva in New Plymouth.',
+    path: '/about',
   });
 
   return (
@@ -60,7 +61,7 @@ const AboutPage: React.FC = () => {
         <MotionReveal className="container mx-auto max-w-2xl relative z-10" variant="scaleIn">
           <h2 className="text-2xl font-bold mb-4">Ready to partner?</h2>
           <p className="text-white/90 mb-6">
-            Explore our work, compare plans, or book a call to discuss your project.
+            Explore our work, compare plans, or contact us to discuss your project.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

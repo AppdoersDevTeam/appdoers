@@ -10,6 +10,8 @@ import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
 import BasicWebsiteProductPage from './pages/BasicWebsiteProductPage';
 import FullWebsiteProductPage from './pages/FullWebsiteProductPage';
+import PrivacyPage from './components/PrivacyPage';
+import TermsPage from './components/TermsPage';
 import NotFoundPage from './components/NotFoundPage';
 import ScrollToTop from './components/ScrollToTop';
 import ScrollAnimationProvider from './components/ScrollAnimationProvider';
@@ -33,9 +35,15 @@ const App: React.FC = () => {
       <AudienceSegmentProvider>
       <ScrollAnimationProvider />
       <ScrollToTop />
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-white focus:text-[#086375] focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
+      >
+        Skip to main content
+      </a>
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-grow">
+        <main id="main-content" className="flex-grow">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/work" element={<WorkPage />} />
@@ -43,6 +51,8 @@ const App: React.FC = () => {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
             <Route path="/basic-website" element={<BasicWebsiteProductPage />} />
             <Route path="/full-website" element={<FullWebsiteProductPage />} />
             <Route path="/websites" element={<Navigate to="/basic-website" replace />} />

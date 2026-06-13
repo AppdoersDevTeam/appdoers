@@ -5,6 +5,7 @@ import PageHero from './PageHero';
 import Pricing from './Pricing';
 import { pageIntros, pricingFaq, tierComparison } from '../content/siteContent';
 import { MotionReveal, Stagger, StaggerItem } from './AnimateIn';
+import StructuredData from './StructuredData';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 const PricingPage: React.FC = () => {
@@ -12,15 +13,17 @@ const PricingPage: React.FC = () => {
     title: 'Website Pricing | Appdoers',
     description:
       'Two website plans for New Zealand clients. Pick your length, set your setup fee, and see exactly what you pay.',
+    path: '/pricing',
   });
 
   return (
     <div className="min-h-screen bg-white">
+      <StructuredData type="faq" />
       <PageHero
         eyebrow={pageIntros.pricing.eyebrow}
         title={pageIntros.pricing.title}
         subtitle="Two plans. Pick your length, set your setup fee, and see exactly what you pay."
-        primaryCta={{ label: 'Book A Call', to: '/contact' }}
+        primaryCta={{ label: 'Contact Us', to: '/contact' }}
         secondaryCta={{ label: 'View Our Work', to: '/work' }}
       />
 
@@ -91,9 +94,9 @@ const PricingPage: React.FC = () => {
           <MotionReveal className="text-center mt-8 text-gray-600 text-sm" delay={0.1}>
             Still unsure?{' '}
             <Link to="/contact" className="text-[#086375] font-semibold hover:text-[#1dd3b0]">
-              Book a call
+              Contact us
             </Link>{' '}
-            and we will help you choose.
+            by phone, email, or the contact form and we will help you choose.
           </MotionReveal>
         </div>
       </section>

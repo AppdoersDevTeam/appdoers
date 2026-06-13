@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { handleFormSubmit } from '../utils/formHandler';
-import { pricingTiers } from '../content/siteContent';
+import { brand, contactPage, pricingTiers } from '../content/siteContent';
+import {
+  formatQuoteSummary,
+  getTier,
+  parseQuoteFromSearchParams,
+  type QuoteInput,
+} from '../utils/pricingCalculations';
+import ContactQuoteSection from './ContactQuoteSection';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 const tierLabels: Record<string, string> = {
@@ -13,83 +20,99 @@ const tierLabels: Record<string, string> = {
 
 const ContactCTA: React.FC = () => {
   usePageMeta({
-    title: 'Book A Call | Appdoers',
-    description: 'Tell us about your project and which plan interests you. We will get back to you soon.',
+    title: contactPage.metaTitle,
+    description: contactPage.metaDescription,
+    path: '/contact',
   });
 
   const [searchParams] = useSearchParams();
-  const tierParam = searchParams.get('tier') || '';
-  const termParam = searchParams.get('term') || '';
-  const devUpfrontParam = searchParams.get('devUpfront') || '';
-  const emailUsersParam = searchParams.get('emailUsers') || '';
-  const emailTierParam = searchParams.get('emailTier') || '';
+  const navigate = useNavigate();
+  const quoteFromUrl = useMemo(() => parseQuoteFromSearchParams(searchParams), [searchParams]);
+  const [includeQuoteInEmail, setIncludeQuoteInEmail] = useState(!!quoteFromUrl);
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     message: '',
-    tier: tierParam,
-    term: termParam,
-    devUpfront: devUpfrontParam,
-    emailUsers: emailUsersParam,
-    emailTier: emailTierParam,
+    tier: quoteFromUrl?.planId ?? searchParams.get('tier') ?? '',
+    term: quoteFromUrl ? String(quoteFromUrl.termMonths) : searchParams.get('term') ?? '',
+    devUpfront: quoteFromUrl ? String(quoteFromUrl.upfrontDev) : searchParams.get('devUpfront') ?? '',
+    includeEmail: quoteFromUrl?.includeEmail ?? searchParams.get('includeEmail') === '1',
+    emailUsers: quoteFromUrl ? String(quoteFromUrl.emailUserCount) : searchParams.get('emailUsers') ?? '',
+    emailTier: quoteFromUrl?.emailTierLabel ?? searchParams.get('emailTier') ?? '',
   });
 
+  const activeQuote = useMemo((): QuoteInput | null => {
+    if (!formData.tier || !tierLabels[formData.tier]) return null;
+
+    const tier = pricingTiers.find((t) => t.id === formData.tier);
+    if (!tier) return null;
+
+    const termMonths = Number(formData.term);
+    const term = tier.termOptions.find((t) => t.months === termMonths)?.months ?? 12;
+    const devUpfront = Number(formData.devUpfront);
+    const upfrontDev = Number.isFinite(devUpfront)
+      ? Math.min(Math.max(devUpfront, tier.minDevelopmentPayment), tier.developmentFee)
+      : tier.minDevelopmentPayment;
+
+    return {
+      planId: formData.tier as QuoteInput['planId'],
+      termMonths: term as QuoteInput['termMonths'],
+      upfrontDev,
+      includeEmail: formData.includeEmail,
+      emailTierLabel: (formData.emailTier || 'Basic email') as QuoteInput['emailTierLabel'],
+      emailUserCount: formData.includeEmail ? Number(formData.emailUsers) || 1 : 1,
+    };
+  }, [formData]);
+
   useEffect(() => {
-    if (tierParam || termParam || devUpfrontParam || emailUsersParam || emailTierParam) {
-      setFormData((prev) => ({
-        ...prev,
-        ...(tierParam ? { tier: tierParam } : {}),
-        ...(termParam ? { term: termParam } : {}),
-        ...(devUpfrontParam ? { devUpfront: devUpfrontParam } : {}),
-        ...(emailUsersParam ? { emailUsers: emailUsersParam } : {}),
-        ...(emailTierParam ? { emailTier: emailTierParam } : {}),
-      }));
-    }
-  }, [tierParam, termParam, devUpfrontParam, emailUsersParam, emailTierParam]);
+    if (!quoteFromUrl) return;
+    setIncludeQuoteInEmail(true);
+    setFormData((prev) => ({
+      ...prev,
+      tier: quoteFromUrl.planId,
+      term: String(quoteFromUrl.termMonths),
+      devUpfront: String(quoteFromUrl.upfrontDev),
+      includeEmail: quoteFromUrl.includeEmail,
+      emailUsers: String(quoteFromUrl.emailUserCount),
+      emailTier: quoteFromUrl.emailTierLabel,
+    }));
+  }, [quoteFromUrl]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const sendingQuote = includeQuoteInEmail && activeQuote;
+    if (!sendingQuote && !formData.message.trim()) {
+      return;
+    }
     setIsSubmitting(true);
     
     try {
-      const tierLabel = tierLabels[formData.tier] || formData.tier;
-      const termLabel = formData.term ? `${formData.term}-month plan` : '';
-      const devLabel = formData.devUpfront
-        ? `$${Number(formData.devUpfront).toLocaleString('en-NZ')} NZD setup fee upfront`
-        : '';
-      const emailLabel =
-        formData.emailUsers && formData.emailTier
-          ? `${formData.emailUsers} email users (${formData.emailTier})`
-          : '';
-      const planLabel = [tierLabel, termLabel, devLabel, emailLabel].filter(Boolean).join(' · ');
+      const quoteText = sendingQuote ? formatQuoteSummary(activeQuote) : '';
+      const userMessage = formData.message.trim();
+
       const result = await handleFormSubmit({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        message: planLabel
-          ? `[${planLabel}] ${formData.message}`
-          : formData.message,
-        source: 'Contact Page',
+        message: userMessage,
+        quote: quoteText || undefined,
+        source: sendingQuote ? 'Contact page (with quote)' : 'Contact page',
       });
       
       if (result.success) {
         setSubmitStatus('success');
-        setFormData({
+        setFormData((prev) => ({
+          ...prev,
           name: '',
           email: '',
           phone: '',
           message: '',
-          tier: tierParam,
-          term: termParam,
-          devUpfront: devUpfrontParam,
-          emailUsers: emailUsersParam,
-          emailTier: emailTierParam,
-        });
+        }));
       } else {
         setSubmitStatus('error');
       }
@@ -103,9 +126,48 @@ const ContactCTA: React.FC = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
   };
+
+  const handlePlanChange = (planId: string) => {
+    if (!planId) {
+      setFormData((prev) => ({ ...prev, tier: '', term: '', devUpfront: '' }));
+      return;
+    }
+    const tier = getTier(planId as QuoteInput['planId']);
+    setFormData((prev) => ({
+      ...prev,
+      tier: planId,
+      term: prev.term || '12',
+      devUpfront: String(tier.minDevelopmentPayment),
+    }));
+    if (planId) setIncludeQuoteInEmail(true);
+  };
+
+  const handleTermChange = (months: number) => {
+    setFormData((prev) => ({ ...prev, term: String(months) }));
+  };
+
+  const clearQuote = () => {
+    setIncludeQuoteInEmail(false);
+    setFormData((prev) => ({
+      ...prev,
+      tier: '',
+      term: '',
+      devUpfront: '',
+      includeEmail: false,
+      emailUsers: '',
+      emailTier: '',
+    }));
+    navigate('/contact', { replace: true });
+  };
+
+  const sendingQuote = includeQuoteInEmail && activeQuote;
 
   return (
     <div className="min-h-screen bg-white">
@@ -128,7 +190,7 @@ const ContactCTA: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Book A Call
+              {contactPage.heading}
             </motion.h1>
             <motion.p 
               className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-6"
@@ -136,8 +198,29 @@ const ContactCTA: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Tell us about your project, which plan interests you, and your timeline. We will get back to you soon.
+              {contactPage.subheadline}
             </motion.p>
+            <motion.div
+              className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <a
+                href={`tel:${brand.phone.replace(/\s/g, '')}`}
+                className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/40 text-white font-semibold px-6 py-3 rounded-full hover:bg-white/20 transition-all duration-300"
+              >
+                <FaPhone aria-hidden />
+                Call {brand.phone}
+              </a>
+              <a
+                href={`mailto:${brand.email}`}
+                className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/40 text-white font-semibold px-6 py-3 rounded-full hover:bg-white/20 transition-all duration-300"
+              >
+                <FaEnvelope aria-hidden />
+                {brand.email}
+              </a>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -159,8 +242,8 @@ const ContactCTA: React.FC = () => {
                 </motion.div>
                 <div>
                   <h3 className="font-bold text-[#086375]">Phone</h3>
-                  <a href="tel:+64225060870" className="text-gray-600 hover:text-[#1dd3b0] transition-colors">
-                    +64 22 5060 870
+                  <a href={`tel:${brand.phone.replace(/\s/g, '')}`} className="text-gray-600 hover:text-[#1dd3b0] transition-colors">
+                    {brand.phone}
                   </a>
                 </div>
               </div>
@@ -200,8 +283,8 @@ const ContactCTA: React.FC = () => {
                 </motion.div>
                 <div>
                   <h3 className="font-bold text-[#086375]">Email</h3>
-                  <a href="mailto:contact@appdoers.co.nz" className="text-gray-600 hover:text-[#1dd3b0] transition-colors">
-                    contact@appdoers.co.nz
+                  <a href={`mailto:${brand.email}`} className="text-gray-600 hover:text-[#1dd3b0] transition-colors">
+                    {brand.email}
                   </a>
                 </div>
               </div>
@@ -216,40 +299,42 @@ const ContactCTA: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="bg-white rounded-xl p-8 shadow-lg bg-gradient-to-br from-white to-[#b2ff9e]/10"
             >
-              <h2 className="text-2xl font-bold text-[#3c1642] mb-6">Let's Talk About Your Project</h2>
-              {formData.tier && tierLabels[formData.tier] && (
-                <p className="text-sm text-[#086375] font-medium mb-4">
-                  Selected plan: {tierLabels[formData.tier]}
-                  {formData.term ? ` · ${formData.term}-month plan` : ''}
-                  {formData.devUpfront
-                    ? ` · $${Number(formData.devUpfront).toLocaleString('en-NZ')} NZD setup fee upfront`
-                    : ''}
-                  {formData.emailUsers && formData.emailTier
-                    ? ` · ${formData.emailUsers} email users (${formData.emailTier})`
-                    : ''}
-                </p>
-              )}
+              <h2 className="text-2xl font-bold text-[#3c1642] mb-2">{contactPage.formHeading}</h2>
+              <p className="text-sm text-gray-600 mb-6">
+                {contactPage.formQuoteHint}{' '}
+                <Link to="/pricing" className="text-[#086375] font-semibold hover:text-[#1dd3b0]">
+                  {contactPage.pricingLinkLabel}
+                </Link>
+                .
+              </p>
+
+              <ContactQuoteSection
+                fields={{
+                  tier: formData.tier,
+                  term: formData.term,
+                  devUpfront: formData.devUpfront,
+                  includeEmail: formData.includeEmail,
+                  emailUsers: formData.emailUsers,
+                  emailTier: formData.emailTier,
+                }}
+                activeQuote={activeQuote}
+                includeInEmail={includeQuoteInEmail}
+                onIncludeChange={setIncludeQuoteInEmail}
+                onChange={handleChange}
+                onPlanChange={handlePlanChange}
+                onTermChange={handleTermChange}
+                onClear={clearQuote}
+              />
               
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="tier" className="block text-sm font-medium text-gray-700 mb-1">
-                    Which plan interests you?
-                  </label>
-                  <select
-                    id="tier"
-                    name="tier"
-                    value={formData.tier}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1dd3b0] focus:border-transparent"
-                  >
-                    <option value="">Select a plan (optional)</option>
-                    {pricingTiers.map((t) => (
-                      <option key={t.id} value={t.id}>
-                        {t.name}: ${t.monthly} NZD/mo
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <input
+                  type="text"
+                  name="_honeypot"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden
+                />
                 <div className="relative">
                   <input
                     type="text"
@@ -317,7 +402,7 @@ const ContactCTA: React.FC = () => {
                     onChange={handleChange}
                     rows={4}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1dd3b0] focus:border-transparent transition-all"
-                    required
+                    required={!sendingQuote}
                   />
                   <label
                     htmlFor="message"
@@ -325,7 +410,7 @@ const ContactCTA: React.FC = () => {
                       formData.message ? 'text-xs -top-2 bg-white px-1' : 'top-3'
                     } text-gray-500`}
                   >
-                    Message *
+                    {sendingQuote ? 'Additional message (optional)' : 'Message *'}
                   </label>
                 </div>
 
@@ -347,7 +432,7 @@ const ContactCTA: React.FC = () => {
                   disabled={isSubmitting}
                   className="w-full bg-[#1dd3b0] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#affc41] transition-all duration-300 disabled:opacity-50"
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {isSubmitting ? 'Sending...' : sendingQuote ? 'Send quote & message' : 'Send message'}
                 </motion.button>
               </form>
             </motion.div>

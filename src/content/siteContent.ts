@@ -1,6 +1,10 @@
 export const brand = {
   name: 'Appdoers',
   tagline: 'Websites & online tools for New Zealand clients',
+  metaTitle: 'Appdoers | Websites & Online Tools for New Zealand',
+  metaDescription:
+    'Fast, easy-to-use websites for New Zealand businesses, churches, and organisations. Clear pricing, hosting included, and you speak directly with the people doing the work.',
+  siteUrl: 'https://appdoers.co.nz',
   location: 'New Zealand',
   email: 'contact@appdoers.co.nz',
   phone: '+64 22 5060 870',
@@ -189,9 +193,24 @@ export const portfolio: PortfolioProject[] = [
 export const stats = [
   { value: 8, suffix: ' wks', prefix: '', label: 'Typical build time' },
   { staticDisplay: '<1s', label: 'Mobile load target' },
-  { value: 2, suffix: '+', prefix: '', label: 'Featured client builds' },
+  { staticDisplay: '100%', label: 'Founder-led delivery' },
   { staticDisplay: 'NZ', label: 'Based in New Zealand' },
 ];
+
+export const testimonials = [
+  {
+    name: 'Patricia da Silva',
+    role: 'Journey of Insights',
+    text: 'Appdoers brought our podcast, shop, and donations into one website. They kept us updated at every step and we always knew what was happening.',
+    rating: 5,
+  },
+  {
+    name: 'Gail Boswell',
+    role: 'NZ Modern School of Music',
+    text: 'We needed a site that felt warm and trustworthy for families across New Zealand. The team made the process straightforward and the result speaks for itself.',
+    rating: 5,
+  },
+] as const;
 
 export type PlanFeature = {
   label: string;
@@ -604,6 +623,7 @@ export const founders = [
     id: 'fabiano',
     badge: 'Founder',
     name: 'Fabiano Da Silva',
+    photo: '/images/1663654614457.jpg',
     role: 'Founder · Client Strategy',
     location: 'Ashburton, New Zealand',
     bio: 'Fabiano makes sure every project starts with the right questions: who you serve, what you need the site to do, and how it fits your budget and timeline.',
@@ -622,6 +642,7 @@ export const founders = [
     id: 'sara',
     badge: 'Tech',
     name: 'Sara Da Silva',
+    photo: '/images/1750225143186.jpg',
     role: 'Technical Lead',
     location: 'New Plymouth, New Zealand',
     bio: 'Sara is the technical lead at Appdoers. She designs and builds the websites, from simple public sites to private member areas, email, donations, and online shops.',
@@ -640,8 +661,22 @@ export const founders = [
 
 export const homeCta = {
   headline: 'Ready for a website that just works?',
-  subheadline: 'Book a free call. We will walk you through your options.',
-  cta: 'Book A Call',
+  subheadline: 'Call us, email us, or send your quote through the contact form.',
+  cta: 'Contact Us',
+};
+
+export const contactPage = {
+  metaTitle: 'Contact Us | Appdoers',
+  metaDescription:
+    'Call, email, or send your project details and pricing quote through our contact form. We reply within one business day.',
+  heading: 'Contact Us',
+  subheadline:
+    'Call us, email us, or use the form below. Built a quote on our pricing page? Your plan details will appear here automatically.',
+  formHeading: 'Send a message',
+  formQuoteHint:
+    'To include a pricing quote, build one on our pricing page first, then click “Send this quote”.',
+  pricingLinkLabel: 'Build a quote on pricing',
+  sendQuoteLabel: 'Send this quote',
 };
 
 export type Product = (typeof products)[number];
@@ -649,3 +684,83 @@ export type Product = (typeof products)[number];
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }
+
+export const privacyPolicy = {
+  title: 'Privacy Policy',
+  updated: 'June 2026',
+  sections: [
+    {
+      heading: 'Who we are',
+      body: 'Appdoers is operated by Fabiano Da Silva and Sara Da Silva, based in New Zealand. Our contact email is contact@appdoers.co.nz.',
+    },
+    {
+      heading: 'Information we collect',
+      body: 'When you contact us through our website form, email, or phone, we may collect your name, email address, phone number, organisation details, and any message you send us. If you become a client, we also hold information needed to deliver your website and support your account.',
+    },
+    {
+      heading: 'How we use your information',
+      body: 'We use your information to respond to enquiries, prepare quotes, deliver website services, send invoices, and provide ongoing support. We do not sell your personal information to third parties.',
+    },
+    {
+      heading: 'Form submissions',
+      body: 'Contact form submissions are processed through our form provider to deliver messages to our inbox. Please do not send sensitive payment details through the contact form.',
+    },
+    {
+      heading: 'Cookies and analytics',
+      body: 'Our website may use basic analytics to understand how visitors use the site. You can control cookies through your browser settings. We do not use invasive tracking.',
+    },
+    {
+      heading: 'Data retention',
+      body: 'We keep enquiry and client records for as long as needed to provide services, meet legal obligations, and resolve disputes. You may ask us to update or delete your contact details where appropriate.',
+    },
+    {
+      heading: 'Your rights',
+      body: 'Under New Zealand privacy law, you may request access to personal information we hold about you and ask us to correct it if it is inaccurate. Contact us at contact@appdoers.co.nz for any privacy request.',
+    },
+    {
+      heading: 'Changes',
+      body: 'We may update this policy from time to time. The latest version will always be published on this page.',
+    },
+  ],
+};
+
+export const termsOfService = {
+  title: 'Terms of Service',
+  updated: 'June 2026',
+  intro:
+    'These terms apply to your use of the Appdoers website and to website services provided by Appdoers. Specific pricing, contract length, and deliverables are agreed in your signed plan.',
+  sections: [
+    {
+      heading: 'Website services',
+      body: 'Appdoers provides website design, development, hosting, security, and support under the Basic Website or Full Website plans described on our pricing page. Scope, timelines, and fees are confirmed before work begins.',
+    },
+    {
+      heading: 'Pricing and payment',
+      body: 'Setup fees are due within 7 days of signing up. Monthly or annual fees are billed in advance. Your first monthly bill is due at the end of the 8-week development period, or within 7 days of launch if your site is ready sooner. Extra work outside your plan is billed at $49 NZD per hour unless otherwise agreed.',
+    },
+    {
+      heading: 'Contract length and renewal',
+      body: 'Your commitment term runs from your launch date. When it ends, you may sign up for another chosen term. Open-ended terms are not offered. If no new term is chosen within 30 days of your contract ending, your site may be suspended.',
+    },
+    {
+      heading: 'Cancellation',
+      body: 'All terminations require 30 days written notice. If you terminate while still in contract, you must pay out the remainder of your contract at your monthly price. On termination we return your personal details, user information, copywriting, images, and domain as agreed.',
+    },
+    {
+      heading: 'Content and ownership',
+      body: 'You supply written content and images ready to use. We do not design logos, edit photos, create videos, run ads, manage social media, or build phone apps unless separately agreed. Website source files remain with Appdoers; another provider cannot simply copy our build.',
+    },
+    {
+      heading: 'Acceptable use',
+      body: 'You agree not to use our services for unlawful content or activity. We may suspend services if a site is used in a way that creates legal, security, or reputational risk.',
+    },
+    {
+      heading: 'Limitation of liability',
+      body: 'We aim to develop your site within 8 weeks and are not liable for delays caused by you not providing information when needed. Our liability is limited to the extent permitted by New Zealand law for services of this kind.',
+    },
+    {
+      heading: 'Contact',
+      body: 'Questions about these terms? Email contact@appdoers.co.nz or call +64 22 5060 870.',
+    },
+  ],
+};

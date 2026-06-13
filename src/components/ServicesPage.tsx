@@ -27,6 +27,7 @@ const ServicesPage: React.FC = () => {
     title: 'Services | Appdoers',
     description:
       'Basic and Full website plans for New Zealand businesses, churches, and organisations — with clear monthly pricing.',
+    path: '/services',
   });
 
   return (
@@ -36,7 +37,7 @@ const ServicesPage: React.FC = () => {
         title={pageIntros.services.title}
         subtitle={pageIntros.services.subtitle}
         primaryCta={{ label: 'View Pricing', to: '/pricing' }}
-        secondaryCta={{ label: 'Start Your Project', to: '/contact' }}
+        secondaryCta={{ label: 'Contact Us', to: '/contact' }}
       />
 
       <section className="py-5 px-4 border-b border-gray-100 bg-white">
@@ -126,14 +127,14 @@ const ServicesPage: React.FC = () => {
         <MotionReveal className="container mx-auto max-w-2xl relative z-10" variant="scaleIn">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Not sure which plan fits?</h2>
           <p className="text-white/90 mb-8">
-            Switch your organisation type above to see tailored examples — or book a call and we
-            will walk you through Basic vs Full.
+            Switch your organisation type above to see tailored examples — or contact us by phone,
+            email, or the contact form and we will walk you through Basic vs Full.
           </p>
           <Link
             to="/contact"
             className="inline-block bg-[#affc41] text-[#3c1642] font-semibold px-8 py-3 rounded-full hover:bg-white hover:scale-[1.04] active:scale-[0.98] transition-all duration-300"
           >
-            Book A Call
+            Contact Us
           </Link>
         </MotionReveal>
       </section>

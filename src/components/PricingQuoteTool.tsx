@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
+  contactPage,
   emailAddOns,
   freeEmailTermMonths,
   maxEmailMailboxes,
@@ -11,6 +12,7 @@ import {
   TERM_OPTIONS,
   calculateQuote,
   calculateWeeklyFromMonthly,
+  buildQuoteContactUrl,
   getEmailPricePerMailbox,
   getTier,
   termLabels,
@@ -64,9 +66,14 @@ const PricingQuoteTool: React.FC<PricingQuoteToolProps> = ({ quote, onQuoteChang
     });
   };
 
-  const contactUrl = `/contact?tier=${planId}&term=${termMonths}&devUpfront=${upfrontDev}${
-    includeEmail ? `&emailUsers=${emailUserCount}&emailTier=${encodeURIComponent(emailTierLabel)}` : ''
-  }`;
+  const contactUrl = buildQuoteContactUrl({
+    planId,
+    termMonths,
+    upfrontDev,
+    includeEmail,
+    emailTierLabel,
+    emailUserCount,
+  });
 
   return (
     <section id="quote-tool" className="max-w-4xl mx-auto mb-8">
@@ -312,7 +319,7 @@ const PricingQuoteTool: React.FC<PricingQuoteToolProps> = ({ quote, onQuoteChang
               to={contactUrl}
               className="block text-center font-semibold px-6 py-3 rounded-lg bg-[#1dd3b0] text-white hover:bg-[#086375] transition-colors"
             >
-              Get this quote
+              {contactPage.sendQuoteLabel}
             </Link>
           </div>
         </div>
