@@ -1,24 +1,27 @@
 export const brand = {
   name: 'Appdoers',
+  legalName: 'Appdoers Limited',
   tagline: 'Websites & online tools for New Zealand clients',
   metaTitle: 'Appdoers | Websites & Online Tools for New Zealand',
   metaDescription:
-    'Fast, easy-to-use websites for New Zealand businesses, churches, and organisations. Clear pricing, hosting included, and you speak directly with the people doing the work.',
+    'Fast, easy-to-use websites for New Zealand businesses, churches, and organisations. Clear pricing, hosting included, and you speak directly with the Appdoers team.',
   siteUrl: 'https://appdoers.co.nz',
   location: 'New Zealand',
   email: 'contact@appdoers.co.nz',
   phone: '+64 22 5060 870',
   address: '49 Braebrook Drive, Netherby, Ashburton 7700',
+  nzbn: '9429052210952',
+  nzbnUrl: 'https://www.nzbn.govt.nz/mynzbn/nzbndetails/9429052210952/',
   year: 2026,
   social: {
-    linkedin: 'https://www.linkedin.com/in/sara-n-a-dasilva',
+    linkedin: 'https://www.linkedin.com/company/appdoers-limited/',
   },
 };
 
 export const hero = {
   headline: 'A professional website without the headache.',
   subheadline:
-    'We build fast, easy-to-use websites for New Zealand clients. Clear pricing, and you always speak directly with the people doing the work.',
+    'We build fast, easy-to-use websites for New Zealand clients. Clear pricing, and you always speak directly with the Appdoers team.',
   primaryCta: 'Start Your Project',
   secondaryCta: 'View Our Work',
   demoUrl: 'https://jornadadeinsights.com',
@@ -29,8 +32,8 @@ export const clientBenefits = [
   'Loads fast on phones',
   'We handle hosting & security',
   'Clear monthly pricing',
-  'Direct founder access',
-  'NZ-based founder',
+  'Direct Appdoers team access',
+  'NZ-based company',
   'Updates when you need them',
   'Responsive support',
   'You own your domain',
@@ -188,12 +191,36 @@ export const portfolio: PortfolioProject[] = [
     externalUrl: 'https://everybodyplaying.com',
     embeddable: false,
   },
+  {
+    category: 'Church Website',
+    title: 'New Plymouth Community Church',
+    description:
+      'A welcoming church website for NPCC in Taranaki: Sunday worship, weekly ministries, sermon audio, newsletter sign-up, and clear ways to find the church.',
+    metric: '8+',
+    metricLabel: 'Weekly ministries',
+    link: '/work#np-community-church',
+    slug: 'np-community-church',
+    client: 'New Plymouth Community Church · npcommunitychurch.org',
+    challenge:
+      'New Plymouth Community Church needed a clear online home for worship times, ministries for all ages, and sermon media—so visitors and members could find activities, listen to teaching, and subscribe to news without hunting across social platforms.',
+    solution:
+      'We built a church website that highlights Sunday worship at 50 Vivian Street, organises weekly activities from kids programs to connect groups, hosts sermon audio, offers newsletter sign-up, and provides find-us details for New Plymouth visitors.',
+    results: [
+      'Sunday service times and location easy to find',
+      'Weekly ministries and activities grouped clearly',
+      'Sermon audio and media on the site',
+      'Newsletter sign-up for regular updates',
+    ],
+    capabilities: ['Sunday & ministries', 'Sermon media', 'Newsletter', 'Find us & contact'],
+    externalUrl: 'https://www.npcommunitychurch.org/',
+    embeddable: false,
+  },
 ];
 
 export const stats = [
   { value: 8, suffix: ' wks', prefix: '', label: 'Typical build time' },
   { staticDisplay: '<1s', label: 'Mobile load target' },
-  { staticDisplay: '100%', label: 'Founder-led delivery' },
+  { staticDisplay: '100%', label: 'Appdoers-led delivery' },
   { staticDisplay: 'NZ', label: 'Based in New Zealand' },
 ];
 
@@ -531,7 +558,7 @@ export const tierComparison = [
   { feature: 'Manage who can log in', fullWebsite: true, starterWebsite: false },
   { feature: 'Online donations', fullWebsite: true, starterWebsite: false },
   { feature: 'Fixed content; changes on request', fullWebsite: false, starterWebsite: true },
-  { feature: 'Free business email (4-year plan (Full: 20GB/5 people, Basic: 5GB/5 people)', fullWebsite: true, starterWebsite: true },
+  { feature: 'Free business email on 4-year plan (Full: 20GB/5 people, Basic: 5GB/5 people)', fullWebsite: true, starterWebsite: true },
 ];
 
 export const aboutContent = {
@@ -560,7 +587,7 @@ export const pageIntros = {
     eyebrow: 'Portfolio',
     title: 'Selected Work',
     subtitle:
-      'Real client websites, from a ministry platform with podcast and shop to a nationwide music school with online enquiries.',
+      'Real client websites, from a ministry platform with podcast and shop to a nationwide music school and a Taranaki community church.',
   },
   pricing: {
     eyebrow: 'Simple & clear',
@@ -575,10 +602,10 @@ export const pageIntros = {
       'Basic and Full website plans for businesses, churches, and organisations — with clear pricing.',
   },
   about: {
-    eyebrow: 'The Team Behind',
+    eyebrow: 'About Us',
     title: 'About Appdoers',
     subtitle:
-      'Founded by Fabiano Da Silva in Ashburton, with technical delivery led by Sara Da Silva in New Plymouth.',
+      'Appdoers Limited is a New Zealand website company helping businesses, churches, and organisations get online with clear pricing and hands-on delivery.',
   },
 };
 
@@ -610,12 +637,12 @@ export const protocol = [
 ];
 
 export const foundersIntro = {
-  eyebrow: 'The Team Behind',
-  title: 'About Appdoers',
+  eyebrow: 'The Appdoers Team',
+  title: 'Founder-led delivery',
   lead:
-    'Fabiano Da Silva founded Appdoers from Ashburton. Sara Da Silva, based in New Plymouth, leads the technical work: design, build, hosting, and delivery. Together they give New Zealand clients a professional website with clear pricing and direct access to the people doing the work.',
+    'Appdoers Limited is a New Zealand website company with teams in Ashburton and New Plymouth. We design, build, host, and support websites for clients across Aotearoa — with clear pricing and direct access to the people doing the work.',
   partnership:
-    'Fabiano shapes what gets built and why; Sara builds it, hosts it, and keeps it fast. You work with Fabiano from your first enquiry through launch and beyond.',
+    'From your first enquiry through launch and beyond, you work with the Appdoers team — not a call centre or a rotating account manager.',
 };
 
 export const founders = [
@@ -624,11 +651,12 @@ export const founders = [
     badge: 'Founder',
     name: 'Fabiano Da Silva',
     photo: '/images/1663654614457.jpg',
+    photoPosition: 'center 20%',
     role: 'Founder · Client Strategy',
     location: 'Ashburton, New Zealand',
-    bio: 'Fabiano makes sure every project starts with the right questions: who you serve, what you need the site to do, and how it fits your budget and timeline.',
+    bio: 'Appdoers client strategy starts every project with the right questions: who you serve, what you need the site to do, and how it fits your budget and timeline.',
     extendedBio:
-      'He leads discovery calls, pricing conversations, and project planning. Clients work with him to choose the right plan, understand contract terms, and prioritise features that actually move things forward. He keeps projects on track when content or decisions are needed from your side.',
+      'Appdoers leads discovery calls, pricing conversations, and project planning. Clients work with us to choose the right plan, understand contract terms, and prioritise features that move things forward. We keep projects on track when content or decisions are needed from your side.',
     focus: [
       'Discovery, scoping, and feature prioritisation',
       'Transparent pricing and partnership terms',
@@ -643,11 +671,12 @@ export const founders = [
     badge: 'Tech',
     name: 'Sara Da Silva',
     photo: '/images/1750225143186.jpg',
+    photoPosition: 'center 15%',
     role: 'Technical Lead',
     location: 'New Plymouth, New Zealand',
-    bio: 'Sara is the technical lead at Appdoers. She designs and builds the websites, from simple public sites to private member areas, email, donations, and online shops.',
+    bio: 'Appdoers technical delivery covers design, build, hosting, and support — from simple public sites to private member areas, email, donations, and online shops.',
     extendedBio:
-      'She makes sure your site loads quickly on phones, sets up your web address, security, and hosting, and builds the tools your clients need. When you need online payments, a shop, or member logins, Sara builds and maintains it behind the scenes.',
+      'The Appdoers team makes sure your site loads quickly on phones, sets up your web address, security, and hosting, and builds the tools your organisation needs. Online payments, shops, and member logins are built and maintained by Appdoers.',
     focus: [
       'Designing and building your website',
       'Fast loading, hosting, and security setup',
@@ -691,7 +720,7 @@ export const privacyPolicy = {
   sections: [
     {
       heading: 'Who we are',
-      body: 'Appdoers is operated by Fabiano Da Silva and Sara Da Silva, based in New Zealand. Our contact email is contact@appdoers.co.nz.',
+      body: 'This website is operated by Appdoers Limited, a New Zealand company (NZBN 9429052210952). Registered address: 49 Braebrook Drive, Netherby, Ashburton 7700. Contact: contact@appdoers.co.nz.',
     },
     {
       heading: 'Information we collect',
@@ -703,11 +732,11 @@ export const privacyPolicy = {
     },
     {
       heading: 'Form submissions',
-      body: 'Contact form submissions are processed through our form provider to deliver messages to our inbox. Please do not send sensitive payment details through the contact form.',
+      body: 'Contact form submissions are emailed to contact@appdoers.co.nz. Please do not send sensitive payment details through the contact form.',
     },
     {
       heading: 'Cookies and analytics',
-      body: 'Our website may use basic analytics to understand how visitors use the site. You can control cookies through your browser settings. We do not use invasive tracking.',
+      body: 'Our website uses essential cookies for basic functionality. We use Vercel Web Analytics to understand aggregate traffic (page views, referrers, countries, and devices). This is not used for advertising and does not track you across other websites. You can control cookies through your browser settings.',
     },
     {
       heading: 'Data retention',
@@ -728,11 +757,11 @@ export const termsOfService = {
   title: 'Terms of Service',
   updated: 'June 2026',
   intro:
-    'These terms apply to your use of the Appdoers website and to website services provided by Appdoers. Specific pricing, contract length, and deliverables are agreed in your signed plan.',
+    'These terms apply to your use of the Appdoers website and to website services provided by Appdoers Limited (NZBN 9429052210952). Specific pricing, contract length, and deliverables are agreed in your signed plan.',
   sections: [
     {
       heading: 'Website services',
-      body: 'Appdoers provides website design, development, hosting, security, and support under the Basic Website or Full Website plans described on our pricing page. Scope, timelines, and fees are confirmed before work begins.',
+      body: 'Appdoers Limited provides website design, development, hosting, security, and support under the Basic Website or Full Website plans described on our pricing page. Scope, timelines, and fees are confirmed before work begins.',
     },
     {
       heading: 'Pricing and payment',
@@ -748,7 +777,7 @@ export const termsOfService = {
     },
     {
       heading: 'Content and ownership',
-      body: 'You supply written content and images ready to use. We do not design logos, edit photos, create videos, run ads, manage social media, or build phone apps unless separately agreed. Website source files remain with Appdoers; another provider cannot simply copy our build.',
+      body: 'You supply written content and images ready to use. We do not design logos, edit photos, create videos, run ads, manage social media, or build phone apps unless separately agreed. Website source files remain with Appdoers Limited; another provider cannot simply copy our build.',
     },
     {
       heading: 'Acceptable use',

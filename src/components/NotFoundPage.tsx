@@ -7,7 +7,7 @@ const NotFoundPage: React.FC = () => {
   usePageMeta({
     title: 'Page Not Found | Appdoers',
     description: 'The page you are looking for does not exist. Browse Appdoers services, pricing, and work.',
-    path: '/404',
+    noindex: true,
   });
 
   return (

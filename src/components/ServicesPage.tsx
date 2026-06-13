@@ -12,6 +12,7 @@ import {
 import { pageIntros, products } from '../content/siteContent';
 import { useAudienceSegment } from '../context/AudienceSegmentContext';
 import { MotionReveal, Stagger, StaggerItem } from './AnimateIn';
+import StructuredData from './StructuredData';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 const productIcons = {
@@ -32,6 +33,7 @@ const ServicesPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <StructuredData type="services" />
       <PageHero
         eyebrow={pageIntros.services.eyebrow}
         title={pageIntros.services.title}

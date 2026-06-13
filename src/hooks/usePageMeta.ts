@@ -6,6 +6,8 @@ type PageMeta = {
   description?: string;
   path?: string;
   image?: string;
+  imageAlt?: string;
+  noindex?: boolean;
 };
 
 const upsertMeta = (attribute: 'name' | 'property', key: string, content: string) => {
@@ -18,11 +20,22 @@ const upsertMeta = (attribute: 'name' | 'property', key: string, content: string
   element.setAttribute('content', content);
 };
 
-export const usePageMeta = ({ title, description, path = '', image }: PageMeta) => {
+const DEFAULT_OG_IMAGE = `${brand.siteUrl}/images/logo.png`;
+const DEFAULT_OG_IMAGE_ALT = 'Appdoers — Websites & Online Tools for New Zealand';
+
+export const usePageMeta = ({
+  title,
+  description,
+  path = '',
+  image,
+  imageAlt,
+  noindex = false,
+}: PageMeta) => {
   useEffect(() => {
     const pageDescription = description ?? brand.metaDescription;
-    const pageUrl = `${brand.siteUrl}${path}`;
-    const pageImage = image ?? `${brand.siteUrl}/images/logo.png`;
+    const pageUrl = path ? `${brand.siteUrl}${path}` : brand.siteUrl;
+    const pageImage = image ?? DEFAULT_OG_IMAGE;
+    const pageImageAlt = imageAlt ?? DEFAULT_OG_IMAGE_ALT;
 
     document.title = title;
     upsertMeta('name', 'description', pageDescription);
@@ -31,11 +44,15 @@ export const usePageMeta = ({ title, description, path = '', image }: PageMeta) 
     upsertMeta('property', 'og:type', 'website');
     upsertMeta('property', 'og:url', pageUrl);
     upsertMeta('property', 'og:image', pageImage);
+    upsertMeta('property', 'og:image:alt', pageImageAlt);
+    upsertMeta('property', 'og:locale', 'en_NZ');
     upsertMeta('property', 'og:site_name', brand.name);
     upsertMeta('name', 'twitter:card', 'summary_large_image');
     upsertMeta('name', 'twitter:title', title);
     upsertMeta('name', 'twitter:description', pageDescription);
     upsertMeta('name', 'twitter:image', pageImage);
+    upsertMeta('name', 'twitter:image:alt', pageImageAlt);
+    upsertMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
 
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     if (!canonical) {
@@ -43,7 +60,11 @@ export const usePageMeta = ({ title, description, path = '', image }: PageMeta) 
       canonical.rel = 'canonical';
       document.head.appendChild(canonical);
     }
-    canonical.href = pageUrl;
+    if (noindex) {
+      canonical.remove();
+    } else {
+      canonical.href = pageUrl;
+    }
 
     return () => {
       document.title = brand.metaTitle;
@@ -51,7 +72,13 @@ export const usePageMeta = ({ title, description, path = '', image }: PageMeta) 
       upsertMeta('property', 'og:title', brand.metaTitle);
       upsertMeta('property', 'og:description', brand.metaDescription);
       upsertMeta('property', 'og:url', brand.siteUrl);
+      upsertMeta('property', 'og:image', DEFAULT_OG_IMAGE);
+      upsertMeta('property', 'og:image:alt', DEFAULT_OG_IMAGE_ALT);
+      upsertMeta('name', 'robots', 'index, follow');
+      if (canonical && !canonical.isConnected) {
+        document.head.appendChild(canonical);
+      }
       if (canonical) canonical.href = brand.siteUrl;
     };
-  }, [title, description, path, image]);
+  }, [title, description, path, image, imageAlt, noindex]);
 };

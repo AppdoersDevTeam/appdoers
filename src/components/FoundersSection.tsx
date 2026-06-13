@@ -18,9 +18,7 @@ const FoundersSection: React.FC<FoundersSectionProps> = ({ variant = 'full' }) =
           <p className="text-[#1dd3b0] font-semibold uppercase tracking-wider mb-2">
             {foundersIntro.eyebrow}
           </p>
-          <h2 className="section-title mb-4">
-            {compact ? 'Meet Fabiano & Sara' : foundersIntro.title}
-          </h2>
+          <h2 className="section-title mb-4">{foundersIntro.title}</h2>
           <p className={`text-gray-700 leading-relaxed ${compact ? 'text-gray-600' : 'mb-4'}`}>
             {foundersIntro.lead}
           </p>
@@ -39,14 +37,15 @@ const FoundersSection: React.FC<FoundersSectionProps> = ({ variant = 'full' }) =
               >
                 <div className={`flex gap-5 ${compact ? 'items-start mb-4' : 'flex-col mb-4'}`}>
                   <div
-                    className={`overflow-hidden rounded-xl border-2 border-[#b2ff9e]/60 bg-gray-50 shrink-0 ${
+                    className={`overflow-hidden rounded-xl border-2 border-[#b2ff9e]/60 bg-[#086375]/10 shrink-0 ${
                       compact ? 'w-28 h-28' : 'w-full max-w-xs mx-auto aspect-square'
                     }`}
                   >
                     <img
                       src={founder.photo}
-                      alt={founder.name}
-                      className="w-full h-full object-contain p-2"
+                      alt={`${founder.name}, ${founder.role} at Appdoers`}
+                      className="w-full h-full object-cover"
+                      style={{ objectPosition: founder.photoPosition ?? 'center' }}
                       loading="lazy"
                     />
                   </div>
@@ -75,7 +74,7 @@ const FoundersSection: React.FC<FoundersSectionProps> = ({ variant = 'full' }) =
 
                     <div className="mb-6">
                       <p className="text-xs font-bold uppercase tracking-wide text-[#086375] mb-2">
-                        At Appdoers, {founder.name.split(' ')[0]} handles
+                        At Appdoers, this role handles
                       </p>
                       <ul className="text-sm text-gray-600 space-y-2">
                         {founder.focus.map((item) => (
@@ -129,7 +128,7 @@ const FoundersSection: React.FC<FoundersSectionProps> = ({ variant = 'full' }) =
               to="/about"
               className="inline-block bg-[#086375] text-white font-semibold px-8 py-3 rounded-lg hover:bg-[#3c1642] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
             >
-              About us: full story
+              About Appdoers
             </Link>
           </MotionReveal>
         )}

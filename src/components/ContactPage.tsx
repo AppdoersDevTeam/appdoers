@@ -2,11 +2,7 @@ import React from 'react';
 import ContactCTA from './ContactCTA';
 
 const ContactPage: React.FC = () => {
-  return (
-    <main>
-      <ContactCTA />
-    </main>
-  );
+  return <ContactCTA />;
 };
 
-export default ContactPage; 
+export default ContactPage;

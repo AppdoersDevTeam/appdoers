@@ -82,15 +82,25 @@ const ContactCTA: React.FC = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [formMessage, setFormMessage] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormMessage(null);
+
+    if (honeypot.trim()) {
+      return;
+    }
+
     const sendingQuote = includeQuoteInEmail && activeQuote;
     if (!sendingQuote && !formData.message.trim()) {
+      setFormMessage('Please enter a message or include a pricing quote.');
       return;
     }
     setIsSubmitting(true);
-    
+    setSubmitStatus('idle');
+
     try {
       const quoteText = sendingQuote ? formatQuoteSummary(activeQuote) : '';
       const userMessage = formData.message.trim();
@@ -106,6 +116,7 @@ const ContactCTA: React.FC = () => {
       
       if (result.success) {
         setSubmitStatus('success');
+        setFormMessage(result.message);
         setFormData((prev) => ({
           ...prev,
           name: '',
@@ -115,6 +126,7 @@ const ContactCTA: React.FC = () => {
         }));
       } else {
         setSubmitStatus('error');
+        setFormMessage(result.message);
       }
     } catch {
       setSubmitStatus('error');
@@ -262,10 +274,7 @@ const ContactCTA: React.FC = () => {
                 </motion.div>
                 <div>
                   <h3 className="font-bold text-[#086375]">Address</h3>
-                  <p className="text-gray-600">
-                    49 Braebrook Drive<br />
-                    Netherby, Ashburton 7700
-                  </p>
+                  <p className="text-gray-600">{brand.address}</p>
                 </div>
               </div>
             </motion.div>
@@ -330,6 +339,8 @@ const ContactCTA: React.FC = () => {
                 <input
                   type="text"
                   name="_honeypot"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
                   tabIndex={-1}
                   autoComplete="off"
                   className="hidden"
@@ -414,15 +425,14 @@ const ContactCTA: React.FC = () => {
                   </label>
                 </div>
 
-                {submitStatus === 'success' && (
-                  <div className="text-green-600 text-sm">
-                    Thank you! Your message has been sent successfully.
-                  </div>
+                {submitStatus === 'success' && formMessage && (
+                  <div className="text-green-600 text-sm">{formMessage}</div>
                 )}
-                {submitStatus === 'error' && (
-                  <div className="text-red-600 text-sm">
-                    Oops! Something went wrong. Please try again.
-                  </div>
+                {submitStatus === 'error' && formMessage && (
+                  <div className="text-red-600 text-sm">{formMessage}</div>
+                )}
+                {submitStatus === 'idle' && formMessage && (
+                  <div className="text-amber-700 text-sm">{formMessage}</div>
                 )}
 
                 <motion.button
@@ -445,6 +455,7 @@ const ContactCTA: React.FC = () => {
               className="rounded-xl overflow-hidden shadow-lg"
             >
               <iframe
+                title="Map showing Appdoers office location in Ashburton, New Zealand"
                 src="https://maps.google.com/maps?q=49+Braebrook+Drive,+Netherby,+Ashburton+7700&hl=en&z=14&output=embed"
                 width="100%"
                 height="100%"

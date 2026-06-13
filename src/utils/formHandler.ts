@@ -9,15 +9,8 @@ export interface ContactFormData {
   source?: string;
 }
 
-const formspreeFormId = import.meta.env.VITE_FORMSPREE_FORM_ID?.trim();
 const recipientEmail = brand.email;
-
-const getFormEndpoint = (): string => {
-  if (formspreeFormId) {
-    return `https://formspree.io/f/${formspreeFormId}`;
-  }
-  return `https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`;
-};
+const formEndpoint = `https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`;
 
 function buildEmailSubject(formData: ContactFormData): string {
   if (formData.quote) {
@@ -59,18 +52,15 @@ export const handleFormSubmit = async (
       message: buildEmailBody(formData),
       _subject: buildEmailSubject(formData),
       _replyto: formData.email,
+      _template: 'table',
+      _captcha: 'false',
     };
 
     if (formData.quote) {
       payload.quote = formData.quote;
     }
 
-    if (!formspreeFormId) {
-      payload._template = 'table';
-      payload._captcha = 'false';
-    }
-
-    const response = await fetch(getFormEndpoint(), {
+    const response = await fetch(formEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

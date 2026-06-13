@@ -6,6 +6,7 @@ import PortfolioPreview from './PortfolioPreview';
 import Testimonials from './Testimonials';
 import Statistics from './Statistics';
 import HomeCTA from './HomeCTA';
+import StructuredData from './StructuredData';
 import { pageIntros, portfolio } from '../content/siteContent';
 import { Stagger, StaggerItem } from './AnimateIn';
 import { usePageMeta } from '../hooks/usePageMeta';
@@ -19,6 +20,7 @@ const WorkPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <StructuredData type="work" />
       <PageHero
         eyebrow={pageIntros.work.eyebrow}
         title={pageIntros.work.title}

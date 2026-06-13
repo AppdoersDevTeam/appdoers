@@ -12,7 +12,7 @@ const AboutPage: React.FC = () => {
   usePageMeta({
     title: 'About Us | Appdoers',
     description:
-      'Founded by Fabiano Da Silva in Ashburton, with technical delivery led by Sara Da Silva in New Plymouth.',
+      'Appdoers Limited is a New Zealand website company helping businesses, churches, and organisations get online with clear pricing and hands-on delivery.',
     path: '/about',
   });
 
@@ -91,6 +91,17 @@ const AboutPage: React.FC = () => {
             {' · '}
             <a href={`mailto:${brand.email}`} className="hover:text-[#086375]">
               {brand.email}
+            </a>
+          </p>
+          <p className="text-gray-500 text-sm mt-3">
+            {brand.legalName} · NZBN{' '}
+            <a
+              href={brand.nzbnUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#086375]"
+            >
+              {brand.nzbn}
             </a>
           </p>
         </MotionReveal>

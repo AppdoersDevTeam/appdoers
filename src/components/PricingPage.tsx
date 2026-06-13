@@ -51,16 +51,28 @@ const PricingPage: React.FC = () => {
                       <td className="p-4 text-gray-800 font-medium">{row.feature}</td>
                       <td className="p-4 text-center">
                         {row.fullWebsite ? (
-                          <FaCheck className="text-[#1dd3b0] mx-auto" />
+                          <span className="inline-flex items-center justify-center">
+                            <FaCheck className="text-[#1dd3b0]" aria-hidden />
+                            <span className="sr-only">Included</span>
+                          </span>
                         ) : (
-                          <FaTimes className="text-gray-300 mx-auto" />
+                          <span className="inline-flex items-center justify-center">
+                            <FaTimes className="text-gray-300" aria-hidden />
+                            <span className="sr-only">Not included</span>
+                          </span>
                         )}
                       </td>
                       <td className="p-4 text-center">
                         {row.starterWebsite ? (
-                          <FaCheck className="text-[#1dd3b0] mx-auto" />
+                          <span className="inline-flex items-center justify-center">
+                            <FaCheck className="text-[#1dd3b0]" aria-hidden />
+                            <span className="sr-only">Included</span>
+                          </span>
                         ) : (
-                          <FaTimes className="text-gray-300 mx-auto" />
+                          <span className="inline-flex items-center justify-center">
+                            <FaTimes className="text-gray-300" aria-hidden />
+                            <span className="sr-only">Not included</span>
+                          </span>
                         )}
                       </td>
                     </tr>

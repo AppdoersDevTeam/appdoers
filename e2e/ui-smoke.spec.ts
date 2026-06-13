@@ -59,8 +59,10 @@ test.describe('Appdoers UI smoke', () => {
     await page.goto('/work');
     await expect(page.getByRole('heading', { name: 'Journey of Insights' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'NZ Modern School of Music' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'New Plymouth Community Church' })).toBeVisible();
     await expect(page.getByRole('link', { name: /Visit jornadadeinsights\.com/i })).toBeVisible();
     await expect(page.getByRole('link', { name: /Visit everybodyplaying\.com/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Visit www\.npcommunitychurch\.org/i })).toBeVisible();
   });
 
   test('homepage embeds Journey of Insights and links Everybody Playing', async ({ page }) => {
@@ -69,6 +71,9 @@ test.describe('Appdoers UI smoke', () => {
     await expect(page.locator('iframe[title="NZ Modern School of Music live site"]')).toHaveCount(0);
     await expect(
       page.locator('img[alt="NZ Modern School of Music website preview"]')
+    ).toBeVisible();
+    await expect(
+      page.locator('img[alt="New Plymouth Community Church website preview"]')
     ).toBeVisible();
     await expect(page.getByRole('link', { name: /Open live site/i }).first()).toBeVisible();
   });

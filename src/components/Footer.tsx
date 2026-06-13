@@ -37,13 +37,16 @@ const Footer: React.FC = () => {
               <img src="/images/logo.png" alt="Appdoers Logo" className="h-12 w-auto" />
             </Link>
             <p className="mt-4 text-white/90 max-w-md">{brand.tagline}</p>
+            <p className="mt-2 text-white/75 text-sm">
+              {brand.legalName} · NZBN {brand.nzbn}
+            </p>
             {brand.social?.linkedin && (
               <div className="flex space-x-4 mt-6">
                 <a
                   href={brand.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-white transition-colors"
+                  className="text-white/80 hover:text-white transition-colors"
                   aria-label="LinkedIn"
                 >
                   <FaLinkedin size={20} />
@@ -57,27 +60,27 @@ const Footer: React.FC = () => {
             'Quick Links',
             <ul className="space-y-2">
               <li>
-                <Link to="/work" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/work" className="text-white/80 hover:text-white transition-colors">
                   Work
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/services" className="text-white/80 hover:text-white transition-colors">
                   Services
                 </Link>
               </li>
               <li>
-                <Link to="/pricing" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/pricing" className="text-white/80 hover:text-white transition-colors">
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/about" className="text-white/80 hover:text-white transition-colors">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/contact" className="text-white/80 hover:text-white transition-colors">
                   Contact
                 </Link>
               </li>
@@ -89,12 +92,12 @@ const Footer: React.FC = () => {
             'Services',
             <ul className="space-y-2">
               <li>
-                <Link to="/basic-website" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/basic-website" className="text-white/80 hover:text-white transition-colors">
                   Basic Website
                 </Link>
               </li>
               <li>
-                <Link to="/full-website" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/full-website" className="text-white/80 hover:text-white transition-colors">
                   Full Website
                 </Link>
               </li>
@@ -109,7 +112,7 @@ const Footer: React.FC = () => {
           {renderSection(
             'contact',
             'Contact',
-            <ul className="space-y-2 text-gray-300">
+            <ul className="space-y-2 text-white/80">
               <li>{brand.address}</li>
               <li>
                 <a href={`tel:${brand.phone.replace(/\s/g, '')}`} className="hover:text-white transition-colors">
@@ -125,9 +128,9 @@ const Footer: React.FC = () => {
           )}
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-300 text-sm">
+        <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-white/80 text-sm">
           <p>
-            &copy; {brand.year} {brand.name}. All rights reserved.
+            &copy; {brand.year} {brand.legalName}. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/privacy" className="hover:text-white transition-colors">

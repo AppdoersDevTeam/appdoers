@@ -15,7 +15,7 @@ const Portfolio: React.FC = () => {
           </p>
         </MotionReveal>
 
-        <Stagger className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+        <Stagger className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {portfolio.map((project) => (
             <StaggerItem key={project.slug}>
               <article className="feature-card flex flex-col h-full overflow-hidden p-0 hover:shadow-2xl transition-shadow duration-500">
