@@ -1,5 +1,7 @@
+/**
+ * Full browser prerender (local/CI only). Vercel builds use prerender-static.mjs instead.
+ */
 import { chromium } from 'playwright';
-import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
@@ -112,11 +114,6 @@ async function main() {
     process.exit(1);
   }
 
-  if (process.env.VERCEL) {
-    console.log('Installing Playwright Chromium for Vercel build…');
-    execSync('npx playwright install chromium', { cwd: root, stdio: 'inherit', shell: true });
-  }
-
   const { server, baseUrl } = await startStaticServer();
   console.log(`Static server ready at ${baseUrl}`);
 
@@ -134,7 +131,10 @@ async function main() {
   });
 
   try {
-    const browser = await chromium.launch();
+    const browser = await chromium.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+    });
     const context = await browser.newContext({ reducedMotion: 'reduce' });
     const page = await context.newPage();
 
