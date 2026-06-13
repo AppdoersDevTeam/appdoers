@@ -1,43 +1,54 @@
 import { brand } from '../content/siteContent';
+import {
+  formatQuoteSummaryForEmail,
+  type QuoteInput,
+} from './pricingCalculations';
 
 export interface ContactFormData {
   name: string;
   email: string;
   phone?: string;
   message: string;
-  quote?: string;
+  quote?: QuoteInput;
   source?: string;
 }
 
 const recipientEmail = brand.email;
 const formEndpoint = `https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`;
 
+const RULE = '────────────────────────────────────────';
+
 function buildEmailSubject(formData: ContactFormData): string {
   if (formData.quote) {
-    return `Website quote request from ${formData.name}`;
+    return `Quote request — ${formData.name}`;
   }
-  return `Website enquiry from ${formData.name}`;
+  return `Website enquiry — ${formData.name}`;
 }
 
 function buildEmailBody(formData: ContactFormData): string {
-  const lines = [
-    'New submission from the Appdoers website contact form',
+  const sections: string[] = [
+    'NEW CONTACT FORM SUBMISSION',
+    'Appdoers website · appdoers.co.nz',
+    RULE,
     '',
-    `Name: ${formData.name}`,
-    `Email: ${formData.email}`,
-    `Phone: ${formData.phone?.trim() || 'Not provided'}`,
-    `Source: ${formData.source || 'Contact page'}`,
+    'CONTACT DETAILS',
+    `Name:    ${formData.name}`,
+    `Email:   ${formData.email}`,
+    `Phone:   ${formData.phone?.trim() || 'Not provided'}`,
+    `Source:  ${formData.source || 'Contact page'}`,
   ];
 
   if (formData.quote) {
-    lines.push('', formData.quote);
+    sections.push('', RULE, '', 'PRICING QUOTE', formatQuoteSummaryForEmail(formData.quote));
   }
 
   if (formData.message.trim()) {
-    lines.push('', '--- Additional message ---', formData.message.trim());
+    sections.push('', RULE, '', 'MESSAGE', formData.message.trim());
   }
 
-  return lines.join('\n');
+  sections.push('', RULE, '', `Reply to: ${formData.email}`);
+
+  return sections.join('\n');
 }
 
 export const handleFormSubmit = async (
@@ -45,20 +56,12 @@ export const handleFormSubmit = async (
 ): Promise<{ success: boolean; message: string }> => {
   try {
     const payload: Record<string, string> = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone?.trim() || 'Not provided',
-      source: formData.source || 'Contact page',
       message: buildEmailBody(formData),
       _subject: buildEmailSubject(formData),
       _replyto: formData.email,
-      _template: 'table',
+      _template: 'box',
       _captcha: 'false',
     };
-
-    if (formData.quote) {
-      payload.quote = formData.quote;
-    }
 
     const response = await fetch(formEndpoint, {
       method: 'POST',

@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { handleFormSubmit } from '../utils/formHandler';
 import { brand, contactPage, pricingTiers } from '../content/siteContent';
 import {
-  formatQuoteSummary,
   getTier,
   parseQuoteFromSearchParams,
   type QuoteInput,
@@ -103,7 +102,6 @@ const ContactCTA: React.FC = () => {
     setSubmitStatus('idle');
 
     try {
-      const quoteText = sendingQuote ? formatQuoteSummary(activeQuote) : '';
       const userMessage = formData.message.trim();
 
       const result = await handleFormSubmit({
@@ -111,7 +109,7 @@ const ContactCTA: React.FC = () => {
         email: formData.email,
         phone: formData.phone,
         message: userMessage,
-        quote: quoteText || undefined,
+        quote: sendingQuote ? activeQuote : undefined,
         source: sendingQuote ? 'Contact page (with quote)' : 'Contact page',
       });
       

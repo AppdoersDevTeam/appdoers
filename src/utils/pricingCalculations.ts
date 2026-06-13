@@ -320,3 +320,56 @@ export function formatQuoteSummary(quote: QuoteInput): string {
 
   return lines.join('\n');
 }
+
+/** Compact quote block for contact-form emails (no duplicate fields or markers). */
+export function formatQuoteSummaryForEmail(quote: QuoteInput): string {
+  const tier = getTier(quote.planId);
+  const breakdown = calculateQuote(quote);
+  const weeklyTotal = calculateWeeklyFromMonthly(breakdown.monthlyTotal);
+  const annualTotal = breakdown.monthlyTotal * 12;
+  const emailTier = getEmailTier(quote.emailTierLabel);
+  const pricePerMailbox = emailTier.prices[quote.termMonths];
+
+  const lines = [
+    `Plan:              ${tier.name}`,
+    `Contract length:   ${termLabels[quote.termMonths]}`,
+    '',
+    'Setup',
+    `  Total setup fee:   $${formatMoney(tier.developmentFee)} NZD`,
+    `  Due today:         $${formatMoney(breakdown.upfront)} NZD`,
+    `  Spread monthly:    $${formatMoney(breakdown.monthlyBuildSpread)} NZD/mo`,
+    '',
+    'Monthly costs',
+    `  Website plan:      $${formatMoney(breakdown.monthlyPlan)} NZD/mo`,
+    `  Setup spread:      $${formatMoney(breakdown.monthlyBuildSpread)} NZD/mo`,
+  ];
+
+  if (quote.includeEmail) {
+    if (breakdown.monthlyEmail === 0 && breakdown.freeEmailUsers > 0) {
+      lines.push(
+        `  Business email:    $0 NZD/mo (${breakdown.freeEmailUsers} included — ${tier.includedEmail.storage})`
+      );
+    } else if (breakdown.emailIsIncluded && breakdown.paidEmailUsers > 0) {
+      lines.push(
+        `  Business email:    $${formatMoney(breakdown.monthlyEmail)} NZD/mo (${breakdown.freeEmailUsers} free + ${breakdown.paidEmailUsers} paid · ${quote.emailTierLabel})`
+      );
+    } else {
+      lines.push(
+        `  Business email:    $${formatMoney(breakdown.monthlyEmail)} NZD/mo (${quote.emailUserCount} × $${formatMoney(pricePerMailbox)} · ${quote.emailTierLabel})`
+      );
+    }
+  } else {
+    lines.push('  Business email:    Not included');
+  }
+
+  lines.push(
+    '',
+    'Summary',
+    `  Due today:         $${formatMoney(breakdown.upfront)} NZD`,
+    `  Monthly total:     $${formatMoney(breakdown.monthlyTotal)} NZD/mo`,
+    `  Weekly equivalent: $${formatMoney(weeklyTotal)} NZD`,
+    `  Annual (monthly):  $${formatMoney(annualTotal)} NZD/year`
+  );
+
+  return lines.join('\n');
+}
