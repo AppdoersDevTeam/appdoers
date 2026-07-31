@@ -140,6 +140,8 @@ export type PortfolioProject = {
   externalUrl: string;
   /** Shopify blocks live iframes; use false for a screenshot preview + open-site link */
   embeddable?: boolean;
+  /** Local/static preview when remote screenshot services fail (e.g. Shopify) */
+  previewImage?: string;
 };
 
 export const portfolio: PortfolioProject[] = [
@@ -188,8 +190,9 @@ export const portfolio: PortfolioProject[] = [
       'Clear paths for students and new music tutors',
     ],
     capabilities: ['Online shop', 'Lesson enquiries', 'Nationwide NZ', 'Easy product updates'],
-    externalUrl: 'https://everybodyplaying.com',
+    externalUrl: 'https://www.everybodyplaying.com',
     embeddable: false,
+    previewImage: '/images/everybodyplaying-preview.jpg',
   },
   {
     category: 'Church Website',
@@ -214,6 +217,56 @@ export const portfolio: PortfolioProject[] = [
     capabilities: ['Sunday & ministries', 'Sermon media', 'Newsletter', 'Find us & contact'],
     externalUrl: 'https://www.npcommunitychurch.org/',
     embeddable: false,
+  },
+  {
+    category: 'Church Platform',
+    title: 'Ashburton Baptist Church',
+    description:
+      'A modern church website for Ashburton Baptist: Sunday services, sermon streaming, events, prayer, giving, and a member login for the congregation.',
+    metric: '1',
+    metricLabel: 'Church home online',
+    link: '/work#ashburton-baptist',
+    slug: 'ashburton-baptist',
+    client: 'Ashburton Baptist Church · ashburtonbaptist.co.nz',
+    challenge:
+      'Ashburton Baptist Church needed a welcoming digital home that reflected their community — service times, sermons, events, prayer, and giving — while giving members a simple way to log in and stay connected beyond Sunday.',
+    solution:
+      'We built a church platform with a clear public site for visitors (watch online, find us, events, prayer, and giving) and member access for people already part of the congregation. Content stays easy to update so the church can keep ministries and announcements current.',
+    results: [
+      'Sunday worship and location easy to find',
+      'Sermons and events in one place',
+      'Prayer and giving paths for visitors and members',
+      'Member login for the church community',
+    ],
+    capabilities: ['Sermons & events', 'Prayer & giving', 'Member login', 'Visitor-friendly home'],
+    externalUrl: 'https://ashburtonbaptist.co.nz/',
+    embeddable: false,
+    previewImage: '/images/ashburtonbaptist-preview.jpg',
+  },
+  {
+    category: 'Retail & E-Commerce',
+    title: 'Motoculture',
+    description:
+      'An online motorcycle showroom for a New Plymouth workshop: bikes, apparel, helmets, parts, and accessories with clear paths to shop and get in touch.',
+    metric: 'NP',
+    metricLabel: 'Based in New Plymouth',
+    link: '/work#motoculture',
+    slug: 'motoculture',
+    client: 'Motoculture · motoculture.co.nz',
+    challenge:
+      'Motoculture needed an online storefront that matched their New Plymouth showroom and workshop — sell motorcycles and riding gear, showcase brands, and make it easy for riders to browse, buy, or call for service.',
+    solution:
+      'We delivered a Shopify storefront with shop-first navigation across motorcycles, apparel, helmets, boots, luggage, parts, and accessories, plus clear contact details and opening hours for the workshop. Riders can shop online or reach the team for repairs and advice.',
+    results: [
+      'Online shop for bikes and riding gear',
+      'Clear categories from apparel to parts',
+      'Showroom and workshop contact easy to find',
+      'Brand-led product browsing for Taranaki riders',
+    ],
+    capabilities: ['Online shop', 'Motorcycles & gear', 'Workshop contact', 'Brand catalogues'],
+    externalUrl: 'https://www.motoculture.co.nz/',
+    embeddable: false,
+    previewImage: '/images/motoculture-preview.jpg',
   },
 ];
 

@@ -15,7 +15,7 @@ const WorkPage: React.FC = () => {
   usePageMeta({
     title: 'Our Work | Appdoers',
     description:
-      'Selected New Zealand client websites: ministry platform, nationwide music school, and Taranaki community church — built by Appdoers Limited.',
+      'Selected New Zealand client websites: churches, music school, motorcycle retail, and more — built by Appdoers Limited.',
     path: '/work',
   });
 
@@ -60,6 +60,7 @@ const WorkPage: React.FC = () => {
                     title={project.title}
                     externalUrl={project.externalUrl}
                     embeddable={project.embeddable !== false}
+                    previewImage={project.previewImage}
                   />
 
                   <div className="grid md:grid-cols-2 gap-5 md:gap-6">

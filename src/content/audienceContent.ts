@@ -29,16 +29,16 @@ export const audienceSpotlights: Record<AudienceId, AudienceSpotlight> = {
     title: 'Trusted by churches across New Zealand',
     description:
       'From sermon libraries and prayer requests to rosters and online giving — we build websites churches use every week.',
-    example: 'Journey of Insights — bilingual ministry platform with podcast, shop, and donations.',
-    link: '/work#jornada-de-insights',
+    example: 'Ashburton Baptist Church — sermons, events, prayer, giving, and member login.',
+    link: '/work#ashburton-baptist',
     linkLabel: 'See church work',
   },
   businesses: {
     title: 'Built for growing businesses',
     description:
       'Look professional online, capture enquiries, and add member tools or a shop when you are ready to grow.',
-    example: 'NZ Modern School of Music — nationwide brand with online shop and lesson enquiries.',
-    link: '/work#everybody-playing',
+    example: 'Motoculture — New Plymouth motorcycle showroom with online shop and workshop contact.',
+    link: '/work#motoculture',
     linkLabel: 'See business work',
   },
   schools: {
@@ -53,17 +53,17 @@ export const audienceSpotlights: Record<AudienceId, AudienceSpotlight> = {
     title: 'Online shops that stay simple',
     description:
       'Sell products or resources on a fast site — with checkout, enquiries, and hosting handled for you.',
-    example: 'Journey of Insights — e-book shop and donations alongside podcast and community content.',
-    link: '/work#jornada-de-insights',
+    example: 'Motoculture — bikes, apparel, helmets, and parts with clear shop paths.',
+    link: '/work#motoculture',
     linkLabel: 'See shop example',
   },
   trades: {
     title: 'Local trades & service businesses',
     description:
       'Show what you do, make it easy to call or message, and look trustworthy on Google and mobile.',
-    example: 'Clear contact forms and fast mobile pages — the basics done properly.',
-    link: '/pricing',
-    linkLabel: 'View pricing',
+    example: 'Motoculture — showroom and repair workshop with online shopping for riders.',
+    link: '/work#motoculture',
+    linkLabel: 'See trade example',
   },
 };
 

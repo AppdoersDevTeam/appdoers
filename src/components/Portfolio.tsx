@@ -23,6 +23,7 @@ const Portfolio: React.FC = () => {
                   title={project.title}
                   externalUrl={project.externalUrl}
                   embeddable={project.embeddable !== false}
+                  previewImage={project.previewImage}
                   compact
                 />
                 <div className="p-6 flex flex-col flex-grow">

@@ -66,7 +66,7 @@ const Hero: React.FC = () => {
                 to="/work"
                 className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-[#affc41] transition-colors border-t border-white/20 pt-6 mt-2"
               >
-                Featured builds: jornadadeinsights.com · everybodyplaying.com · npcommunitychurch.org
+                Featured builds: ashburtonbaptist.co.nz · motoculture.co.nz · everybodyplaying.com
                 <FaArrowRight className="text-xs group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </motion.div>

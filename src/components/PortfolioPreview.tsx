@@ -6,6 +6,7 @@ export type PortfolioPreviewProps = {
   externalUrl: string;
   compact?: boolean;
   embeddable?: boolean;
+  previewImage?: string;
 };
 
 const IFRAME_WIDTH = 1280;
@@ -43,9 +44,11 @@ const ScreenshotPreview: React.FC<{
   externalUrl: string;
   host: string;
   compact?: boolean;
-}> = ({ title, externalUrl, host, compact = false }) => {
+  previewImage?: string;
+}> = ({ title, externalUrl, host, compact = false, previewImage }) => {
   const [screenshotFailed, setScreenshotFailed] = useState(false);
   const minHeight = compact ? 200 : 280;
+  const imageSrc = previewImage || screenshotPreviewUrl(externalUrl);
 
   if (screenshotFailed) {
     return (
@@ -83,7 +86,7 @@ const ScreenshotPreview: React.FC<{
         style={{ minHeight }}
       >
         <img
-          src={screenshotPreviewUrl(externalUrl)}
+          src={imageSrc}
           alt={`${title} website preview`}
           className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
           loading="lazy"
@@ -154,6 +157,7 @@ const PortfolioPreview: React.FC<PortfolioPreviewProps> = ({
   externalUrl,
   compact = false,
   embeddable = true,
+  previewImage,
 }) => {
   const host = externalUrl.replace(/^https?:\/\//, '');
 
@@ -164,6 +168,7 @@ const PortfolioPreview: React.FC<PortfolioPreviewProps> = ({
         externalUrl={externalUrl}
         host={host}
         compact={compact}
+        previewImage={previewImage}
       />
     );
   }
