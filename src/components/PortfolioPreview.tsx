@@ -47,15 +47,14 @@ const ScreenshotPreview: React.FC<{
   previewImage?: string;
 }> = ({ title, externalUrl, host, compact = false, previewImage }) => {
   const [screenshotFailed, setScreenshotFailed] = useState(false);
-  const minHeight = compact ? 200 : 280;
+  const frameClass = compact ? 'aspect-[16/10] min-h-[200px]' : 'aspect-[16/10] min-h-[280px]';
   const imageSrc = previewImage || screenshotPreviewUrl(externalUrl);
 
   if (screenshotFailed) {
     return (
       <PreviewChrome host={host} externalUrl={externalUrl} linkLabel="Open live site">
         <div
-          className="flex flex-col items-center justify-center text-center bg-gradient-to-br from-[#3c1642] via-[#086375] to-[#1dd3b0] text-white px-6"
-          style={{ minHeight }}
+          className={`flex flex-col items-center justify-center text-center bg-gradient-to-br from-[#3c1642] via-[#086375] to-[#1dd3b0] text-white px-6 ${frameClass}`}
         >
           <p className="text-lg font-bold mb-2">{title}</p>
           <p className="text-white/85 text-sm max-w-md mb-5">
@@ -82,13 +81,12 @@ const ScreenshotPreview: React.FC<{
         href={externalUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative block w-full overflow-hidden bg-gray-100"
-        style={{ minHeight }}
+        className={`group relative block w-full overflow-hidden bg-gray-100 ${frameClass}`}
       >
         <img
           src={imageSrc}
           alt={`${title} website preview`}
-          className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+          className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
           loading="lazy"
           onError={() => setScreenshotFailed(true)}
         />
